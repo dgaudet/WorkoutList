@@ -310,7 +310,7 @@
 	[entryNew setTitleWithString:documentName];
 	[entryNew setUploadData:data];
 	[entryNew setUploadMIMEType:@"text/csv"];
-	[entryNew setUploadSlug:[NSString stringWithFormat:@"@%.csv", documentName]];
+	[entryNew setUploadSlug:[NSString stringWithFormat:@"%@.csv", documentName]];
 	
 	GDataCategory *category = [GDataCategory categoryWithScheme:kGDataCategoryScheme term:kGDataCategorySpreadsheetDoc];	 
 	[entryNew setCategories:[NSArray arrayWithObject:category]];
