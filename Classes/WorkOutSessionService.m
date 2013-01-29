@@ -83,8 +83,8 @@
 		
 	for (WorkOutSession *session in [self retreiveAllWorkOutSessions]) {
 		NSString *formattedDateString = [formatter stringFromDate:[session startDate]];
-		NSTimeInterval interval = [[session endDate] timeIntervalSinceDate:[session startDate]];
-		rowData = [rowData stringByAppendingFormat:@"\n%@, %@, %f", [[session workOut] name], formattedDateString, interval];
+        NSString *friendlyDuration = [self friendlyDurationForWorkOutSession:session];
+		rowData = [rowData stringByAppendingFormat:@"\n%@, %@, %@", [[session workOut] name], formattedDateString, friendlyDuration];
 	}
 	
 	return [NSString stringWithFormat:@"%@%@", colHeaders, rowData];
@@ -97,12 +97,12 @@
 
     int hours = duration / (60 * 60);
     if (hours > 0) {
-        friendlyDuration = [friendlyDuration stringByAppendingFormat:@"%i h, ", hours];
+        friendlyDuration = [friendlyDuration stringByAppendingFormat:@"%i h - ", hours];
     }
     
     int minutes = (duration / 60) % 60;
     if (minutes > 0) {
-        friendlyDuration = [friendlyDuration stringByAppendingFormat:@"%i m, ", minutes];
+        friendlyDuration = [friendlyDuration stringByAppendingFormat:@"%i m - ", minutes];
     }
     
     int seconds = duration % 60;
