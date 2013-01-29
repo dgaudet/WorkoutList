@@ -90,4 +90,25 @@
 	return [NSString stringWithFormat:@"%@%@", colHeaders, rowData];
 }
 
+- (NSString *)friendlyDurationForWorkOutSession:(WorkOutSession *)session {
+    NSTimeInterval interval = [session.endDate timeIntervalSinceDate:session.startDate];
+    NSString *friendlyDuration = @"";
+    int duration = round(interval);
+
+    int hours = duration / (60 * 60);
+    if (hours > 0) {
+        friendlyDuration = [friendlyDuration stringByAppendingFormat:@"%i h, ", hours];
+    }
+    
+    int minutes = (duration / 60) % 60;
+    if (minutes > 0) {
+        friendlyDuration = [friendlyDuration stringByAppendingFormat:@"%i m, ", minutes];
+    }
+    
+    int seconds = duration % 60;
+    friendlyDuration = [friendlyDuration stringByAppendingFormat:@"%i s", seconds];
+    
+	return [friendlyDuration stringByAppendingFormat:@" - duration %i", duration];
+}
+
 @end
