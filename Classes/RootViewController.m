@@ -16,7 +16,6 @@
 #import "EditUserListTableViewController.h"
 
 //ToDo: add code to ensure no problems occur if a user backgrounds the app while uploading to google docs
-//test
 
 @interface RootViewController (PrivateMethods)
 

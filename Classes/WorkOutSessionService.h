@@ -19,5 +19,6 @@
 - (BOOL)startWorkOutSessionForWorkOutWithName:(NSString *)name;
 - (BOOL)endStartedWorkOutSessionForWorkOutWithName:(NSString *)name;
 - (NSString *)generateCSVDataForAllWorkOutSessionsWithDateFormatter:(NSDateFormatter *)formatter;
+- (NSString *)friendlyDurationForWorkOutSession:(WorkOutSession *)session;
 
 @end

@@ -143,8 +143,7 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
 	NSString *label = [NSString stringWithFormat:@"%@ - %@", [[session workOut] name], formattedDateString];
 	cell.textLabel.text = label;
 	
-	NSTimeInterval interval = [[session endDate] timeIntervalSinceDate:[session startDate]];
-	cell.detailTextLabel.text = [NSString stringWithFormat:@"%f", interval];
+	cell.detailTextLabel.text = [[WorkOutSessionService sharedInstance] friendlyDurationForWorkOutSession:session];
     
     return cell;
 }

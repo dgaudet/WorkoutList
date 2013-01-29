@@ -227,7 +227,7 @@
 	
 	WorkOutSession *workOutSession = (WorkOutSession *)[NSEntityDescription insertNewObjectForEntityForName:WOS_ENTITY_NAME inManagedObjectContext:managedObjectContext];
 	NSDate *currentDate = [NSDate date];
-	[workOutSession setStartDate:[currentDate dateByAddingTimeInterval:-1200]];
+	[workOutSession setStartDate:[currentDate dateByAddingTimeInterval:-10200]];
 	[workOutSession setEndDate:[currentDate dateByAddingTimeInterval:-1000]];
 	[workOutSession setWorkOut:workOut];
 	
