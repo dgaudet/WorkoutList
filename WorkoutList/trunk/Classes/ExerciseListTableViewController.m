@@ -371,18 +371,22 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 }
 
 -(void)workOutSessionButtonPressed:(NSIndexPath *)indexPath {
-	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-	NSString *message = [NSString stringWithFormat:@"Press Ok to %@", [tableData objectAtIndex:indexPath.section]];
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-	[alert show];
-	[alert release];	
-	
-	if ([[tableData objectAtIndex:0] isEqualToString:START_WORK_OUT]) {
+	NSString *message = @"";
+    if ([[tableData objectAtIndex:0] isEqualToString:START_WORK_OUT]) {
+        message = [message stringByAppendingString:@"Press Ok to start Workout"];
 		[self startWorkOut];
 	} else {
 		[self endWorkOut];
+        WorkOutSession *session = [[WorkOutSessionService sharedInstance] retreiveMostRecentlyEndedWorkOutSessionWithName:workOutName];
+        NSString *duration = [[WorkOutSessionService sharedInstance] friendlyDurationForWorkOutSession:session];
+        message = [message stringByAppendingFormat:@"Nice Workout here's your time\n %@", duration];
 	}
 	[self.tableView reloadData];
+    
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];	
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+	[alert show];
+	[alert release];
 }
 
 - (void)startWorkOut {

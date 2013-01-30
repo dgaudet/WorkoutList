@@ -16,6 +16,7 @@
 + (id)sharedInstance;
 - (NSArray *)retreiveAllWorkOutSessions;
 - (WorkOutSession *)retreiveStartedWorkOutSessionWithName:(NSString *)name;
+- (WorkOutSession *)retreiveMostRecentlyEndedWorkOutSessionWithName:(NSString *)name;
 - (BOOL)startWorkOutSessionForWorkOutWithName:(NSString *)name;
 - (BOOL)endStartedWorkOutSessionForWorkOutWithName:(NSString *)name;
 - (NSString *)generateCSVDataForAllWorkOutSessionsWithDateFormatter:(NSDateFormatter *)formatter;
