@@ -106,9 +106,7 @@
     }
     
     int seconds = duration % 60;
-    friendlyDuration = [friendlyDuration stringByAppendingFormat:@"%i s", seconds];
-    
-	return [friendlyDuration stringByAppendingFormat:@" - duration %i", duration];
+    return [friendlyDuration stringByAppendingFormat:@"%i s", seconds];
 }
 
 @end
