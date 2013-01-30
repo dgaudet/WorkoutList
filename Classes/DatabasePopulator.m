@@ -252,6 +252,16 @@
 	return [self fetchManagedObjectsForEntity:entityName withPredicate:predicate withSortDescriptor:nil];
 }
 
+- (id)fetchFirstManagedObjectsForEntity:(NSString*)entityName withPredicate:(NSPredicate *)predicate withSortDescriptor:(NSSortDescriptor *)sortDescriptor {
+    NSArray *data = [[NSArray alloc] initWithArray:[self fetchManagedObjectsForEntity:entityName withPredicate:predicate withSortDescriptor:sortDescriptor]];
+	[sortDescriptor release];
+	if (data.count > 0) {
+		return [data objectAtIndex:0];
+	} else {
+		return nil;
+	}
+}
+
 - (NSArray *)fetchManagedObjectsForEntity:(NSString*)entityName withPredicate:(NSPredicate *)predicate withSortDescriptor:(NSSortDescriptor *)sortDescriptor {
 	NSManagedObjectContext *context = [self managedObjectContext];
 	NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:context];
