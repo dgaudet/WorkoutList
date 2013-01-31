@@ -196,7 +196,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
     return cell;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView threeColumnStyleCell:(NSString *)leftLabel middleLabel:(NSString *)middleLabel2 rightLabel:(NSString *)rightLabel{
+-(UITableViewCell *)tableView:(UITableView *)tableView threeColumnStyleCell:(NSString *)leftText middleLabel:(NSString *)middleText rightLabel:(NSString *)rightText {
     static NSString *CellIdentifier = @"ThreeColumnCellStyle";
     
 	NSInteger mainLabelTag = 1;
@@ -206,7 +206,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
 		
-		UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(30.0, 0.0, 210.0, 40.0)];		
+		UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(30.0, 0.0, 205.0, 40.0)];
         mainLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17.0]; ;
         mainLabel.textColor = [UIColor blackColor];		
         mainLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;		
@@ -214,7 +214,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 		[cell.contentView addSubview:mainLabel];
 		[mainLabel release];
 		
-		UILabel *middleLabel = [[UILabel alloc] initWithFrame:CGRectMake(240.0, 2.0, 30.0, 40.0)];		
+		UILabel *middleLabel = [[UILabel alloc] initWithFrame:CGRectMake(235.0, 2.0, 35.0, 40.0)];
         middleLabel.font = [UIFont fontWithName:@"Helvetica" size:17.0]; ;
         middleLabel.textColor = [UIColor redColor];		
         middleLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;		
@@ -225,11 +225,11 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
     
     // Configure the cell...
 	UILabel *mainLabel = (UILabel *) [cell.contentView viewWithTag:mainLabelTag];
-	mainLabel.text = leftLabel;
+	mainLabel.text = leftText;
 	UILabel *middleLabel = (UILabel *) [cell.contentView viewWithTag:middleLabelTag];
-	middleLabel.text = middleLabel2;	
+    middleLabel.text = middleText;
 	
-	cell.detailTextLabel.text = rightLabel;
+    cell.detailTextLabel.text = rightText;
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }

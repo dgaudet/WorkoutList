@@ -19,11 +19,6 @@
 #pragma mark -
 #pragma mark Application lifecycle
 
-//ToDo: change the display name of the tab bar controllers to be shorter than the actual work out list name
-//ToDo: Add a friendly WorkOutSession duration
-//ToDo: Add a workOutSession duration to the message box when ending a workout
-//ToDo: use the friendly WorkOutSession duration when exporting to google docs
-//ToDo: allow the ExcerciesListTableViewController to display a longer Exercise Rep
 //ToDo: allow ordering of the work outs
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
