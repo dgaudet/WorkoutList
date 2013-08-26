@@ -72,8 +72,8 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
 	[exportButton release];	
 	
 	dateFormatter = [[NSDateFormatter alloc] init];
-	[dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-	[dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+    NSString *formatString = [NSDateFormatter dateFormatFromTemplate:@"MMM, dd, yyyy" options:0 locale:[NSLocale currentLocale]];
+    [dateFormatter setDateFormat:formatString];
 }
 		 
 - (NSArray *)loadTableDataArrayWithWorkOutSessionsFromDb {
@@ -140,10 +140,10 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
 	WorkOutSession *session = [tableData objectAtIndex:indexPath.row];
 	NSString *formattedDateString = [dateFormatter stringFromDate:[session startDate]];
 	
-	NSString *label = [NSString stringWithFormat:@"%@ - %@", [[session workOut] name], formattedDateString];
-	cell.textLabel.text = label;
+	cell.textLabel.text = [[session workOut] name];
 	
-	cell.detailTextLabel.text = [[WorkOutSessionService sharedInstance] friendlyDurationForWorkOutSession:session];
+    NSString *label = [NSString stringWithFormat:@"%@ - %@", formattedDateString, [[WorkOutSessionService sharedInstance] friendlyDurationForWorkOutSession:session]];
+	cell.detailTextLabel.text = label;
     
     return cell;
 }
