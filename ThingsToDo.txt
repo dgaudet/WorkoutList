@@ -1,0 +1,3 @@
+* Add Start/End Workout button to bottom of ExerciceListTableViewController
+* Add ability to move Excercieses from group to group and within the group
+* Add the ability to delete an Exercise by swiping
