@@ -161,7 +161,9 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 		NSArray *rowsForSection = [[NSArray alloc] initWithArray:[[group exercise] allObjects]];
 		Exercise *exerciseForRow = [rowsForSection objectAtIndex: indexPath.row];
 		[rowsForSection release];
-		return [self tableView:tableView threeColumnStyleCell:exerciseForRow.name middleLabel:exerciseForRow.weight rightLabel:exerciseForRow.reps];				
+        UITableViewCell *cell = [self tableView:tableView threeColumnStyleCell:exerciseForRow.name middleLabel:exerciseForRow.weight rightLabel:exerciseForRow.reps];
+        [cell setShowsReorderControl:YES];
+		return cell;
 	}	
 }
 
@@ -311,48 +313,49 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 #pragma mark -
 #pragma mark TableEditting
 
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleNone;
+}
+
+#pragma mark Cell Reordering
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == startButtonIndexPath.row && indexPath.section == startButtonIndexPath.section) {
         return NO;
     }
-	return YES;
+    return YES;
 }
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    
+}
+
+#pragma mark Cell Deleting
+// Override to support conditional editing of the table view.
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (indexPath.row == startButtonIndexPath.row && indexPath.section == startButtonIndexPath.section) {
+//        return NO;
+//    }
+//	return YES;
+//}
 
 // Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-	if (editingStyle == UITableViewCellEditingStyleDelete) {
-		// Delete the row from the data source
-		ExerciseGroup *group = [tableData objectAtIndex:indexPath.section];
-		Exercise *exercise = [[[group exercise] allObjects] objectAtIndex:indexPath.row];
-		
-		if([[ExerciseService sharedInstance] deleteExercise:exercise]){
-			[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-		} else {
-			[self showErrorAlert];
-		}
-	}   
-	else if (editingStyle == UITableViewCellEditingStyleInsert) {
-		// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-	}   
-}
-
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
- }
- */
-
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+//	if (editingStyle == UITableViewCellEditingStyleDelete) {
+//		// Delete the row from the data source
+//		ExerciseGroup *group = [tableData objectAtIndex:indexPath.section];
+//		Exercise *exercise = [[[group exercise] allObjects] objectAtIndex:indexPath.row];
+//		
+//		if([[ExerciseService sharedInstance] deleteExercise:exercise]){
+//			[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//		} else {
+//			[self showErrorAlert];
+//		}
+//	}   
+//	else if (editingStyle == UITableViewCellEditingStyleInsert) {
+//		// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+//	}   
+//}
 
 #pragma mark -
 #pragma mark Table view delegate
