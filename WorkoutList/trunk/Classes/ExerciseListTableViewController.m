@@ -82,7 +82,8 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 -(NSArray *)loadTableDataArrayWithExerciseGroupsFromDb {
 	NSMutableArray *data = [[NSMutableArray alloc] initWithArray:[[ExerciseGroupService sharedInstance] 
 																  retreiveAllExerciseGroupsForWorkOutWithName: workOutName]];
-	if ([self findStartedWorkOutSession]) {
+	startButtonIndexPath = [[NSIndexPath indexPathForRow:0 inSection:0] retain];
+    if ([self findStartedWorkOutSession]) {
 		[data insertObject:END_WORK_OUT atIndex:0];
 	} else {
 		[data insertObject:START_WORK_OUT atIndex:0];
@@ -312,6 +313,9 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == startButtonIndexPath.row && indexPath.section == startButtonIndexPath.section) {
+        return NO;
+    }
 	return YES;
 }
 
@@ -455,6 +459,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 - (void)dealloc {
 	[tableData release];
 	[workOutName release];
+    [startButtonIndexPath release];
     [super dealloc];
 }
 

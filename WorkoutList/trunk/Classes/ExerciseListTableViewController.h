@@ -15,6 +15,7 @@
 	NSInteger lastRow;
 	NSInteger lastSection;
 	NSString *workOutName;
+    NSIndexPath *startButtonIndexPath;
 }
 
 @property (nonatomic, retain) NSString *workOutName;
