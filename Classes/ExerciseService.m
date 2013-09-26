@@ -9,6 +9,12 @@
 #import "ExerciseService.h"
 #import "DatabasePopulator.h"
 
+@interface ExerciseService (PrivateMethods)
+
+- (void)createExerciseWithName:(NSString *)name weight:(NSString *)weight reps:(NSString *)reps exerciseGroup:(ExerciseGroup *)exerciseGroup;
+
+@end
+
 @implementation ExerciseService
 
 + (id)sharedInstance
@@ -46,6 +52,21 @@
 	}
 	
 	return FALSE;	
+}
+
+- (void)saveExerciseWithName:(NSString *)name weight:(NSString *)weight reps:(NSString *)reps exerciseGroup:(ExerciseGroup *)exerciseGroup {
+    [self createExerciseWithName:name weight:weight reps:reps exerciseGroup:exerciseGroup];
+    
+    [[DatabasePopulator sharedInstance] saveContext];
+}
+
+- (void)createExerciseWithName:(NSString *)name weight:(NSString *)weight reps:(NSString *)reps exerciseGroup:(ExerciseGroup *)exerciseGroup {
+    NSManagedObjectContext *managedObjectContext = [[DatabasePopulator sharedInstance] managedObjectContext];
+	Exercise *exercise = (Exercise *)[NSEntityDescription insertNewObjectForEntityForName:E_ENTITY_NAME inManagedObjectContext:managedObjectContext];
+	[exercise setName: name];
+	[exercise setWeight: weight];
+	[exercise setReps: reps];
+	[exercise setExerciseGroup: exerciseGroup];
 }
 
 @end

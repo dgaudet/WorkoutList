@@ -15,7 +15,6 @@
 
 @interface DatabasePopulator (PrivateMethods)
 
-- (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 - (void)generateAndSaveWorkOut1;
 - (void)generateAndSaveWorkOut2;
