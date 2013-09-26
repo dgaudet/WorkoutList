@@ -7,7 +7,9 @@
 //
 
 #import "ExerciseGroupService.h"
+#import "ExerciseService.h"
 #import "ExerciseGroup.h"
+#import "Exercise.h"
 #import "DatabasePopulator.h"
 
 @implementation ExerciseGroupService
@@ -23,6 +25,14 @@
     return master;
 }
 
+- (id)init {
+    self = [super init];
+    if (self) {
+        _exerciseService = [ExerciseService sharedInstance];
+    }
+    return self;
+}
+
 - (NSArray *)retreiveAllExerciseGroupsForWorkOutWithName:(NSString *) workOutName {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"workOut.name like %@", workOutName];
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
@@ -30,6 +40,12 @@
 	[sortDescriptor release];	
 	
 	return data;
+}
+
+- (void)moveExcercise:(Exercise *)exercise fromGroup:(ExerciseGroup *)fromGroup toGroup:(ExerciseGroup *)toGroup {
+    [_exerciseService saveExerciseWithName:exercise.name weight:exercise.weight reps:exercise.reps exerciseGroup:toGroup];
+    
+    [_exerciseService deleteExercise:exercise];
 }
 
 @end

@@ -7,13 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-
+@class ExerciseGroup;
+@class Exercise;
+@class ExerciseService;
 
 @interface ExerciseGroupService : NSObject {
-
+    ExerciseService *_exerciseService;
 }
 
 + (id)sharedInstance;
 - (NSArray *)retreiveAllExerciseGroupsForWorkOutWithName:(NSString *) workOutName;
+- (void)moveExcercise:(Exercise *)exercise fromGroup:(ExerciseGroup *)fromGroup toGroup:(ExerciseGroup *)toGroup;
 
 @end
