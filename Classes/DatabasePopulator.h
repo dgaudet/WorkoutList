@@ -10,16 +10,14 @@
 #import <CoreData/CoreData.h>
 #import "Exercise.h"
 #import "ExerciseGroup.h"
+@class ManagedObjectContextService;
 
 @interface DatabasePopulator : NSObject {
 	NSManagedObjectContext *managedObjectContext;
-	NSManagedObjectModel *managedObjectModel;
-	NSPersistentStoreCoordinator *persistentStoreCoordinator;
+    ManagedObjectContextService *_managedObjectContextService;
 }
 
-@property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 + (id)sharedInstance;
 - (void)saveContext;
@@ -28,6 +26,5 @@
 - (NSArray *)fetchManagedObjectsForEntity:(NSString*)entityName withPredicate:(NSPredicate *)predicate;
 - (NSArray *)fetchManagedObjectsForEntity:(NSString*)entityName withPredicate:(NSPredicate *)predicate withSortDescriptor:(NSSortDescriptor *)sortDescriptor;
 - (id)fetchFirstManagedObjectsForEntity:(NSString*)entityName withPredicate:(NSPredicate *)predicate withSortDescriptor:(NSSortDescriptor *)sortDescriptor;
-- (Exercise *)exerciseWithName:(NSString *)name weight:(NSString *)weight reps:(NSString *)reps exerciseGroup:(ExerciseGroup *)exerciseGroup1;
 
 @end

@@ -12,7 +12,6 @@
 
 - (NSManagedObjectModel *)managedObjectModel;
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator;
-- (BOOL)databaseExists;
 - (NSURL *)applicationDocumentsDirectory;
 
 @end
