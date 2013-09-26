@@ -13,6 +13,7 @@
 #import "WorkOutSession.h"
 #import "WorkOutSessionService.h"
 #import "ExerciseService.h"
+#import "Exercise.h"
 
 @interface ExerciseListTableViewController (PrivateMethods)
 
@@ -327,7 +328,22 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    ExerciseGroup *fromGroup = [tableData objectAtIndex:sourceIndexPath.section];
+    NSArray *rowsForSection = [NSArray arrayWithArray:[[fromGroup exercise] allObjects]];
+    Exercise *sourceExercise = [rowsForSection objectAtIndex: sourceIndexPath.row];
     
+    ExerciseGroup *toGroup = [tableData objectAtIndex:destinationIndexPath.section];
+
+    [[ExerciseGroupService sharedInstance] moveExcercise:sourceExercise fromGroup:fromGroup toGroup:toGroup];
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath {
+    if (proposedDestinationIndexPath.section == startButtonIndexPath.section) {
+        return [NSIndexPath indexPathForRow:0 inSection:proposedDestinationIndexPath.section + 1];
+    }
+    
+    // Allow the proposed destination.
+    return proposedDestinationIndexPath;
 }
 
 #pragma mark Cell Deleting
@@ -340,22 +356,22 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 //}
 
 // Override to support editing the table view.
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-//	if (editingStyle == UITableViewCellEditingStyleDelete) {
-//		// Delete the row from the data source
-//		ExerciseGroup *group = [tableData objectAtIndex:indexPath.section];
-//		Exercise *exercise = [[[group exercise] allObjects] objectAtIndex:indexPath.row];
-//		
-//		if([[ExerciseService sharedInstance] deleteExercise:exercise]){
-//			[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//		} else {
-//			[self showErrorAlert];
-//		}
-//	}   
-//	else if (editingStyle == UITableViewCellEditingStyleInsert) {
-//		// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-//	}   
-//}
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (editingStyle == UITableViewCellEditingStyleDelete) {
+		// Delete the row from the data source
+		ExerciseGroup *group = [tableData objectAtIndex:indexPath.section];
+		Exercise *exercise = [[[group exercise] allObjects] objectAtIndex:indexPath.row];
+		
+		if([[ExerciseService sharedInstance] deleteExercise:exercise]){
+			[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+		} else {
+			[self showErrorAlert];
+		}
+	}   
+	else if (editingStyle == UITableViewCellEditingStyleInsert) {
+		// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+	}   
+}
 
 #pragma mark -
 #pragma mark Table view delegate
