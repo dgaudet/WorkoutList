@@ -10,7 +10,6 @@
 
 @interface ManagedObjectContextService (PrivateMethods)
 
-- (NSManagedObjectContext *)managedObjectContext;
 - (NSManagedObjectModel *)managedObjectModel;
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator;
 - (BOOL)databaseExists;
@@ -29,6 +28,17 @@
 			master = [self new];
 	}
     return master;
+}
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        if (_managedObjectContext == nil)
+        {
+            _managedObjectContext = [self managedObjectContext];
+        }
+    }
+    return self;
 }
 
 - (void)saveContext {
