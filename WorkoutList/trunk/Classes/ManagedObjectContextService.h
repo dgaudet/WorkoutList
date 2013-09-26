@@ -17,6 +17,7 @@
 
 + (id)sharedInstance;
 - (void)saveContext;
+- (BOOL)databaseExists;
 - (NSManagedObjectContext *)managedObjectContext;
 
 @end
