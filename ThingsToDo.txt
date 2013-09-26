@@ -1,11 +1,11 @@
 * Add Start/End Workout button to bottom of ExerciceListTableViewController
 * Add ability to move Excercieses from group to group
-** Must not allow moving rows to the groups with the start button
-** Attempt moving multiple rows before saving
-** Must not allow moving an item within the group, should be checked in the service not on the controller
+** Must not allow moving rows to the groups with the start button - done
+** Attempt moving multiple rows before saving - seems ok so far
+** Do not need to save rows reordered within a group, should be checked in the service not on the controller
 ** tasks
-*** Add Create Excercise method to ExerciseService
-*** In GroupService Call Create Excercise, then delete Exercise
+*** -Add Create Excercise method to ExerciseService- done
+*** -In GroupService Call Create Excercise, then delete Exercise- done
 *** Modify DatabasePopulator to call ExerciseService create method
 *** Pull Database editing methods out of the populator and into some sort of manager
 *** Figure out what should happen if you move all items out of a group
