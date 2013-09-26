@@ -7,13 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
 @interface ManagedObjectContextService : NSObject {
-    NSManagedObjectContext *managedObjectContext;
-	NSManagedObjectModel *managedObjectModel;
-	NSPersistentStoreCoordinator *persistentStoreCoordinator;
+    NSManagedObjectContext *_managedObjectContext;
+	NSManagedObjectModel *_managedObjectModel;
+	NSPersistentStoreCoordinator *_persistentStoreCoordinator;
 }
 
 + (id)sharedInstance;
+- (void)saveContext;
 
 @end
