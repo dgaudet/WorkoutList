@@ -16,5 +16,6 @@
 + (id)sharedInstance;
 - (BOOL)deleteExercise:(Exercise *)exercise;
 - (BOOL)updateExercise:(Exercise *)exercise;
+- (void)saveExerciseWithName:(NSString *)name weight:(NSString *)weight reps:(NSString *)reps exerciseGroup:(ExerciseGroup *)exerciseGroup;
 
 @end
