@@ -7,7 +7,7 @@
 //
 
 #import "DatabasePopulator.h"
-#import "WorkoutListAppDelegate.h"
+#import "ExerciseService.h"
 #import "Exercise.h"
 #import "ExerciseGroup.h"
 #import "WorkOutSession.h"
@@ -16,7 +16,7 @@
 
 @interface DatabasePopulator (PrivateMethods)
 
-- (Exercise *)exerciseWithName:(NSString *)name weight:(NSString *)weight reps:(NSString *)reps exerciseGroup:(ExerciseGroup *)exerciseGroup1;
+- (void)exerciseWithName:(NSString *)name weight:(NSString *)weight reps:(NSString *)reps exerciseGroup:(ExerciseGroup *)exerciseGroup;
 - (NSURL *)applicationDocumentsDirectory;
 - (void)generateAndSaveWorkOut1;
 - (void)generateAndSaveWorkOut2;
@@ -43,6 +43,7 @@
     self = [super init];
     if (self) {
         _managedObjectContextService = [ManagedObjectContextService sharedInstance];
+        _exerciseService = [ExerciseService sharedInstance];
         managedObjectContext = [_managedObjectContextService managedObjectContext];
     }
     return self;
@@ -113,10 +114,7 @@
 	[exerciseGroup6 setWorkOut:workOut];
 	[exerciseGroup7 setWorkOut:workOut];
 	
-	NSError *error;
-	if (![managedObjectContext save:&error]) {
-		// Handle the error.
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+	if (![_managedObjectContextService saveContextSuccessOrFail]) {
 		exit(-1);  // Fail
 	}
 }
@@ -175,10 +173,7 @@
 	[workOutSession setEndDate:[currentDate dateByAddingTimeInterval:-100]];
 	[workOutSession setWorkOut:workOut];
 	
-	NSError *error;
-	if (![managedObjectContext save:&error]) {
-		// Handle the error.
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+	if (![_managedObjectContextService saveContextSuccessOrFail]) {
 		exit(-1);  // Fail
 	}
 }	
@@ -240,27 +235,13 @@
 	[workOutSession setEndDate:[currentDate dateByAddingTimeInterval:-1000]];
 	[workOutSession setWorkOut:workOut];
 	
-	NSError *error;
-	if (![managedObjectContext save:&error]) {
-		// Handle the error.
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+	if (![_managedObjectContextService saveContextSuccessOrFail]) {
 		exit(-1);  // Fail
 	}
 }	
 
-- (Exercise *)exerciseWithName:(NSString *)name weight:(NSString *)weight reps:(NSString *)reps exerciseGroup:(ExerciseGroup *)exerciseGroup1 {
-	Exercise *exercise1 = (Exercise *)[NSEntityDescription insertNewObjectForEntityForName:E_ENTITY_NAME inManagedObjectContext:managedObjectContext];
-	[exercise1 setName: name];
-	[exercise1 setWeight: weight];
-	[exercise1 setReps: reps];
-	[exercise1 setExerciseGroup: exerciseGroup1];
-	return exercise1;
+- (void)exerciseWithName:(NSString *)name weight:(NSString *)weight reps:(NSString *)reps exerciseGroup:(ExerciseGroup *)exerciseGroup {
+	[_exerciseService saveExerciseWithName:name weight:weight reps:reps exerciseGroup:exerciseGroup];
 }
-
-- (void)dealloc {
-	[managedObjectContext release];
-	[super dealloc];
-}
-
 
 @end
