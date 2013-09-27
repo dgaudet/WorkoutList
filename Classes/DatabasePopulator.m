@@ -48,8 +48,7 @@
     return self;
 }
 
--(void)populateDatabase {
-	
+- (void)populateDatabase {
 	[self generateAndSaveWorkOut1];
 	[self generateAndSaveWorkOut2];
 	[self generateAndSaveWorkOut3];

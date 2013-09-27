@@ -9,9 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "WorkOutSession.h"
 #import "FetchEntityService.h"
+#import "ManagedObjectContextService.h"
 
 @interface WorkOutSessionService : NSObject {
     FetchEntityService *_fetchedEntityService;
+    ManagedObjectContextService *_managedObjectContextService;
 }
 
 + (id)sharedInstance;
