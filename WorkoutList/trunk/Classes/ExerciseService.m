@@ -40,27 +40,11 @@
 - (BOOL)deleteExercise:(Exercise *)exercise {
 	[[[DatabasePopulator sharedInstance] managedObjectContext] deleteObject:exercise];
 	
-	NSError *error;
-	if (![[[DatabasePopulator sharedInstance] managedObjectContext] save:&error]) {
-		// Handle the error.
-		NSLog(@"Saving changes failed: %@", error);		
-	} else {
-		return TRUE;
-	}
-
-	return FALSE;
+	return [_managedObjectContextService saveContextSuccessOrFail];
 }
 
 - (BOOL)updateExercise:(Exercise *)exercise {
-	NSError *error;
-	if (![[[DatabasePopulator sharedInstance] managedObjectContext] save:&error]) {
-		// Handle the error.
-		NSLog(@"Saving changes failed: %@", error);		
-	} else {
-		return TRUE;
-	}
-	
-	return FALSE;	
+    return [_managedObjectContextService saveContextSuccessOrFail];
 }
 
 - (void)saveExerciseWithName:(NSString *)name weight:(NSString *)weight reps:(NSString *)reps exerciseGroup:(ExerciseGroup *)exerciseGroup {

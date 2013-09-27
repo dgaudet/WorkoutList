@@ -7,9 +7,9 @@
 //
 
 #import "WorkOutSessionService.h"
-#import "DatabasePopulator.h"
 #import "WorkOutSession.h"
 #import "WorkOut.h"
+#import "ManagedObjectContextService.h"
 
 @implementation WorkOutSessionService
 
@@ -28,6 +28,7 @@
     self = [super init];
     if (self) {
         _fetchedEntityService = [FetchEntityService sharedInstance];
+        _managedObjectContextService = [ManagedObjectContextService sharedInstance];
     }
     return self;
 }
@@ -52,20 +53,15 @@
 }
 
 - (BOOL)startWorkOutSessionForWorkOutWithName:(NSString *)name {
-	WorkOutSession *session = (WorkOutSession *)[NSEntityDescription insertNewObjectForEntityForName:WOS_ENTITY_NAME inManagedObjectContext:[[DatabasePopulator sharedInstance] managedObjectContext]];
+    NSManagedObjectContext *managedObjectContext = [_managedObjectContextService managedObjectContext];
+	WorkOutSession *session = (WorkOutSession *)[NSEntityDescription insertNewObjectForEntityForName:WOS_ENTITY_NAME inManagedObjectContext:managedObjectContext];
 	[session setStartDate:[NSDate date]];
 	
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name like %@", name];
 	NSArray *workOuts = [_fetchedEntityService fetchManagedObjectsForEntity:WO_ENTITY_NAME withPredicate:predicate];	
 	[session setWorkOut:[workOuts objectAtIndex:0]];
 	
-	NSError *error;
-	if (![[[DatabasePopulator sharedInstance] managedObjectContext] save:&error]) {
-		// Handle the error.
-		NSLog(@"Saving changes failed: %@", error);
-		return FALSE;
-	}	
-	return TRUE;
+    return [_managedObjectContextService saveContextSuccessOrFail];
 }
 
 - (BOOL)endStartedWorkOutSessionForWorkOutWithName:(NSString *)name {
@@ -73,16 +69,13 @@
 	if (session) {	
 		[session setEndDate:[NSDate date]];
 		
-		NSError *error;
-		if (![[[DatabasePopulator sharedInstance] managedObjectContext] save:&error]) {
-			// Handle the error.
-			NSLog(@"Saving changes failed: %@", error);			
+		if ([_managedObjectContextService saveContextSuccessOrFail]) {
+			return YES;
 		} else {
-			return TRUE;
+			return NO;
 		}
-	} 
-	
-	return FALSE;
+	}
+	return NO;
 }
 
 - (NSString *)generateCSVDataForAllWorkOutSessionsWithDateFormatter:(NSDateFormatter *)formatter {

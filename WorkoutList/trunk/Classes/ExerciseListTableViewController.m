@@ -80,7 +80,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 	lastSection = 0;
 }
 
--(NSArray *)loadTableDataArrayWithExerciseGroupsFromDb {
+- (NSArray *)loadTableDataArrayWithExerciseGroupsFromDb {
 	NSMutableArray *data = [[NSMutableArray alloc] initWithArray:[[ExerciseGroupService sharedInstance] 
 																  retreiveAllExerciseGroupsForWorkOutWithName: workOutName]];
 	startButtonIndexPath = [[NSIndexPath indexPathForRow:0 inSection:0] retain];
@@ -168,7 +168,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 	}	
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView textBoxStyleCell:(NSString *)name cellValue:(NSString *)value {
+- (UITableViewCell *)tableView:(UITableView *)tableView textBoxStyleCell:(NSString *)name cellValue:(NSString *)value {
     static NSString *CellIdentifier = @"TextBoxCellStyle";
     
 	NSInteger TextFieldTag = 1;
@@ -200,7 +200,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
     return cell;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView threeColumnStyleCell:(NSString *)leftText middleLabel:(NSString *)middleText rightLabel:(NSString *)rightText {
+- (UITableViewCell *)tableView:(UITableView *)tableView threeColumnStyleCell:(NSString *)leftText middleLabel:(NSString *)middleText rightLabel:(NSString *)rightText {
     static NSString *CellIdentifier = @"ThreeColumnCellStyle";
     
 	NSInteger mainLabelTag = 1;
@@ -238,7 +238,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
     return cell;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView defaultStyleCell:(NSString *)name cellValue:(NSString *)value {
+- (UITableViewCell *)tableView:(UITableView *)tableView defaultStyleCell:(NSString *)name cellValue:(NSString *)value {
 	static NSString *CellIdentifier = @"DefaultCellStyle";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -254,7 +254,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
     return cell;	
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView centeredTextStyleCell:(NSString *)text {
+- (UITableViewCell *)tableView:(UITableView *)tableView centeredTextStyleCell:(NSString *)text {
 	static NSString *CellIdentifier = @"CenteredTextCellStyle";
     
 	NSInteger mainLabelTag = 1;
@@ -280,7 +280,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 }
 
 
--(UITableViewCell *)tableView:(UITableView *)tableView sliderStyleCell:(NSString *)name cellValue:(NSString *)value {
+- (UITableViewCell *)tableView:(UITableView *)tableView sliderStyleCell:(NSString *)name cellValue:(NSString *)value {
 	static NSString *CellIdentifier = @"SliderCellStyle";
 	
 	UISlider *slider;
@@ -393,10 +393,10 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 	}
 }
 
--(void)workOutSessionButtonPressed:(NSIndexPath *)indexPath {
+- (void)workOutSessionButtonPressed:(NSIndexPath *)indexPath {
 	NSString *message = @"";
     if ([[tableData objectAtIndex:0] isEqualToString:START_WORK_OUT]) {
-        message = [message stringByAppendingString:@"Press Ok to start Workout"];
+        message = [message stringByAppendingString:@"Get started with your Workout"];
 		[self startWorkOut];
 	} else {
 		[self endWorkOut];
@@ -420,7 +420,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 	}
 }
 
--(WorkOutSession *)findStartedWorkOutSession {
+- (WorkOutSession *)findStartedWorkOutSession {
 	return [[WorkOutSessionService sharedInstance] retreiveStartedWorkOutSessionWithName:workOutName];
 }
 

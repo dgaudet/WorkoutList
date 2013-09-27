@@ -40,6 +40,19 @@
     return self;
 }
 
+- (BOOL)saveContextSuccessOrFail {
+    NSError *error = nil;
+    NSManagedObjectContext *managedContext = _managedObjectContext;
+    if (managedContext != nil) {
+        if (![managedContext save:&error]) {
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        } else {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 - (void)saveContext {
     NSError *error = nil;
 	NSManagedObjectContext *managedContext = _managedObjectContext;
