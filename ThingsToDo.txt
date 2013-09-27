@@ -4,7 +4,7 @@
 ** Attempt moving multiple rows before saving - seems ok so far
 ** Do not need to save rows reordered within a group, should be checked in the service not on the controller
 ** tasks
-*** -Add Create Excercise method to ExerciseService- done
+*** Add Create Excercise method to ExerciseService that returns false if it fails
 *** -In GroupService Call Create Excercise, then delete Exercise- done
 *** Modify DatabasePopulator to call ExerciseService create method
 *** Pull Database editing methods out of the populator and into some sort of manager
