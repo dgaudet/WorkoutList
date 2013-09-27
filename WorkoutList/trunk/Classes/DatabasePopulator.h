@@ -20,10 +20,6 @@
 @property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
 
 + (id)sharedInstance;
-- (BOOL)databaseExists;
 - (void)populateDatabase;
-- (NSArray *)fetchManagedObjectsForEntity:(NSString*)entityName withPredicate:(NSPredicate *)predicate;
-- (NSArray *)fetchManagedObjectsForEntity:(NSString*)entityName withPredicate:(NSPredicate *)predicate withSortDescriptor:(NSSortDescriptor *)sortDescriptor;
-- (id)fetchFirstManagedObjectsForEntity:(NSString*)entityName withPredicate:(NSPredicate *)predicate withSortDescriptor:(NSSortDescriptor *)sortDescriptor;
 
 @end

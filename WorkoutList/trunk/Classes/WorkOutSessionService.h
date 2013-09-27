@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "WorkOutSession.h"
+#import "FetchEntityService.h"
 
 @interface WorkOutSessionService : NSObject {
-
+    FetchEntityService *_fetchedEntityService;
 }
 
 + (id)sharedInstance;

@@ -10,9 +10,11 @@
 @class ExerciseGroup;
 @class Exercise;
 @class ExerciseService;
+@class FetchEntityService;
 
 @interface ExerciseGroupService : NSObject {
     ExerciseService *_exerciseService;
+    FetchEntityService *_fetchEntityService;
 }
 
 + (id)sharedInstance;

@@ -7,9 +7,11 @@
 //
 
 #import "WorkOutService.h"
-#import "DatabasePopulator.h"
 #import "WorkOut.h"
 #import "ExerciseGroupService.h"
+#import "ExerciseGroup.h"
+#import "Exercise.h"
+#import "FetchEntityService.h"
 
 //ToDo:Sort the WorkOut Groups by number
 
@@ -26,9 +28,17 @@
     return master;
 }
 
+- (id)init {
+    self = [super init];
+    if (self) {
+        _fetchEntityService = [FetchEntityService sharedInstance];
+    }
+    return self;
+}
+
 - (NSArray *)retreiveAllWorkOuts {
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-	NSArray *data = [[[NSArray alloc] initWithArray:[[DatabasePopulator sharedInstance] fetchManagedObjectsForEntity:WO_ENTITY_NAME withPredicate:nil withSortDescriptor:sortDescriptor]] autorelease];
+	NSArray *data = [[[NSArray alloc] initWithArray:[_fetchEntityService fetchManagedObjectsForEntity:WO_ENTITY_NAME withPredicate:nil withSortDescriptor:sortDescriptor]] autorelease];
 	[sortDescriptor release];
 		
 	return data;
