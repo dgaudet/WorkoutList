@@ -20,5 +20,7 @@
 - (BOOL)saveContextSuccessOrFail;
 - (BOOL)databaseExists;
 - (NSManagedObjectContext *)managedObjectContext;
+- (void)deleteManagedObject:(NSManagedObject *)entity;
+- (NSManagedObject *)createManagedObjectWithEntityName:(NSString *)entityName;
 
 @end

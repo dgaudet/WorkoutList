@@ -69,6 +69,14 @@
     }
 }
 
+- (NSManagedObject *)createManagedObjectWithEntityName:(NSString *)entityName {
+    return [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:_managedObjectContext];
+}
+
+- (void)deleteManagedObject:(NSManagedObject *)entity {
+    [_managedObjectContext deleteObject:entity];
+}
+
 #pragma mark -
 #pragma mark Core Data stack
 

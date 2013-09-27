@@ -9,7 +9,6 @@
 #import "RootViewController.h"
 #import "WorkOutService.h"
 #import "ExerciseListTableViewController.h"
-#import "DatabasePopulator.h"
 #import "GoogleDataService.h"
 #import "SessionListTableViewController.h"
 #import "UserService.h"
