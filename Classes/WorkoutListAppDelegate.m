@@ -7,10 +7,9 @@
 //
 
 #import "WorkoutListAppDelegate.h"
-#import "ExerciseListTableViewController.h"
 #import "DatabasePopulator.h"
-#import "SessionListTableViewController.h"
 #import "RootViewController.h"
+#import "ManagedObjectContextService.h"
 
 @implementation WorkoutListAppDelegate
 
@@ -22,9 +21,9 @@
 //ToDo: allow ordering of the work outs
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
-    
+    _managedObjectContextService = [ManagedObjectContextService sharedInstance];
     // Override point for customization after application launch.
-    if ([[DatabasePopulator sharedInstance] databaseExists]) {
+    if ([_managedObjectContextService databaseExists]) {
 		NSLog(@"data base exists? true");
 	} else {
 		NSLog(@"data base exists? false");
@@ -55,7 +54,7 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, called instead of applicationWillTerminate: when the user quits.
      */
-	[[DatabasePopulator sharedInstance] saveContext];
+	[_managedObjectContextService saveContext];
 }
 
 
@@ -78,7 +77,7 @@
      Called when the application is about to terminate.
      See also applicationDidEnterBackground:.
      */
-	[[DatabasePopulator sharedInstance] saveContext];
+	[_managedObjectContextService saveContext];
 }
 
 #pragma mark -

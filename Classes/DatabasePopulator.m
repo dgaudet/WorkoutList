@@ -102,6 +102,7 @@
 	[exerciseGroup7 setName: @"Workout Group 7"];
 	[self exerciseWithName:@"Ab Roller" weight:@"" reps:@"12" exerciseGroup:exerciseGroup7];
 	[self exerciseWithName:@"TriceptsExtension(French Press)" weight:@"55" reps:@"10" exerciseGroup:exerciseGroup7];
+    [self exerciseWithName:@"Chinup" weight:@"" reps:@"12" exerciseGroup:exerciseGroup7];
 		
 	WorkOut *workOut = (WorkOut *)[NSEntityDescription insertNewObjectForEntityForName:WO_ENTITY_NAME inManagedObjectContext:managedObjectContext];
 	[workOut setName:@"Abs/Chest/Forearm/Tricep"];
@@ -231,6 +232,7 @@
 	[self exerciseWithName:@"Dumbell Single Leg Calf Raise" weight:@"65" reps:@"10" exerciseGroup:exerciseGroup6];
 	[self exerciseWithName:@"Arnold Press" weight:@"45" reps:@"5" exerciseGroup:exerciseGroup6];
 	[self exerciseWithName:@"Behind Neck Press" weight:@"50" reps:@"9" exerciseGroup:exerciseGroup6];
+    [self exerciseWithName:@"Chinup" weight:@"" reps:@"12" exerciseGroup:exerciseGroup6];
 	[exerciseGroup6 setWorkOut:workOut];
 	
 	WorkOutSession *workOutSession = (WorkOutSession *)[NSEntityDescription insertNewObjectForEntityForName:WOS_ENTITY_NAME inManagedObjectContext:managedObjectContext];
@@ -297,10 +299,6 @@
 	[request release];
 	return fetchResults;
 }
-
-- (void)saveContext {
-    [_managedObjectContextService saveContext];
-}    
 
 - (BOOL)databaseExists
 {

@@ -7,6 +7,7 @@
 //
 
 #import "ExerciseService.h"
+#import "ManagedObjectContextService.h"
 #import "DatabasePopulator.h"
 
 @interface ExerciseService (PrivateMethods)
@@ -26,6 +27,14 @@
 			master = [self new];
 	}
     return master;
+}
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        _managedObjectContextService = [ManagedObjectContextService sharedInstance];
+    }
+    return self;
 }
 
 - (BOOL)deleteExercise:(Exercise *)exercise {
@@ -57,11 +66,11 @@
 - (void)saveExerciseWithName:(NSString *)name weight:(NSString *)weight reps:(NSString *)reps exerciseGroup:(ExerciseGroup *)exerciseGroup {
     [self createExerciseWithName:name weight:weight reps:reps exerciseGroup:exerciseGroup];
     
-    [[DatabasePopulator sharedInstance] saveContext];
+    [_managedObjectContextService saveContext];
 }
 
 - (void)createExerciseWithName:(NSString *)name weight:(NSString *)weight reps:(NSString *)reps exerciseGroup:(ExerciseGroup *)exerciseGroup {
-    NSManagedObjectContext *managedObjectContext = [[DatabasePopulator sharedInstance] managedObjectContext];
+    NSManagedObjectContext *managedObjectContext = [_managedObjectContextService managedObjectContext];
 	Exercise *exercise = (Exercise *)[NSEntityDescription insertNewObjectForEntityForName:E_ENTITY_NAME inManagedObjectContext:managedObjectContext];
 	[exercise setName: name];
 	[exercise setWeight: weight];

@@ -41,7 +41,6 @@
 }
 
 - (void)saveContext {
-    
     NSError *error = nil;
 	NSManagedObjectContext *managedContext = _managedObjectContext;
     if (managedContext != nil) {
