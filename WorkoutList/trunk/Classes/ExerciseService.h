@@ -7,10 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Exercise.h"
+@class Exercise;
+@class ExerciseGroup;
+@class ManagedObjectContextService;
 
 @interface ExerciseService : NSObject {
-
+    ManagedObjectContextService *_managedObjectContextService;
 }
 
 + (id)sharedInstance;

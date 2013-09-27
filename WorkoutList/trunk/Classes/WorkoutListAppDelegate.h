@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <CoreData/CoreData.h>
+#import "ManagedObjectContextService.h"
 
 @interface WorkoutListAppDelegate : NSObject <UIApplicationDelegate> {
-    
     UIWindow *window;
 	UINavigationController *navController;
+    ManagedObjectContextService *_managedObjectContextService;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
