@@ -10,7 +10,7 @@
 #import "ExerciseService.h"
 #import "ExerciseGroup.h"
 #import "Exercise.h"
-#import "DatabasePopulator.h"
+#import "FetchEntityService.h"
 
 @implementation ExerciseGroupService
 
@@ -29,6 +29,7 @@
     self = [super init];
     if (self) {
         _exerciseService = [ExerciseService sharedInstance];
+        _fetchEntityService = [FetchEntityService sharedInstance];
     }
     return self;
 }
@@ -36,7 +37,7 @@
 - (NSArray *)retreiveAllExerciseGroupsForWorkOutWithName:(NSString *) workOutName {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"workOut.name like %@", workOutName];
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-	NSArray *data = [[[NSArray alloc] initWithArray:[[DatabasePopulator sharedInstance] fetchManagedObjectsForEntity:EG_ENTITY_NAME withPredicate:predicate withSortDescriptor:sortDescriptor]] autorelease];
+	NSArray *data = [[[NSArray alloc] initWithArray:[_fetchEntityService fetchManagedObjectsForEntity:EG_ENTITY_NAME withPredicate:predicate withSortDescriptor:sortDescriptor]] autorelease];
 	[sortDescriptor release];	
 	
 	return data;

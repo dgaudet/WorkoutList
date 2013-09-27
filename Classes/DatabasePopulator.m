@@ -258,53 +258,6 @@
 	return exercise1;
 }
 
-- (NSArray *)fetchManagedObjectsForEntity:(NSString*)entityName withPredicate:(NSPredicate *)predicate{
-	return [self fetchManagedObjectsForEntity:entityName withPredicate:predicate withSortDescriptor:nil];
-}
-
-- (id)fetchFirstManagedObjectsForEntity:(NSString*)entityName withPredicate:(NSPredicate *)predicate withSortDescriptor:(NSSortDescriptor *)sortDescriptor {
-    NSArray *data = [[NSArray alloc] initWithArray:[self fetchManagedObjectsForEntity:entityName withPredicate:predicate withSortDescriptor:sortDescriptor]];
-	[sortDescriptor release];
-	if (data.count > 0) {
-		return [data objectAtIndex:0];
-	} else {
-		return nil;
-	}
-}
-
-- (NSArray *)fetchManagedObjectsForEntity:(NSString*)entityName withPredicate:(NSPredicate *)predicate withSortDescriptor:(NSSortDescriptor *)sortDescriptor {
-	NSManagedObjectContext *context = managedObjectContext;
-	NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:context];
-	
-	NSFetchRequest *request = [[NSFetchRequest alloc] init];
-	[request setEntity:entity];
-	
-	if (sortDescriptor) {
-		NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-		[request setSortDescriptors:sortDescriptors];
-	}
-	if (predicate) {
-		[request setPredicate:predicate];
-	}	
-	
-	NSError *error;
-	NSArray *fetchResults = [[[context executeFetchRequest:request error:&error] copy] autorelease];
-	
-	if (!fetchResults) {
-		// Handle the error.
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-		exit(-1);  // Fail
-	}
-	
-	[request release];
-	return fetchResults;
-}
-
-- (BOOL)databaseExists
-{
-	return [_managedObjectContextService databaseExists];
-}
-
 - (void)dealloc {
 	[managedObjectContext release];
 	[super dealloc];

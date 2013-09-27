@@ -7,14 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-
+@class FetchEntityService;
 
 @interface WorkOutService : NSObject {
-
+    FetchEntityService *_fetchEntityService;
 }
 
 + (id)sharedInstance;
 - (NSArray *)retreiveAllWorkOuts;
--(NSString *)generateCSVForAllWorkOuts;
+- (NSString *)generateCSVForAllWorkOuts;
 
 @end

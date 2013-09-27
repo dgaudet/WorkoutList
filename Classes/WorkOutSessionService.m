@@ -24,9 +24,17 @@
     return master;
 }
 
+- (id)init {
+    self = [super init];
+    if (self) {
+        _fetchedEntityService = [FetchEntityService sharedInstance];
+    }
+    return self;
+}
+
 - (NSArray *)retreiveAllWorkOutSessions {
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"startDate" ascending:NO];
-	NSArray *data = [[[NSArray alloc] initWithArray:[[DatabasePopulator sharedInstance] fetchManagedObjectsForEntity:WOS_ENTITY_NAME withPredicate:nil withSortDescriptor: sortDescriptor]] autorelease];
+	NSArray *data = [[[NSArray alloc] initWithArray:[_fetchedEntityService fetchManagedObjectsForEntity:WOS_ENTITY_NAME withPredicate:nil withSortDescriptor: sortDescriptor]] autorelease];
 	[sortDescriptor release];
 	return data;
 }
@@ -34,13 +42,13 @@
 - (WorkOutSession *)retreiveStartedWorkOutSessionWithName:(NSString *)name {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(workOut.name like %@) AND (endDate == nil)", name];
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"startDate" ascending:NO];
-	return (WorkOutSession *)[[DatabasePopulator sharedInstance] fetchFirstManagedObjectsForEntity:WOS_ENTITY_NAME withPredicate:predicate withSortDescriptor:sortDescriptor];
+	return (WorkOutSession *)[_fetchedEntityService fetchFirstManagedObjectsForEntity:WOS_ENTITY_NAME withPredicate:predicate withSortDescriptor:sortDescriptor];
 }
 
 - (WorkOutSession *)retreiveMostRecentlyEndedWorkOutSessionWithName:(NSString *)name {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(workOut.name like %@) AND (endDate != nil)", name];
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"endDate" ascending:NO];
-    return (WorkOutSession *)[[DatabasePopulator sharedInstance] fetchFirstManagedObjectsForEntity:WOS_ENTITY_NAME withPredicate:predicate withSortDescriptor:sortDescriptor];
+    return (WorkOutSession *)[_fetchedEntityService fetchFirstManagedObjectsForEntity:WOS_ENTITY_NAME withPredicate:predicate withSortDescriptor:sortDescriptor];
 }
 
 - (BOOL)startWorkOutSessionForWorkOutWithName:(NSString *)name {
@@ -48,7 +56,7 @@
 	[session setStartDate:[NSDate date]];
 	
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name like %@", name];
-	NSArray *workOuts = [[DatabasePopulator sharedInstance] fetchManagedObjectsForEntity:WO_ENTITY_NAME withPredicate:predicate];	
+	NSArray *workOuts = [_fetchedEntityService fetchManagedObjectsForEntity:WO_ENTITY_NAME withPredicate:predicate];	
 	[session setWorkOut:[workOuts objectAtIndex:0]];
 	
 	NSError *error;
