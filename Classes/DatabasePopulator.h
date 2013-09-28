@@ -12,14 +12,14 @@
 #import "ExerciseGroup.h"
 @class ManagedObjectContextService;
 @class ExerciseService;
+@class ExerciseGroupService;
 
 @interface DatabasePopulator : NSObject {
-	NSManagedObjectContext *managedObjectContext;
+	NSManagedObjectContext *_managedObjectContext;
     ManagedObjectContextService *_managedObjectContextService;
     ExerciseService *_exerciseService;
+    ExerciseGroupService *_exerciseGroupService;
 }
-
-@property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
 
 + (id)sharedInstance;
 - (void)populateDatabase;

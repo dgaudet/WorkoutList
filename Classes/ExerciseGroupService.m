@@ -11,6 +11,7 @@
 #import "ExerciseGroup.h"
 #import "Exercise.h"
 #import "FetchEntityService.h"
+#import "ManagedObjectContextService.h"
 
 @implementation ExerciseGroupService
 
@@ -30,6 +31,7 @@
     if (self) {
         _exerciseService = [ExerciseService sharedInstance];
         _fetchEntityService = [FetchEntityService sharedInstance];
+        _managedObjectContextService = [ManagedObjectContextService sharedInstance];
     }
     return self;
 }
@@ -47,6 +49,13 @@
     [_exerciseService saveExerciseWithName:exercise.name weight:exercise.weight reps:exercise.reps exerciseGroup:toGroup];
     
     [_exerciseService deleteExercise:exercise];
+}
+
+- (BOOL)saveExerciseGroupWithName:(NSString *)groupName {
+    ExerciseGroup *group = (ExerciseGroup *)[_managedObjectContextService createManagedObjectWithEntityName:EG_ENTITY_NAME];
+    [group setName:groupName];
+    
+    return [_managedObjectContextService saveContextSuccessOrFail];
 }
 
 @end

@@ -6,8 +6,8 @@
 ** tasks
 *** Add Create Excercise method to ExerciseService that returns false if it fails
 *** -In GroupService Call Create Excercise, then delete Exercise- done
-*** Modify DatabasePopulator to call ExerciseService create method
-*** Pull Database editing methods out of the populator and into some sort of manager
+*** -Modify DatabasePopulator to call ExerciseService create method-
+*** -Pull Database editing methods out of the populator and into some sort of manager-
 *** Figure out what should happen if you move all items out of a group
 **** Either just leave it forever, or find a way to add a new group
 ***** then allow reodering of groups??
