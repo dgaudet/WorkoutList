@@ -11,14 +11,17 @@
 @class Exercise;
 @class ExerciseService;
 @class FetchEntityService;
+@class ManagedObjectContextService;
 
 @interface ExerciseGroupService : NSObject {
     ExerciseService *_exerciseService;
     FetchEntityService *_fetchEntityService;
+    ManagedObjectContextService *_managedObjectContextService;
 }
 
 + (id)sharedInstance;
 - (NSArray *)retreiveAllExerciseGroupsForWorkOutWithName:(NSString *) workOutName;
 - (void)moveExcercise:(Exercise *)exercise fromGroup:(ExerciseGroup *)fromGroup toGroup:(ExerciseGroup *)toGroup;
+- (BOOL)saveExerciseGroupWithName:(NSString *)groupName;
 
 @end
