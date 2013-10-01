@@ -46,7 +46,7 @@
 }
 
 - (void)moveExcercise:(Exercise *)exercise fromGroup:(ExerciseGroup *)fromGroup toGroup:(ExerciseGroup *)toGroup {
-    [_exerciseService saveExerciseWithName:exercise.name weight:exercise.weight reps:exercise.reps exerciseGroup:toGroup];
+    [_exerciseService saveExerciseWithName:exercise.name weight:exercise.weight reps:exercise.reps ordinal:[NSNumber numberWithInt:0] exerciseGroup:toGroup];
     
     [_exerciseService deleteExercise:exercise];
 }

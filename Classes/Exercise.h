@@ -18,6 +18,7 @@ extern NSString * const E_ENTITY_NAME;
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSString *weight;
 @property (nonatomic, retain) NSString *reps;
+@property (nonatomic, retain) NSNumber *ordinal;
 @property (nonatomic, retain) ExerciseGroup *exerciseGroup;
 
 @end

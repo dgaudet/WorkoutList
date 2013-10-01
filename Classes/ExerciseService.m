@@ -13,7 +13,7 @@
 
 @interface ExerciseService (PrivateMethods)
 
-- (void)createExerciseWithName:(NSString *)name weight:(NSString *)weight reps:(NSString *)reps exerciseGroup:(ExerciseGroup *)exerciseGroup;
+- (void)createExerciseWithName:(NSString *)name weight:(NSString *)weight reps:(NSString *)reps ordinal:(NSNumber *)ordinal exerciseGroup:(ExerciseGroup *)exerciseGroup;
 
 @end
 
@@ -48,17 +48,18 @@
     return [_managedObjectContextService saveContextSuccessOrFail];
 }
 
-- (void)saveExerciseWithName:(NSString *)name weight:(NSString *)weight reps:(NSString *)reps exerciseGroup:(ExerciseGroup *)exerciseGroup {
-    [self createExerciseWithName:name weight:weight reps:reps exerciseGroup:exerciseGroup];
+- (void)saveExerciseWithName:(NSString *)name weight:(NSString *)weight reps:(NSString *)reps ordinal:(NSNumber *)ordinal exerciseGroup:(ExerciseGroup *)exerciseGroup {
+    [self createExerciseWithName:name weight:weight reps:reps ordinal:ordinal exerciseGroup:exerciseGroup];
     
     [_managedObjectContextService saveContext];
 }
 
-- (void)createExerciseWithName:(NSString *)name weight:(NSString *)weight reps:(NSString *)reps exerciseGroup:(ExerciseGroup *)exerciseGroup {
+- (void)createExerciseWithName:(NSString *)name weight:(NSString *)weight reps:(NSString *)reps ordinal:(NSNumber *)ordinal exerciseGroup:(ExerciseGroup *)exerciseGroup {
 	Exercise *exercise = (Exercise *)[_managedObjectContextService createManagedObjectWithEntityName:E_ENTITY_NAME];
 	[exercise setName: name];
 	[exercise setWeight: weight];
 	[exercise setReps: reps];
+    [exercise setOrdinal:ordinal];
 	[exercise setExerciseGroup: exerciseGroup];
 }
 
