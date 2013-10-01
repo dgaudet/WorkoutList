@@ -13,6 +13,7 @@
 #import "WorkOutSessionService.h"
 #import "ExerciseService.h"
 #import "Exercise.h"
+#import "ExerciseGroup.h"
 
 @interface ExerciseListTableViewController (PrivateMethods)
 
