@@ -16,6 +16,7 @@ NSString * const E_ENTITY_NAME = @"Exercise";
 @dynamic name;
 @dynamic weight;
 @dynamic reps;
+@dynamic ordinal;
 @dynamic exerciseGroup;
 
 @end
