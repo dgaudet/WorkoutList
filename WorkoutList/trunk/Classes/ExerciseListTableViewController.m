@@ -159,7 +159,9 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 		return [self tableView:tableView centeredTextStyleCell:[tableData objectAtIndex:indexPath.section]];
 	} else {
 		ExerciseGroup *group = [tableData objectAtIndex:indexPath.section];
-		NSArray *rowsForSection = [[NSArray alloc] initWithArray:[[group exercise] allObjects]];
+		NSMutableArray *rowsForSection = [[NSMutableArray alloc] initWithArray:[[group exercise] allObjects]];
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"ordinal" ascending:YES];
+        [rowsForSection sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
 		Exercise *exerciseForRow = [rowsForSection objectAtIndex: indexPath.row];
 		[rowsForSection release];
         UITableViewCell *cell = [self tableView:tableView threeColumnStyleCell:exerciseForRow.name middleLabel:exerciseForRow.weight rightLabel:exerciseForRow.reps];
