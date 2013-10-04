@@ -17,4 +17,13 @@ NSString * const EG_ENTITY_NAME = @"ExerciseGroup";
 @dynamic exercise;
 @dynamic workOut;
 
+- (NSArray *)sortedExercies {
+    NSMutableArray *sortedExercies = [[NSMutableArray alloc] initWithArray:[self.exercise allObjects]];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"ordinal" ascending:YES];
+    [sortedExercies sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    [sortDescriptor release];
+    
+    return [sortedExercies autorelease];
+}
+
 @end
