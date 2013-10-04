@@ -21,6 +21,7 @@
 
 + (id)sharedInstance;
 - (NSArray *)retreiveAllExerciseGroupsForWorkOutWithName:(NSString *) workOutName;
+- (void)moveExcercise:(Exercise *)exercise fromGroup:(ExerciseGroup *)fromGroup toGroup:(ExerciseGroup *)toGroup toOrdinal:(NSNumber *)ordinal;
 - (void)moveExcercise:(Exercise *)exercise fromGroup:(ExerciseGroup *)fromGroup toGroup:(ExerciseGroup *)toGroup;
 - (BOOL)saveExerciseGroupWithName:(NSString *)groupName;
 

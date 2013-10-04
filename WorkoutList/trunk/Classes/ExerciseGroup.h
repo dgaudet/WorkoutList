@@ -30,4 +30,6 @@ extern NSString * const EG_ENTITY_NAME;
 - (void)addExercise:(NSSet *)value;
 - (void)removeExercise:(NSSet *)value;
 
+- (NSArray *)sortedExercies;
+
 @end

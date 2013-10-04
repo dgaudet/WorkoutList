@@ -45,6 +45,42 @@
 	return data;
 }
 
+- (void)moveExcercise:(Exercise *)exercise fromGroup:(ExerciseGroup *)fromGroup toGroup:(ExerciseGroup *)toGroup toOrdinal:(NSNumber *)ordinal {
+    //if it's the same group reorder them all based on the change
+    //if it's a new group reorder any items in the row after the row it was added to
+    NSLog(@"Moving exercise: %@ from: %@ to: %@", exercise.name, exercise.ordinal, ordinal);
+    if ([fromGroup.name isEqualToString:toGroup.name]) {
+        NSLog(@"same group");
+        NSMutableArray *sortedExercies = [NSMutableArray arrayWithArray:[fromGroup sortedExercies]];
+        NSLog(@"Before Sorted execies: %@", sortedExercies);
+        
+        NSUInteger originalOrdinal = [exercise.ordinal integerValue];
+        NSUInteger toOrdinal = [ordinal integerValue];
+        [sortedExercies removeObjectAtIndex:originalOrdinal];
+        [sortedExercies insertObject:exercise atIndex:toOrdinal];
+        NSLog(@"after move Sorted execies: %@", sortedExercies);
+        
+        NSInteger start = originalOrdinal;
+        if (toOrdinal < start) {
+            start = toOrdinal;
+        }
+        NSInteger end = toOrdinal;
+        if (originalOrdinal > end) {
+            end = originalOrdinal;
+        }
+        
+        for (NSInteger i = start; i <= end; i++) {
+            exercise = [sortedExercies objectAtIndex:i];
+            exercise.ordinal = [NSNumber numberWithInteger:i];
+        }
+        NSLog(@"After sort Sorted execies: %@", sortedExercies);
+    } else {
+        [_exerciseService saveExerciseWithName:exercise.name weight:exercise.weight reps:exercise.reps ordinal:ordinal exerciseGroup:toGroup];
+        
+        [_exerciseService deleteExercise:exercise];
+    }
+}
+
 - (void)moveExcercise:(Exercise *)exercise fromGroup:(ExerciseGroup *)fromGroup toGroup:(ExerciseGroup *)toGroup {
     [_exerciseService saveExerciseWithName:exercise.name weight:exercise.weight reps:exercise.reps ordinal:[NSNumber numberWithInt:0] exerciseGroup:toGroup];
     

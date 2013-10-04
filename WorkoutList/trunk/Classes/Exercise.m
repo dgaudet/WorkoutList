@@ -19,4 +19,8 @@ NSString * const E_ENTITY_NAME = @"Exercise";
 @dynamic ordinal;
 @dynamic exerciseGroup;
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"Name: %@ Ordinal: %@", self.name, self.ordinal];
+}
+
 @end
