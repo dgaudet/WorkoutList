@@ -4,6 +4,7 @@
 ** Attempt moving multiple rows before saving - seems ok so far
 *** Bug - move from section 2 to top of section 1, then move from section 1 to section 2 - doesn't save
 *** Bug - move row 2 or below in section 2, to row 1 in section 2, then move the same one to section 1 - saves wrong one
+*** Bug - move all items out of row, then move item back into row - crash
 ** Do not need to save rows reordered within a group, should be checked in the service not on the controller
 ** tasks
 *** Add Create Excercise method to ExerciseService that returns false if it fails
