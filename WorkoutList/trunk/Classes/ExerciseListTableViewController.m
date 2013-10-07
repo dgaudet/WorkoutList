@@ -159,9 +159,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 		return [self tableView:tableView centeredTextStyleCell:[tableData objectAtIndex:indexPath.section]];
 	} else {
 		ExerciseGroup *group = [tableData objectAtIndex:indexPath.section];
-		NSMutableArray *rowsForSection = [[NSMutableArray alloc] initWithArray:[[group exercise] allObjects]];
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"ordinal" ascending:YES];
-        [rowsForSection sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+		NSArray *rowsForSection = [group sortedExercies];
 		Exercise *exerciseForRow = [rowsForSection objectAtIndex: indexPath.row];
 		[rowsForSection release];
         UITableViewCell *cell = [self tableView:tableView threeColumnStyleCell:exerciseForRow.name middleLabel:exerciseForRow.weight rightLabel:exerciseForRow.reps];
@@ -331,12 +329,13 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     ExerciseGroup *fromGroup = [tableData objectAtIndex:sourceIndexPath.section];
-    NSArray *rowsForSection = [NSArray arrayWithArray:[[fromGroup exercise] allObjects]];
-    Exercise *sourceExercise = [rowsForSection objectAtIndex: sourceIndexPath.row];
+    NSArray *rowsForSection = [fromGroup sortedExercies];
+    Exercise *exercise = [rowsForSection objectAtIndex: sourceIndexPath.row];
     
     ExerciseGroup *toGroup = [tableData objectAtIndex:destinationIndexPath.section];
+    NSNumber *ordinal = [NSNumber numberWithInt:destinationIndexPath.row];
 
-    [[ExerciseGroupService sharedInstance] moveExcercise:sourceExercise fromGroup:fromGroup toGroup:toGroup];
+    [[ExerciseGroupService sharedInstance] moveExcercise:exercise fromGroup:fromGroup toGroup:toGroup toOrdinal:ordinal];
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath {
