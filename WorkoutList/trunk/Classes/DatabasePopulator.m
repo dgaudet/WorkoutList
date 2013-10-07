@@ -122,41 +122,41 @@
 -(void)generateAndSaveWorkOut2 {
 	ExerciseGroup *exerciseGroup1 = (ExerciseGroup *)[NSEntityDescription insertNewObjectForEntityForName:EG_ENTITY_NAME inManagedObjectContext:_managedObjectContext];
 	[exerciseGroup1 setName: @"Workout Group 1"];
-	[self exerciseWithName:@"Barbell Bent Over Row" weight:@"105/115" reps:@"7" ordinal:[NSNumber numberWithInt:0] exerciseGroup:exerciseGroup1];
-	[self exerciseWithName:@"Upright External Rotation" weight:@"45" reps:@"11" ordinal:[NSNumber numberWithInt:1] exerciseGroup:exerciseGroup1];
+	[self exerciseWithName:@"Barbell Bent Over Row" weight:@"90" reps:@"7" ordinal:[NSNumber numberWithInt:0] exerciseGroup:exerciseGroup1];
+	[self exerciseWithName:@"Lying External Rotation" weight:@"30" reps:@"8" ordinal:[NSNumber numberWithInt:1] exerciseGroup:exerciseGroup1];
+    [self exerciseWithName:@"Upright External Rotation" weight:@"45" reps:@"6" ordinal:[NSNumber numberWithInt:2] exerciseGroup:exerciseGroup1];
 	[self exerciseWithName:@"Back Extention" weight:@"25" reps:@"8" ordinal:[NSNumber numberWithInt:3] exerciseGroup:exerciseGroup1];
 
 	ExerciseGroup *exerciseGroup2 = (ExerciseGroup *)[NSEntityDescription insertNewObjectForEntityForName:EG_ENTITY_NAME inManagedObjectContext:_managedObjectContext];
 	[exerciseGroup2 setName: @"Workout Group 2"];
-	[self exerciseWithName:@"Dumbell Bent Over Row" weight:@"65" reps:@"6" ordinal:[NSNumber numberWithInt:0] exerciseGroup:exerciseGroup2];
-	[self exerciseWithName:@"Barbell Rear Delt Row" weight:@"75" reps:@"4" ordinal:[NSNumber numberWithInt:1] exerciseGroup:exerciseGroup2];
-	[self exerciseWithName:@"Lying External Rotation" weight:@"20" reps:@"9" ordinal:[NSNumber numberWithInt:2] exerciseGroup:exerciseGroup2];
-	[self exerciseWithName:@"Lateral Neck Flexon" weight:@"40" reps:@"7" ordinal:[NSNumber numberWithInt:3] exerciseGroup:exerciseGroup2];
+	[self exerciseWithName:@"Dumbell Bent Over Row" weight:@"85" reps:@"10" ordinal:[NSNumber numberWithInt:0] exerciseGroup:exerciseGroup2];
+	[self exerciseWithName:@"Barbell Rear Delt Row" weight:@"80" reps:@"4" ordinal:[NSNumber numberWithInt:1] exerciseGroup:exerciseGroup2];	
+	[self exerciseWithName:@"Lateral Neck Flexon" weight:@"--40" reps:@"12" ordinal:[NSNumber numberWithInt:2] exerciseGroup:exerciseGroup2];
 	
 	ExerciseGroup *exerciseGroup3 = (ExerciseGroup *)[NSEntityDescription insertNewObjectForEntityForName:EG_ENTITY_NAME inManagedObjectContext:_managedObjectContext];
 	[exerciseGroup3 setName: @"Workout Group 3"];
-	[self exerciseWithName:@"Chinup" weight:@"" reps:@"10" ordinal:[NSNumber numberWithInt:0] exerciseGroup:exerciseGroup3];
-	[self exerciseWithName:@"Barbell Shrug" weight:@"130" reps:@"3" ordinal:[NSNumber numberWithInt:1] exerciseGroup:exerciseGroup3];
-	[self exerciseWithName:@"Neck Flexon" weight:@"40" reps:@"9" ordinal:[NSNumber numberWithInt:2] exerciseGroup:exerciseGroup3];
+	[self exerciseWithName:@"Chinup" weight:@"" reps:@"12" ordinal:[NSNumber numberWithInt:0] exerciseGroup:exerciseGroup3];
+	[self exerciseWithName:@"Barbell Shrug" weight:@"180" reps:@"6" ordinal:[NSNumber numberWithInt:1] exerciseGroup:exerciseGroup3];
+	[self exerciseWithName:@"Neck Flexon 45+25" weight:@"--70" reps:@"6" ordinal:[NSNumber numberWithInt:2] exerciseGroup:exerciseGroup3];
 	
 	ExerciseGroup *exerciseGroup4 = (ExerciseGroup *)[NSEntityDescription insertNewObjectForEntityForName:EG_ENTITY_NAME inManagedObjectContext:_managedObjectContext];
 	[exerciseGroup4 setName: @"Workout Group 4"];
-	[self exerciseWithName:@"Dumbell Internal Rotation" weight:@"45" reps:@"11" ordinal:[NSNumber numberWithInt:0] exerciseGroup:exerciseGroup4];
-	[self exerciseWithName:@"Dumbell Shrug" weight:@"60" reps:@"6" ordinal:[NSNumber numberWithInt:1] exerciseGroup:exerciseGroup4];
-	[self exerciseWithName:@"Underhand Chinup" weight:@"" reps:@"11" ordinal:[NSNumber numberWithInt:2] exerciseGroup:exerciseGroup4];
-	[self exerciseWithName:@"Dumbell Preacher Curl(Single)" weight:@"35" reps:@"9" ordinal:[NSNumber numberWithInt:3] exerciseGroup:exerciseGroup4];
+	[self exerciseWithName:@"Dumbell Internal Rotation" weight:@"55" reps:@"7" ordinal:[NSNumber numberWithInt:0] exerciseGroup:exerciseGroup4];
+	[self exerciseWithName:@"Dumbell Shrug" weight:@"85" reps:@"7" ordinal:[NSNumber numberWithInt:1] exerciseGroup:exerciseGroup4];
+	[self exerciseWithName:@"Underhand Chinup" weight:@"" reps:@"12" ordinal:[NSNumber numberWithInt:2] exerciseGroup:exerciseGroup4];
+	[self exerciseWithName:@"Dumbell Preacher Curl(Single)" weight:@"50" reps:@"-6" ordinal:[NSNumber numberWithInt:3] exerciseGroup:exerciseGroup4];
 	
 	ExerciseGroup *exerciseGroup5 = (ExerciseGroup *)[NSEntityDescription insertNewObjectForEntityForName:EG_ENTITY_NAME inManagedObjectContext:_managedObjectContext];
 	[exerciseGroup5 setName: @"Workout Group 5"];
-	[self exerciseWithName:@"Dumbell Concentration Curl" weight:@"45" reps:@"6" ordinal:[NSNumber numberWithInt:0] exerciseGroup:exerciseGroup5];
-	[self exerciseWithName:@"Incline Curl" weight:@"40" reps:@"7" ordinal:[NSNumber numberWithInt:1] exerciseGroup:exerciseGroup5];
-	[self exerciseWithName:@"Neck Extension" weight:@"40" reps:@"10" ordinal:[NSNumber numberWithInt:2] exerciseGroup:exerciseGroup5];
+	[self exerciseWithName:@"Dumbell Concentration Curl" weight:@"40" reps:@"10" ordinal:[NSNumber numberWithInt:0] exerciseGroup:exerciseGroup5];
+	[self exerciseWithName:@"Incline Curl" weight:@"35" reps:@"10" ordinal:[NSNumber numberWithInt:1] exerciseGroup:exerciseGroup5];
+	[self exerciseWithName:@"Neck Extension 2x50-10" weight:@"60" reps:@"4" ordinal:[NSNumber numberWithInt:2] exerciseGroup:exerciseGroup5];
 	
 	ExerciseGroup *exerciseGroup6 = (ExerciseGroup *)[NSEntityDescription insertNewObjectForEntityForName:EG_ENTITY_NAME inManagedObjectContext:_managedObjectContext];
 	[exerciseGroup6 setName: @"Workout Group 6"];
-	[self exerciseWithName:@"Barbell Curl" weight:@"45" reps:@"8" ordinal:[NSNumber numberWithInt:0] exerciseGroup:exerciseGroup6];
-	[self exerciseWithName:@"Seated Dumbell Curl" weight:@"50" reps:@"4" ordinal:[NSNumber numberWithInt:1] exerciseGroup:exerciseGroup6];
-	[self exerciseWithName:@"Elastic Curl" weight:@"" reps:@"12" ordinal:[NSNumber numberWithInt:2] exerciseGroup:exerciseGroup6];
+	[self exerciseWithName:@"Barbell Curl" weight:@"60" reps:@"8" ordinal:[NSNumber numberWithInt:0] exerciseGroup:exerciseGroup6];
+	[self exerciseWithName:@"Seated Dumbell Curl" weight:@"40" reps:@"-4" ordinal:[NSNumber numberWithInt:1] exerciseGroup:exerciseGroup6];
+	[self exerciseWithName:@"21's" weight:@"30" reps:@"7" ordinal:[NSNumber numberWithInt:2] exerciseGroup:exerciseGroup6];
 	
 	WorkOut *workOut = (WorkOut *)[NSEntityDescription insertNewObjectForEntityForName:WO_ENTITY_NAME inManagedObjectContext:_managedObjectContext];
 	[workOut setName:@"Back/Bicep/Neck"];
