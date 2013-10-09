@@ -53,8 +53,8 @@
 	for (WorkOut *workOut in [self retreiveAllWorkOuts]) {
 		NSArray *exerciseGroups = [[ExerciseGroupService sharedInstance] retreiveAllExerciseGroupsForWorkOutWithName:workOut.name];
 		BOOL workOutDisplay = NO;
-		for (ExerciseGroup *group in exerciseGroups) {
-			NSArray *exercises = [[NSArray alloc] initWithArray:[group.exercise allObjects]];
+		for (ExerciseGroup *group in exerciseGroups) {            
+			NSArray *exercises = [[NSArray alloc] initWithArray:[group sortedExercies]];
 			BOOL groupDisplay = NO;
 			for (Exercise *exercise in exercises) {
 				if (!workOutDisplay) {

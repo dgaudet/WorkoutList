@@ -161,7 +161,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 		ExerciseGroup *group = [tableData objectAtIndex:indexPath.section];
 		NSArray *rowsForSection = [group sortedExercies];
 		Exercise *exerciseForRow = [rowsForSection objectAtIndex: indexPath.row];
-		[rowsForSection release];
+
         UITableViewCell *cell = [self tableView:tableView threeColumnStyleCell:exerciseForRow.name middleLabel:exerciseForRow.weight rightLabel:exerciseForRow.reps];
         [cell setShowsReorderControl:YES];
 		return cell;

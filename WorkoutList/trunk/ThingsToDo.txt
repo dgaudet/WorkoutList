@@ -20,3 +20,4 @@
 * Change the background of start button to green possibly
 * Use the new version of GData
 ** https://code.google.com/p/google-api-objectivec-client/
+* Make longer exercise names span 2 lines instead of ...
