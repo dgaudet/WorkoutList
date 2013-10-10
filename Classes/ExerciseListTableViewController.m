@@ -17,12 +17,13 @@
 
 @interface ExerciseListTableViewController (PrivateMethods)
 
--(NSArray *)loadTableDataArrayWithExerciseGroupsFromDb;
--(UITableViewCell *)tableView:(UITableView *)tableView defaultStyleCell:(NSString *)name cellValue:(NSString *)value;
--(UITableViewCell *)tableView:(UITableView *)tableView textBoxStyleCell:(NSString *)name cellValue:(NSString *)value;
--(UITableViewCell *)tableView:(UITableView *)tableView threeColumnStyleCell:(NSString *)leftLabel middleLabel:(NSString *)middleLabel rightLabel:(NSString *)rightLabel;
--(UITableViewCell *)tableView:(UITableView *)tableView centeredTextStyleCell:(NSString *)text;
--(void)workOutSessionButtonPressed:(NSIndexPath *)indexPath;
+- (NSArray *)loadTableDataArrayWithExerciseGroupsFromDb;
+- (Exercise *)exerciseForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (UITableViewCell *)tableView:(UITableView *)tableView defaultStyleCell:(NSString *)name cellValue:(NSString *)value;
+- (UITableViewCell *)tableView:(UITableView *)tableView textBoxStyleCell:(NSString *)name cellValue:(NSString *)value;
+- (UITableViewCell *)tableView:(UITableView *)tableView threeColumnStyleCell:(NSString *)leftLabel middleLabel:(NSString *)middleLabel rightLabel:(NSString *)rightLabel;
+- (UITableViewCell *)tableView:(UITableView *)tableView centeredTextStyleCell:(NSString *)text;
+- (void)workOutSessionButtonPressed:(NSIndexPath *)indexPath;
 - (void)startWorkOut;
 - (void)endWorkOut;
 - (void)showErrorAlert;
@@ -93,6 +94,12 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 	return data;
 }
 
+- (Exercise *)exerciseForRowAtIndexPath:(NSIndexPath *)indexPath {
+    ExerciseGroup *group = [tableData objectAtIndex:indexPath.section];
+    NSArray *rowsForSection = [group sortedExercies];
+    return [rowsForSection objectAtIndex: indexPath.row];
+}
+
 /*
  - (void)viewWillAppear:(BOOL)animated {
  [super viewWillAppear:animated];
@@ -158,9 +165,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 	if (indexPath.section == 0 && indexPath.row == 0) {
 		return [self tableView:tableView centeredTextStyleCell:[tableData objectAtIndex:indexPath.section]];
 	} else {
-		ExerciseGroup *group = [tableData objectAtIndex:indexPath.section];
-		NSArray *rowsForSection = [group sortedExercies];
-		Exercise *exerciseForRow = [rowsForSection objectAtIndex: indexPath.row];
+		Exercise *exerciseForRow = [self exerciseForRowAtIndexPath:indexPath];
 
         UITableViewCell *cell = [self tableView:tableView threeColumnStyleCell:exerciseForRow.name middleLabel:exerciseForRow.weight rightLabel:exerciseForRow.reps];
         [cell setShowsReorderControl:YES];
@@ -329,8 +334,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     ExerciseGroup *fromGroup = [tableData objectAtIndex:sourceIndexPath.section];
-    NSArray *rowsForSection = [fromGroup sortedExercies];
-    Exercise *exercise = [rowsForSection objectAtIndex: sourceIndexPath.row];
+    Exercise *exercise = [self exerciseForRowAtIndexPath:sourceIndexPath];
     
     ExerciseGroup *toGroup = [tableData objectAtIndex:destinationIndexPath.section];
     NSNumber *ordinal = [NSNumber numberWithInt:destinationIndexPath.row];
@@ -360,8 +364,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (editingStyle == UITableViewCellEditingStyleDelete) {
 		// Delete the row from the data source
-		ExerciseGroup *group = [tableData objectAtIndex:indexPath.section];
-		Exercise *exercise = [[[group exercise] allObjects] objectAtIndex:indexPath.row];
+		Exercise *exercise = [self exerciseForRowAtIndexPath:indexPath];
 		
 		if([[ExerciseService sharedInstance] deleteExercise:exercise]){
 			[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -381,12 +384,9 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 	if (indexPath.section == 0 && indexPath.row == 0) {
 		[self workOutSessionButtonPressed:indexPath];
 	} else {
-		EditRowListTableViewController *editNavController = [[EditRowListTableViewController alloc] initWithStyle:UITableViewStyleGrouped];	
-		ExerciseGroup *group = [tableData objectAtIndex:indexPath.section];
-		NSArray *rowsForSection = [[NSArray alloc] initWithArray:[[group exercise] allObjects]];
+		EditRowListTableViewController *editNavController = [[EditRowListTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
 		editNavController.delegate = self;
-		editNavController.exercise = [rowsForSection objectAtIndex: indexPath.row];
-		[rowsForSection release];
+		editNavController.exercise = [self exerciseForRowAtIndexPath:indexPath];
 		[self.navigationController pushViewController:editNavController animated:YES];
 		[editNavController release];
 		lastRow = indexPath.row;
