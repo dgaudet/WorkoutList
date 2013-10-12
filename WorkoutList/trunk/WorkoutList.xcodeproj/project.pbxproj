@@ -26,6 +26,7 @@
 		0585DE261332E29A0094C98C /* WorkOutSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 0585DE251332E29A0094C98C /* WorkOutSession.m */; };
 		058D854012F614D200EDBC90 /* Exercise.m in Sources */ = {isa = PBXBuildFile; fileRef = 058D853F12F614D200EDBC90 /* Exercise.m */; };
 		05957B5E135FB3F1004F1CE4 /* GoogleDataService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05957B5D135FB3F1004F1CE4 /* GoogleDataService.m */; };
+		05CE57721808F55000E5E445 /* ExerciseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CE57711808F55000E5E445 /* ExerciseTableViewCell.m */; };
 		05D2F4AC17F4B80400A68701 /* ManagedObjectContextService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D2F4AB17F4B80400A68701 /* ManagedObjectContextService.m */; };
 		05D2F4B317F4BB1D00A68701 /* FetchEntityService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D2F4B217F4BB1D00A68701 /* FetchEntityService.m */; };
 		1D3623260D0F684500981E51 /* WorkoutListAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* WorkoutListAppDelegate.m */; };
@@ -433,6 +434,8 @@
 		05957B5C135FB3F1004F1CE4 /* GoogleDataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleDataService.h; sourceTree = "<group>"; };
 		05957B5D135FB3F1004F1CE4 /* GoogleDataService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleDataService.m; sourceTree = "<group>"; };
 		05BB2C74148F07E800186616 /* GData.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GData.xcodeproj; path = "../../gdata-objectivec-client-read-only/Source/GData.xcodeproj"; sourceTree = "<group>"; };
+		05CE57701808F55000E5E445 /* ExerciseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExerciseTableViewCell.h; sourceTree = "<group>"; };
+		05CE57711808F55000E5E445 /* ExerciseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExerciseTableViewCell.m; sourceTree = "<group>"; };
 		05D2F4AA17F4B80400A68701 /* ManagedObjectContextService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagedObjectContextService.h; sourceTree = "<group>"; };
 		05D2F4AB17F4B80400A68701 /* ManagedObjectContextService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagedObjectContextService.m; sourceTree = "<group>"; };
 		05D2F4B117F4BB1D00A68701 /* FetchEntityService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchEntityService.h; sourceTree = "<group>"; };
@@ -829,12 +832,22 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		05CE576B1808F4FB00E5E445 /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				05CE57701808F55000E5E445 /* ExerciseTableViewCell.h */,
+				05CE57711808F55000E5E445 /* ExerciseTableViewCell.m */,
+			);
+			name = TableViewCells;
+			sourceTree = "<group>";
+		};
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
 				057BB01217EFF3B400E4B2C3 /* Headers */,
 				05999A0113722EAB00EBB42F /* DomainObjects */,
 				35B376351371D54C000B48C2 /* Services */,
+				05CE576B1808F4FB00E5E445 /* TableViewCells */,
 				0585DE1E1332E27A0094C98C /* SessionListTableViewController.h */,
 				0585DE1F1332E27A0094C98C /* SessionListTableViewController.m */,
 				28C286DF0D94DF7D0034E888 /* RootViewController.h */,
@@ -1048,6 +1061,7 @@
 				1D3623260D0F684500981E51 /* WorkoutListAppDelegate.m in Sources */,
 				28C286E10D94DF7D0034E888 /* RootViewController.m in Sources */,
 				05D2F4AC17F4B80400A68701 /* ManagedObjectContextService.m in Sources */,
+				05CE57721808F55000E5E445 /* ExerciseTableViewCell.m in Sources */,
 				05513AC912F3CCA9003E49DF /* ExerciseListTableViewController.m in Sources */,
 				058410C112F5032900B54241 /* EditRowListTableViewController.m in Sources */,
 				058D854012F614D200EDBC90 /* Exercise.m in Sources */,
