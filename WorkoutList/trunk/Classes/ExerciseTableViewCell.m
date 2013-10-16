@@ -44,6 +44,11 @@
     [super layoutSubviews];
     [nameLabel setFrame:self._nameViewFrame];
     [weightlabel setFrame:self._weightViewFrame];
+    if (self.editing) {
+        weightlabel.alpha = 0.0;
+    } else {
+        weightlabel.alpha = 1.0;
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -53,13 +58,13 @@
     // Configure the view for the selected state
 }
 
-#define EDITING_INSET       0.0
+#define EDITING_INSET       30.0
 #define NAME_LABEL_X        8.0
 #define WEIGHT_LABEL_X      225.0
 
 - (CGRect)_nameViewFrame {
     if (self.editing) {
-        return CGRectMake(NAME_LABEL_X + EDITING_INSET, 0.0, WEIGHT_LABEL_X - NAME_LABEL_X - EDITING_INSET, 40.0);
+        return CGRectMake(NAME_LABEL_X, 0.0, WEIGHT_LABEL_X - NAME_LABEL_X - EDITING_INSET, 40.0);
     }
 	else {
         return CGRectMake(NAME_LABEL_X, 0.0, WEIGHT_LABEL_X - NAME_LABEL_X, 40.0);
@@ -68,7 +73,7 @@
 
 - (CGRect)_weightViewFrame {
     if (self.editing) {
-        return CGRectMake(WEIGHT_LABEL_X + EDITING_INSET, 2.0, 35.0 - EDITING_INSET, 40.0);
+        return CGRectMake(WEIGHT_LABEL_X - EDITING_INSET, 2.0, 35.0, 40.0);
     }
 	else {
         return CGRectMake(WEIGHT_LABEL_X, 2.0, 35.0, 40.0);
