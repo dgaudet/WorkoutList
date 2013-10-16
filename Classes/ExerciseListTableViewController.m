@@ -14,6 +14,7 @@
 #import "ExerciseService.h"
 #import "Exercise.h"
 #import "ExerciseGroup.h"
+#import "ExerciseTableViewCell.h"
 
 @interface ExerciseListTableViewController (PrivateMethods)
 
@@ -166,8 +167,14 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 		return [self tableView:tableView centeredTextStyleCell:[tableData objectAtIndex:indexPath.section]];
 	} else {
 		Exercise *exerciseForRow = [self exerciseForRowAtIndexPath:indexPath];
+        static NSString *ExerciseCellReuseIdentifier = @"ExerciseCellReuseIdentifier";
 
-        UITableViewCell *cell = [self tableView:tableView threeColumnStyleCell:exerciseForRow.name middleLabel:exerciseForRow.weight rightLabel:exerciseForRow.reps];
+        ExerciseTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ExerciseCellReuseIdentifier];
+        if (cell == nil) {
+            cell = [[[ExerciseTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ExerciseCellReuseIdentifier] autorelease];
+            
+        }
+        [cell setExercise:exerciseForRow];
         [cell setShowsReorderControl:YES];
 		return cell;
 	}	
