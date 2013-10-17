@@ -274,7 +274,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
-		UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 2.0, 285.0, 40.0)];		
+		UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 2.0, 285.0, 40.0)];
         mainLabel.textAlignment = UITextAlignmentCenter;
 		mainLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17.0];
         mainLabel.textColor = [UIColor blackColor];
@@ -360,12 +360,12 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 
 #pragma mark Cell Deleting
 // Override to support conditional editing of the table view.
-//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if (indexPath.row == startButtonIndexPath.row && indexPath.section == startButtonIndexPath.section) {
-//        return NO;
-//    }
-//	return YES;
-//}
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == startButtonIndexPath.row && indexPath.section == startButtonIndexPath.section) {
+        return NO;
+    }
+	return YES;
+}
 
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -441,11 +441,11 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 }
 
 
-- (void)editRowListTableViewController:(EditRowListTableViewController *)controller didChangeExercise:(Exercise *)changedExercise{
+- (void)editRowListTableViewController:(EditRowListTableViewController *)controller didChangeExercise:(Exercise *)changedExercise {
 	//http://developer.apple.com/library/ios/#documentation/UserExperience/Conceptual/TableView_iPhone/ManageInsertDeleteRow/ManageInsertDeleteRow.html
 	[self.navigationController popViewControllerAnimated:YES];
 	ExerciseGroup *group = [tableData objectAtIndex:lastSection];
-	Exercise *originalExercise = [[[group exercise] allObjects] objectAtIndex:lastRow];
+	Exercise *originalExercise = [[group sortedExercies] objectAtIndex:lastRow];
 	[originalExercise setName:[changedExercise name]];
 	[originalExercise setWeight:[changedExercise weight]];
 	[originalExercise setReps:[changedExercise reps]];
