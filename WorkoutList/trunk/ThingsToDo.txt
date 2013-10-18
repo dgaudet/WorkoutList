@@ -21,3 +21,12 @@
 * Use the new version of GData
 ** https://code.google.com/p/google-api-objectivec-client/
 * Make longer exercise names span 2 lines instead of ...
+** lots to think about
+*** What should happen during editing, since the width changes
+*** it should change if the name is updated to be shorter or longer
+** The order of methods is heightForRowAtIndexPath, for all rows, then CellForRowAtIndexPath
+** need a method that can take a string, since that's all the Controller will have, and it will know if it is editing or not
+*** the method must find out the width of the row based on the editing, and the string to figure out the height
+** Posibly reload the view when going to edit mode?
+* Make the Excercise name input uppercase firt letter of all words
+* replace lastRow and lastSection in ExerciseListTableViewController with NSIndexPath
