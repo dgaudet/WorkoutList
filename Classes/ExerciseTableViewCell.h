@@ -18,4 +18,6 @@
 
 @property (nonatomic, retain) Exercise *exercise;
 
++ (CGFloat)heightForCellWithString:(NSString *)string editingMode:(BOOL)editingMode;
+
 @end

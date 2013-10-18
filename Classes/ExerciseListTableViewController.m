@@ -323,6 +323,18 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat height = 43;
+    NSString *text = @"";
+    if (indexPath.section > 0) {
+        Exercise *exerciseForRow = [self exerciseForRowAtIndexPath:indexPath];
+        height = [ExerciseTableViewCell heightForCellWithString:exerciseForRow.name editingMode:self.editing] + 2.0;
+        text = exerciseForRow.name;
+    }
+    NSLog(@"height for cell: %.2f at index path - %i:%i - %@", height, indexPath.section, indexPath.row, text);
+    return height;
+}
+
 #pragma mark -
 #pragma mark TableEditting
 
@@ -444,8 +456,8 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 - (void)editRowListTableViewController:(EditRowListTableViewController *)controller didChangeExercise:(Exercise *)changedExercise {
 	//http://developer.apple.com/library/ios/#documentation/UserExperience/Conceptual/TableView_iPhone/ManageInsertDeleteRow/ManageInsertDeleteRow.html
 	[self.navigationController popViewControllerAnimated:YES];
-	ExerciseGroup *group = [tableData objectAtIndex:lastSection];
-	Exercise *originalExercise = [[group sortedExercies] objectAtIndex:lastRow];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:lastRow inSection:lastSection];
+	Exercise *originalExercise = [self exerciseForRowAtIndexPath:indexPath];
 	[originalExercise setName:[changedExercise name]];
 	[originalExercise setWeight:[changedExercise weight]];
 	[originalExercise setReps:[changedExercise reps]];
