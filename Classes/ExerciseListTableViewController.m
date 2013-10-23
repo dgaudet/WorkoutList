@@ -342,6 +342,14 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
     return UITableViewCellEditingStyleNone;
 }
 
+- (void)setEditing:(BOOL)editing animated:(BOOL)animate{
+    [super setEditing:editing animated:animate];
+    //http://locassa.com/animate-uitableview-cell-height-change/
+    //begin updates and end updates cause the table cells reload, but does it while animating
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+}
+
 #pragma mark Cell Reordering
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -461,7 +469,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 	[originalExercise setName:[changedExercise name]];
 	[originalExercise setWeight:[changedExercise weight]];
 	[originalExercise setReps:[changedExercise reps]];
-	
+    
 	if ([[ExerciseService sharedInstance] updateExercise:originalExercise]) {
 		[self.tableView reloadData];
 	} else {
