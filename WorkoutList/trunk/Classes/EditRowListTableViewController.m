@@ -30,6 +30,7 @@
 //ToDo: fix bug where if app is shutdown while you were on the edit form, it will actually save the temporary data in the fields, without the
 //user clicking save
 //ToDo: new feature - when the user clicks inside a cell, but not actually inside the UITextField, give the textField focus
+//ToDo: if you add text to any field then hit back it saves anyway
 
 /*
 - (id)initWithStyle:(UITableViewStyle)style {
