@@ -331,7 +331,6 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
         height = [ExerciseTableViewCell heightForCellWithString:exerciseForRow.name editingMode:self.editing] + 2.0;
         text = exerciseForRow.name;
     }
-    NSLog(@"height for cell: %.2f at index path - %i:%i - %@", height, indexPath.section, indexPath.row, text);
     return height;
 }
 
