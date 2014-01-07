@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@class WorkOut;
 @class FetchEntityService;
 
 @interface WorkOutService : NSObject {
@@ -15,6 +16,7 @@
 
 + (id)sharedInstance;
 - (NSArray *)retreiveAllWorkOuts;
+- (WorkOut *)retreiveWorkOutWithName:(NSString *)workOut;
 - (NSString *)generateCSVForAllWorkOuts;
 
 @end

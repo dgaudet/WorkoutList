@@ -36,6 +36,23 @@
     return self;
 }
 
+- (WorkOut *)retreiveWorkOutWithName:(NSString *)workOutName {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name like %@", workOutName];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+	NSArray *data = [[[NSArray alloc] initWithArray:[_fetchEntityService fetchManagedObjectsForEntity:WO_ENTITY_NAME withPredicate:predicate withSortDescriptor:sortDescriptor]] autorelease];
+	[sortDescriptor release];
+    
+    WorkOut *workOut = nil;
+    if (data) {
+        if ([data count] > 0) {
+            workOut = [data objectAtIndex:0];
+        }
+    }
+    
+	return workOut;
+
+}
+
 - (NSArray *)retreiveAllWorkOuts {
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
 	NSArray *data = [[[NSArray alloc] initWithArray:[_fetchEntityService fetchManagedObjectsForEntity:WO_ENTITY_NAME withPredicate:nil withSortDescriptor:sortDescriptor]] autorelease];
