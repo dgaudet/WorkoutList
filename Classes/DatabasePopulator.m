@@ -13,6 +13,7 @@
 #import "ExerciseGroup.h"
 #import "WorkOutSession.h"
 #import "WorkOut.h"
+#import "WorkOutService.h"
 #import "ManagedObjectContextService.h"
 
 @interface DatabasePopulator (PrivateMethods)
@@ -45,6 +46,7 @@
         _managedObjectContext = [_managedObjectContextService managedObjectContext];
         _exerciseService = [ExerciseService sharedInstance];
         _exerciseGroupService = [ExerciseGroupService sharedInstance];
+        _workOutService = [WorkOutService sharedInstance];
     }
     return self;
 }
@@ -252,6 +254,21 @@
 
 - (void)exerciseWithName:(NSString *)name weight:(NSString *)weight reps:(NSString *)reps ordinal:(NSNumber *)ordinal exerciseGroup:(ExerciseGroup *)exerciseGroup {
 	[_exerciseService saveExerciseWithName:name weight:weight reps:reps ordinal:ordinal exerciseGroup:exerciseGroup];
+}
+
+- (void)addSessionForWorkOutWithName:(NSString *)name startDate:(NSDate *)startDate andEndDate:(NSDate *)endDate {
+    WorkOut *workOut = [_workOutService retreiveWorkOutWithName:name];
+    
+    if (workOut) {
+        WorkOutSession *workOutSession = (WorkOutSession *)[NSEntityDescription insertNewObjectForEntityForName:WOS_ENTITY_NAME inManagedObjectContext:_managedObjectContext];
+        [workOutSession setStartDate:startDate];
+        [workOutSession setEndDate:endDate];
+        [workOutSession setWorkOut:workOut];
+        
+        if (![_managedObjectContextService saveContextSuccessOrFail]) {
+            exit(-1);  // Fail
+        }
+    }
 }
 
 @end

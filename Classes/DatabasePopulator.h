@@ -13,15 +13,18 @@
 @class ManagedObjectContextService;
 @class ExerciseService;
 @class ExerciseGroupService;
+@class WorkOutService;
 
 @interface DatabasePopulator : NSObject {
 	NSManagedObjectContext *_managedObjectContext;
     ManagedObjectContextService *_managedObjectContextService;
     ExerciseService *_exerciseService;
     ExerciseGroupService *_exerciseGroupService;
+    WorkOutService *_workOutService;
 }
 
 + (id)sharedInstance;
 - (void)populateDatabase;
+- (void)addSessionForWorkOutWithName:(NSString *)name startDate:(NSDate *)startDate andEndDate:(NSDate *)endDate;
 
 @end
