@@ -9,7 +9,7 @@
 #import "RootViewController.h"
 #import "WorkOutService.h"
 #import "ExerciseListTableViewController.h"
-#import "GoogleDataService.h"
+//#import "GoogleDataService.h"
 #import "SessionListTableViewController.h"
 #import "UserService.h"
 #import "EditUserListTableViewController.h"
@@ -23,11 +23,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView centeredTextStyleCell:(NSString *)text;
 
 - (void)exportButtonPressed:(id)sender;
-- (void)docListFetchTicket:(GDataServiceTicket *)ticket finishedWithFeed:(GDataFeedDocList *)feed error:(NSError *)error;
-- (void)createAndSaveSpreadsheetWithFeed:(GDataFeedDocList *)feed inFolderWithName:(GDataEntryFolderDoc *)folderEntry;
+//- (void)docListFetchTicket:(GDataServiceTicket *)ticket finishedWithFeed:(GDataFeedDocList *)feed error:(NSError *)error;
+//- (void)createAndSaveSpreadsheetWithFeed:(GDataFeedDocList *)feed inFolderWithName:(GDataEntryFolderDoc *)folderEntry;
 - (NSString *)generateSessionSpreadSheetTitle;
 - (NSString*)generateSessionSpreadSheetData;
-- (void)uploadDocTicket:(GDataServiceTicket *)ticket finishedWithEntry:(GDataEntryDocBase *)entry error:(NSError *)error;
+//- (void)uploadDocTicket:(GDataServiceTicket *)ticket finishedWithEntry:(GDataEntryDocBase *)entry error:(NSError *)error;
 - (void)settingsButtonPressed:(id)sender;
 - (void)settingsControllerDidFinish;
 
@@ -276,50 +276,51 @@
 #pragma mark Export work
 
 - (void)exportButtonPressed:(id)sender {
-	[[GoogleDataService sharedInstance] fetchDocListWithdidFinishSelector:@selector(docListFetchTicket:finishedWithFeed:error:) forDelegate:self];
-	[self showLoadingIndicators];
+    [self showErrorAlert];
+//	[[GoogleDataService sharedInstance] fetchDocListWithdidFinishSelector:@selector(docListFetchTicket:finishedWithFeed:error:) forDelegate:self];
+//	[self showLoadingIndicators];
 }
 
-- (void)docListFetchTicket:(GDataServiceTicket *)ticket finishedWithFeed:(GDataFeedDocList *)feed error:(NSError *)error {
-	if (error) {
-		NSLog(@"Got Feed with error: %@", [error description]);
-		[self showErrorAlert];
-	} else {
-		NSArray *folderEntries = [feed entriesWithCategoryKind:kGDataCategoryFolderDoc];
-		GDataEntryFolderDoc *workoutFolder;
-		
-		for(GDataEntryFolderDoc *folderEntry in folderEntries){
-			NSString *title = [[folderEntry title] stringValue];
-			if ([title isEqualToString:[[UserService sharedInstance] retrieveUser].googleFolder]) {
-				workoutFolder = folderEntry; 
-			}	
-		}
-		[self createAndSaveSpreadsheetWithFeed:feed inFolderWithName:workoutFolder];
-	}
-}
-
-- (void)createAndSaveSpreadsheetWithFeed:(GDataFeedDocList *)feed inFolderWithName:(GDataEntryFolderDoc *)folderEntry {
-	//http://groups.google.com/group/gdata-objectivec-client/browse_thread/thread/4569ad053eb88090
-	// Insert a new document with the client's data.
-	GDataEntrySpreadsheetDoc *entryNew = [GDataEntrySpreadsheetDoc documentEntry];
-	NSString *documentName = [self generateSessionSpreadSheetTitle];
-	NSData *data = [[self generateSessionSpreadSheetData] dataUsingEncoding:NSUTF8StringEncoding]; 
-	
-	[entryNew setTitleWithString:documentName];
-	[entryNew setUploadData:data];
-	[entryNew setUploadMIMEType:@"text/csv"];
-	[entryNew setUploadSlug:[NSString stringWithFormat:@"%@.csv", documentName]];
-	
-	GDataCategory *category = [GDataCategory categoryWithScheme:kGDataCategoryScheme term:kGDataCategorySpreadsheetDoc];	 
-	[entryNew setCategories:[NSArray arrayWithObject:category]];
-	[category setLabel:@"spreadsheet"];
-	
-	NSURL *urlPost = [GDataServiceGoogleDocs folderContentsFeedURLForFolderID:[folderEntry resourceID]];
-	GDataServiceGoogleDocs *service = [[GoogleDataService sharedInstance] docsService];
-	[service setServiceUploadChunkSize:0];
-	[service fetchEntryByInsertingEntry:entryNew forFeedURL:urlPost delegate:self
-					  didFinishSelector:@selector(uploadDocTicket:finishedWithEntry:error:)];
-}
+//- (void)docListFetchTicket:(GDataServiceTicket *)ticket finishedWithFeed:(GDataFeedDocList *)feed error:(NSError *)error {
+//	if (error) {
+//		NSLog(@"Got Feed with error: %@", [error description]);
+//		[self showErrorAlert];
+//	} else {
+//		NSArray *folderEntries = [feed entriesWithCategoryKind:kGDataCategoryFolderDoc];
+//		GDataEntryFolderDoc *workoutFolder;
+//		
+//		for(GDataEntryFolderDoc *folderEntry in folderEntries){
+//			NSString *title = [[folderEntry title] stringValue];
+//			if ([title isEqualToString:[[UserService sharedInstance] retrieveUser].googleFolder]) {
+//				workoutFolder = folderEntry; 
+//			}	
+//		}
+//		[self createAndSaveSpreadsheetWithFeed:feed inFolderWithName:workoutFolder];
+//	}
+//}
+//
+//- (void)createAndSaveSpreadsheetWithFeed:(GDataFeedDocList *)feed inFolderWithName:(GDataEntryFolderDoc *)folderEntry {
+//	//http://groups.google.com/group/gdata-objectivec-client/browse_thread/thread/4569ad053eb88090
+//	// Insert a new document with the client's data.
+//	GDataEntrySpreadsheetDoc *entryNew = [GDataEntrySpreadsheetDoc documentEntry];
+//	NSString *documentName = [self generateSessionSpreadSheetTitle];
+//	NSData *data = [[self generateSessionSpreadSheetData] dataUsingEncoding:NSUTF8StringEncoding]; 
+//	
+//	[entryNew setTitleWithString:documentName];
+//	[entryNew setUploadData:data];
+//	[entryNew setUploadMIMEType:@"text/csv"];
+//	[entryNew setUploadSlug:[NSString stringWithFormat:@"%@.csv", documentName]];
+//	
+//	GDataCategory *category = [GDataCategory categoryWithScheme:kGDataCategoryScheme term:kGDataCategorySpreadsheetDoc];	 
+//	[entryNew setCategories:[NSArray arrayWithObject:category]];
+//	[category setLabel:@"spreadsheet"];
+//	
+//	NSURL *urlPost = [GDataServiceGoogleDocs folderContentsFeedURLForFolderID:[folderEntry resourceID]];
+//	GDataServiceGoogleDocs *service = [[GoogleDataService sharedInstance] docsService];
+//	[service setServiceUploadChunkSize:0];
+//	[service fetchEntryByInsertingEntry:entryNew forFeedURL:urlPost delegate:self
+//					  didFinishSelector:@selector(uploadDocTicket:finishedWithEntry:error:)];
+//}
 
 -(NSString *)generateSessionSpreadSheetTitle {
 	NSDate *currentDate = [NSDate date];
@@ -336,16 +337,16 @@
 	return [NSString stringWithString:[[WorkOutService sharedInstance] generateCSVForAllWorkOuts]];
 }
 
-- (void)uploadDocTicket:(GDataServiceTicket *)ticket finishedWithEntry:(GDataEntryDocBase *)entry error:(NSError *)error {
-	NSLog(@"Uploaded???");
-	[self hideLoadingIndicators];
-	if(error){
-		NSLog(@"An error occurred: %@", error);
-		[self showErrorAlert];
-	} else {
-		NSLog(@"Successfully Uploaded");
-	}	
-}
+//- (void)uploadDocTicket:(GDataServiceTicket *)ticket finishedWithEntry:(GDataEntryDocBase *)entry error:(NSError *)error {
+//	NSLog(@"Uploaded???");
+//	[self hideLoadingIndicators];
+//	if(error){
+//		NSLog(@"An error occurred: %@", error);
+//		[self showErrorAlert];
+//	} else {
+//		NSLog(@"Successfully Uploaded");
+//	}	
+//}
 
 #pragma mark -
 #pragma mark Settings work

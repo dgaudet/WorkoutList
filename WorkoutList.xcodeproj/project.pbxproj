@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0525377A17F0C58D0084202E /* ThingsToDo.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0525377917F0C58D0084202E /* ThingsToDo.txt */; };
+		0529800F1BB5FF1F008B1493 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0529800E1BB5FF1F008B1493 /* Images.xcassets */; };
 		05513AC912F3CCA9003E49DF /* ExerciseListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05513AC812F3CCA9003E49DF /* ExerciseListTableViewController.m */; };
-		057BAEC317EFEF7D00E4B2C3 /* libGDataTouchStaticLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05BB2C83148F07E800186616 /* libGDataTouchStaticLib.a */; };
 		05806F4913621F02001C5317 /* WorkOutService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05806F4813621F02001C5317 /* WorkOutService.m */; };
 		05822E6E136603E100357408 /* ExerciseGroupService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05822E6D136603E100357408 /* ExerciseGroupService.m */; };
 		05822EB413661A1300357408 /* WorkOutSessionService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05822EB313661A1300357408 /* WorkOutSessionService.m */; };
@@ -90,6 +90,7 @@
 
 /* Begin PBXFileReference section */
 		0525377917F0C58D0084202E /* ThingsToDo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ThingsToDo.txt; sourceTree = "<group>"; };
+		0529800E1BB5FF1F008B1493 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = WorkoutList/Images.xcassets; sourceTree = "<group>"; };
 		05513AC712F3CCA9003E49DF /* ExerciseListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExerciseListTableViewController.h; sourceTree = "<group>"; };
 		05513AC812F3CCA9003E49DF /* ExerciseListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExerciseListTableViewController.m; sourceTree = "<group>"; };
 		057BB01317EFF3B400E4B2C3 /* GData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GData.h; sourceTree = "<group>"; };
@@ -468,7 +469,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				057BAEC317EFEF7D00E4B2C3 /* libGDataTouchStaticLib.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */,
@@ -899,6 +899,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0529800E1BB5FF1F008B1493 /* Images.xcassets */,
 				0585C7F3133EA7A9009F084A /* bicep.gif */,
 				28AD735F0D9D9599002E5188 /* MainWindow.xib */,
 				28F335F01007B36200424DE2 /* RootViewController.xib */,
@@ -1045,6 +1046,7 @@
 			files = (
 				28AD73600D9D9599002E5188 /* MainWindow.xib in Resources */,
 				28F335F11007B36200424DE2 /* RootViewController.xib in Resources */,
+				0529800F1BB5FF1F008B1493 /* Images.xcassets in Resources */,
 				0585C7F4133EA7A9009F084A /* bicep.gif in Resources */,
 				0525377A17F0C58D0084202E /* ThingsToDo.txt in Resources */,
 			);
@@ -1094,6 +1096,45 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		052980081BB5F8BA008B1493 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "5c572a62-73fa-48b9-b93e-0d915f3d03ec";
+				SDKROOT = iphoneos;
+			};
+			name = Beta;
+		};
+		052980091BB5F8BA008B1493 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				BUNDLE_ID_SUFFIX = .beta;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = WorkoutList_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "WorkoutList-Info.plist";
+				LIBRARY_SEARCH_PATHS = "";
+				PRODUCT_NAME = "WorkoutList-Beta";
+				USER_HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Beta;
+		};
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1102,6 +1143,9 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				BUNDLE_ID_SUFFIX = .dev;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1130,6 +1174,9 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				BUNDLE_ID_SUFFIX = "";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WorkoutList_Prefix.pch;
@@ -1179,6 +1226,7 @@
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
 				1D6058950D05DD3E006BFB54 /* Release */,
+				052980091BB5F8BA008B1493 /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1188,6 +1236,7 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
+				052980081BB5F8BA008B1493 /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

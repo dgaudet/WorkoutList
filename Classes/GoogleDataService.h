@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "GoogleDataService.h"
-#import "GDataDocs.h"
+//#import "GDataDocs.h"
 
 @interface GoogleDataService : NSObject {
 
@@ -16,7 +16,7 @@
 
 + (id)sharedInstance;
 + (NSDateFormatter *)docsDateFormatter;
-- (GDataServiceGoogleDocs *)docsService;
-- (void)fetchDocListWithdidFinishSelector:(SEL)selector forDelegate:(id)delegate;
+//- (GDataServiceGoogleDocs *)docsService;
+//- (void)fetchDocListWithdidFinishSelector:(SEL)selector forDelegate:(id)delegate;
 
 @end
