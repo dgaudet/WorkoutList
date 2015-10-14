@@ -21,9 +21,8 @@ NSString * const EG_ENTITY_NAME = @"ExerciseGroup";
     NSMutableArray *sortedExercies = [[NSMutableArray alloc] initWithArray:[self.exercise allObjects]];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"ordinal" ascending:YES];
     [sortedExercies sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-    [sortDescriptor release];
     
-    return [sortedExercies autorelease];
+    return sortedExercies;
 }
 
 @end

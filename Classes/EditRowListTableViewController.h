@@ -12,14 +12,14 @@
 @protocol EditRowListTableViewControllerDelegate;
 
 @interface EditRowListTableViewController : UITableViewController <UITextFieldDelegate>{
-	id<EditRowListTableViewControllerDelegate> delegate;
+	id<EditRowListTableViewControllerDelegate> __unsafe_unretained delegate;
 	NSArray *tableData;
 	Exercise *exercise;
 	UITextField *textFieldBeingEdited;
 }
 
-@property (assign)id<EditRowListTableViewControllerDelegate> delegate;
-@property(nonatomic, retain) Exercise *exercise;
+@property (unsafe_unretained)id<EditRowListTableViewControllerDelegate> delegate;
+@property(nonatomic, strong) Exercise *exercise;
 
 @end
 

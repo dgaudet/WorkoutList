@@ -18,6 +18,6 @@
     NSIndexPath *startButtonIndexPath;
 }
 
-@property (nonatomic, retain) NSString *workOutName;
+@property (nonatomic, strong) NSString *workOutName;
 
 @end

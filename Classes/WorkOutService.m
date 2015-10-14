@@ -39,8 +39,7 @@
 - (WorkOut *)retreiveWorkOutWithName:(NSString *)workOutName {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name like %@", workOutName];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-	NSArray *data = [[[NSArray alloc] initWithArray:[_fetchEntityService fetchManagedObjectsForEntity:WO_ENTITY_NAME withPredicate:predicate withSortDescriptor:sortDescriptor]] autorelease];
-	[sortDescriptor release];
+	NSArray *data = [[NSArray alloc] initWithArray:[_fetchEntityService fetchManagedObjectsForEntity:WO_ENTITY_NAME withPredicate:predicate withSortDescriptor:sortDescriptor]];
     
     WorkOut *workOut = nil;
     if (data) {
@@ -55,15 +54,14 @@
 
 - (NSArray *)retreiveAllWorkOuts {
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-	NSArray *data = [[[NSArray alloc] initWithArray:[_fetchEntityService fetchManagedObjectsForEntity:WO_ENTITY_NAME withPredicate:nil withSortDescriptor:sortDescriptor]] autorelease];
-	[sortDescriptor release];
+	NSArray *data = [[NSArray alloc] initWithArray:[_fetchEntityService fetchManagedObjectsForEntity:WO_ENTITY_NAME withPredicate:nil withSortDescriptor:sortDescriptor]];
 		
 	return data;
 }
 
 -(NSString *)generateCSVForAllWorkOuts {
 	NSString *colHeaders = @"Work Out,Exercise Group, Exercise Name, Weight, Sets";
-	NSString *rowData = [[[NSString alloc] init] autorelease];	
+	NSString *rowData = [[NSString alloc] init];	
 	NSString *workOutName;
 	NSString *groupName;	
 	
@@ -90,7 +88,6 @@
 				rowData = [rowData stringByAppendingFormat:@"\n%@,%@,%@,%@,%@", 
 						   workOutName, groupName, exercise.name, exercise.weight, exercise.reps]; 
 			}
-			[exercises release];
 		}
 	}
 	

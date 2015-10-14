@@ -33,7 +33,6 @@
     RootViewController *rootViewController = [[RootViewController alloc] initWithStyle:UITableViewStyleGrouped];
 	navController = [[UINavigationController alloc] init];
 	[navController pushViewController:rootViewController animated:NO];
-	[rootViewController release];
 	
 	[window addSubview:navController.view];
 	[window makeKeyAndVisible];
@@ -89,10 +88,6 @@
      */
 }
 
-- (void)dealloc {	
-	[window release];
-	[super dealloc];
-}
 
 
 @end

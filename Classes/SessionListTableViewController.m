@@ -8,6 +8,7 @@
 
 #import "SessionListTableViewController.h"
 #import "WorkOutSession.h"
+#import "WorkOut.h"
 #import "WorkOutSessionService.h"
 #import "GoogleDataService.h"
 //#import "GDataDocs.h"
@@ -70,7 +71,6 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
 	
 	UIBarButtonItem *exportButton = [[UIBarButtonItem alloc] initWithTitle:@"Export" style:UIBarButtonItemStylePlain target:self action:@selector(exportButtonPressed:)];
 	self.navigationItem.rightBarButtonItem = exportButton;
-	[exportButton release];	
 	
 	dateFormatter = [[NSDateFormatter alloc] init];
     NSString *formatString = [NSDateFormatter dateFormatFromTemplate:@"MMM, dd, yyyy" options:0 locale:[NSLocale currentLocale]];
@@ -134,14 +134,14 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
     // Configure the cell...
 	WorkOutSession *session = [tableData objectAtIndex:indexPath.row];
 	NSString *formattedDateString = [dateFormatter stringFromDate:[session startDate]];
 	
-	cell.textLabel.text = [[session workOut] name];
+	cell.textLabel.text = [session workOut].name;
 	
     NSString *label = [NSString stringWithFormat:@"%@ - %@", formattedDateString, [[WorkOutSessionService sharedInstance] friendlyDurationForWorkOutSession:session]];
 	cell.detailTextLabel.text = label;
@@ -261,7 +261,6 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
 	[formatter setTimeStyle:NSDateFormatterShortStyle];
 	NSString *formattedDateString = [formatter stringFromDate:currentDate];
 	NSString *title = [NSString stringWithFormat:@"%@ %@", SLTVC_SPREADSHEET_NAME, formattedDateString];
-	[formatter release];
 	return title;
 }
 
@@ -301,7 +300,6 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
     if (spinner) {
         [spinner stopAnimating];
         [spinner removeFromSuperview];
-        [spinner release];
         spinner = nil;
     }
 }
@@ -312,7 +310,6 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
 	NSString *message = @"We are sorry there was a problem processing Your Request Please Try Again later. Press Ok to continue";
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
 	[alert show];
-	[alert release];
 	[self hideLoadingIndicators];
 }
 
@@ -332,11 +329,6 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
 }
 
 
-- (void)dealloc {
-	[dateFormatter release];
-	[tableData release];
-    [super dealloc];
-}
 
 
 @end

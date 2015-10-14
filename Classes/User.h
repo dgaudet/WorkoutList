@@ -15,9 +15,9 @@
 	NSString *googleFolder;
 }
 
-@property (nonatomic, retain) NSString *userName;
-@property (nonatomic, retain) NSString *password;
-@property (nonatomic, retain) NSString *googleFolder;
+@property (nonatomic, strong) NSString *userName;
+@property (nonatomic, strong) NSString *password;
+@property (nonatomic, strong) NSString *googleFolder;
 
 - (id)initWithName:(NSString *)name password:(NSString *)pass googleFolder:(NSString *)folderName;
 

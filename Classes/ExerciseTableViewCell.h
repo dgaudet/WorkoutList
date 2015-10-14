@@ -16,7 +16,7 @@
     UILabel *weightlabel;
 }
 
-@property (nonatomic, retain) Exercise *exercise;
+@property (nonatomic, strong) Exercise *exercise;
 
 + (CGFloat)heightForCellWithString:(NSString *)string editingMode:(BOOL)editingMode;
 

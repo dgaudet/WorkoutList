@@ -74,7 +74,6 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 	
 	UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
 	self.navigationItem.backBarButtonItem = backButton;
-	[backButton release];
 		
 	tableData = [[NSMutableArray alloc] initWithArray: self.loadTableDataArrayWithExerciseGroupsFromDb];
 	
@@ -85,7 +84,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 - (NSArray *)loadTableDataArrayWithExerciseGroupsFromDb {
 	NSMutableArray *data = [[NSMutableArray alloc] initWithArray:[[ExerciseGroupService sharedInstance] 
 																  retreiveAllExerciseGroupsForWorkOutWithName: workOutName]];
-	startButtonIndexPath = [[NSIndexPath indexPathForRow:0 inSection:0] retain];
+	startButtonIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     if ([self findStartedWorkOutSession]) {
 		[data insertObject:END_WORK_OUT atIndex:0];
 	} else {
@@ -147,7 +146,6 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 		ExerciseGroup *group = [tableData objectAtIndex:section];
  	 	NSArray *rowsForSection = [[NSArray alloc] initWithArray:[[group exercise] allObjects]];
 		rowCount = [rowsForSection count];
-		[rowsForSection release];
 	}
 	return rowCount;
 }
@@ -171,7 +169,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 
         ExerciseTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ExerciseCellReuseIdentifier];
         if (cell == nil) {
-            cell = [[[ExerciseTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ExerciseCellReuseIdentifier] autorelease];
+            cell = [[ExerciseTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ExerciseCellReuseIdentifier];
             
         }
         [cell setExercise:exerciseForRow];
@@ -188,7 +186,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 	
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];	
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];	
 		
 		UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(30.0, 0.0, 60.0, 40.0)];		
         mainLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17.0]; ;
@@ -196,13 +194,11 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
         mainLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;		
         mainLabel.tag = MainLabelTag;
 		[cell.contentView addSubview:mainLabel];
-		[mainLabel release];
 		
 		UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(90.0, 10.0, 180.0, 40.0)];
 		textField.placeholder = @"insert text";
 		textField.tag = TextFieldTag;
 		[cell.contentView addSubview:textField];
-		[textField release];
 	}
     
     // Configure the cell...
@@ -220,7 +216,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 	
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
 		
 		UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(30.0, 0.0, 205.0, 40.0)];
         mainLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17.0]; ;
@@ -228,7 +224,6 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
         mainLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;		
         mainLabel.tag = mainLabelTag;
 		[cell.contentView addSubview:mainLabel];
-		[mainLabel release];
 		
 		UILabel *middleLabel = [[UILabel alloc] initWithFrame:CGRectMake(235.0, 2.0, 35.0, 40.0)];
         middleLabel.font = [UIFont fontWithName:@"Helvetica" size:17.0]; ;
@@ -236,7 +231,6 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
         middleLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;		
         middleLabel.tag = middleLabelTag;
 		[cell.contentView addSubview:middleLabel];
-		[middleLabel release];
 	}
     
     // Configure the cell...
@@ -255,7 +249,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
     
     // Set up the cell...	
@@ -273,7 +267,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 	
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
 		UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 2.0, 285.0, 40.0)];
         mainLabel.textAlignment = UITextAlignmentCenter;
 		mainLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17.0];
@@ -281,7 +275,6 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
         mainLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;		
         mainLabel.tag = mainLabelTag;		
 		[cell.contentView addSubview:mainLabel];
-		[mainLabel release];
     }
     
     // Set up the cell...
@@ -300,20 +293,18 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 		
 		slider = [[UISlider alloc] initWithFrame:CGRectMake(80.0, 0.0, 180.0, 40.0)];
 		slider.minimumValue = 0;
 		slider.maximumValue = 10;
 		[cell.contentView addSubview:slider];
-		[slider release];
 		
 		mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(30.0, 0.0, 50.0, 40.0)];		
         mainLabel.font = [UIFont systemFontOfSize:14.0];			
         mainLabel.textColor = [UIColor blackColor];		
         mainLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;		
         [cell.contentView addSubview:mainLabel];
-		[mainLabel release];
 	}
     
     // Configure the cell...
@@ -414,7 +405,6 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 		editNavController.delegate = self;
 		editNavController.exercise = [self exerciseForRowAtIndexPath:indexPath];
 		[self.navigationController pushViewController:editNavController animated:YES];
-		[editNavController release];
 		lastRow = indexPath.row;
 		lastSection = indexPath.section;
 	}
@@ -436,7 +426,6 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];	
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
 	[alert show];
-	[alert release];
 }
 
 - (void)startWorkOut {
@@ -482,7 +471,6 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 	NSString *message = @"We are sorry there was a problem processing Your Request Please Try Again later. Press Ok to continue";
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
 	[alert show];
-	[alert release];
 }
 
 
@@ -502,12 +490,6 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 }
 
 
-- (void)dealloc {
-	[tableData release];
-	[workOutName release];
-    [startButtonIndexPath release];
-    [super dealloc];
-}
 
 @end
 

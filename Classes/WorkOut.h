@@ -16,9 +16,9 @@ extern NSString * const WO_ENTITY_NAME;
 @interface WorkOut : NSManagedObject {
 }
 
-@property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSSet *exerciseGroup;
-@property (nonatomic, retain) NSSet *workOutSession;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSSet *exerciseGroup;
+@property (nonatomic, strong) NSSet *workOutSession;
 
 @end
 

@@ -18,9 +18,9 @@ extern NSString * const EG_ENTITY_NAME;
 
 //http://mobile.tutsplus.com/tutorials/iphone/iphone-core-data/
 
-@property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSSet *exercise;
-@property (nonatomic, retain) WorkOut *workOut;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSSet *exercise;
+@property (nonatomic, strong) WorkOut *workOut;
 
 @end
 

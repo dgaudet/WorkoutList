@@ -47,15 +47,12 @@
 	self.title = @"Time to Work Out";
 	UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:nil action:nil];
 	self.navigationItem.backBarButtonItem = backButton;
-	[backButton release];	
 	
 	UIBarButtonItem *exportButton = [[UIBarButtonItem alloc] initWithTitle:@"Export" style:UIBarButtonItemStylePlain target:self action:@selector(exportButtonPressed:)];
 	self.navigationItem.rightBarButtonItem = exportButton;
-	[exportButton release];
 	
 	UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(settingsButtonPressed:)];
 	self.navigationItem.leftBarButtonItem = settingsButton;
-	[settingsButton release];
 	
 	tableData = [[NSArray alloc] initWithArray:[self loadTableData]];
 }
@@ -65,11 +62,8 @@
 	NSDictionary *workOutSection = [[NSDictionary alloc] initWithObjectsAndKeys:allWorkOuts, @"items", @"Work Outs", @"name", nil];
 	NSArray *allSessions = [[NSArray alloc] initWithObjects:@"View Completed Sessions", nil];
 	NSDictionary *sessionSection = [[NSDictionary alloc] initWithObjectsAndKeys:allSessions, @"items", @"Sessions", @"name", nil];
-	[allSessions release];
 	
-	NSArray *data = [[[NSArray alloc] initWithObjects:workOutSection, sessionSection, nil] autorelease];
-	[workOutSection release];	
-	[sessionSection release];	
+	NSArray *data = [[NSArray alloc] initWithObjects:workOutSection, sessionSection, nil];
 	
 	return data;
 }
@@ -140,7 +134,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
     
     // Set up the cell...	
@@ -158,7 +152,7 @@
 	
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
 		UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 2.0, 285.0, 40.0)];		
         mainLabel.textAlignment = UITextAlignmentCenter;
 		mainLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17.0];
@@ -166,7 +160,6 @@
         mainLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;		
         mainLabel.tag = mainLabelTag;		
 		[cell.contentView addSubview:mainLabel];
-		[mainLabel release];
     }
     
     // Set up the cell...
@@ -229,11 +222,9 @@
 		exerciseListTableViewController.title = [[array objectAtIndex:indexPath.row] name];
 		
 		[self.navigationController pushViewController:exerciseListTableViewController animated:YES];
-		[exerciseListTableViewController release];
 	} else {
 		SessionListTableViewController *sessionListTable = [[SessionListTableViewController alloc] initWithStyle:UITableViewStylePlain];
 		[self.navigationController pushViewController:sessionListTable animated:YES];
-		[sessionListTable release];
 	}
 }
 
@@ -257,7 +248,6 @@
     if (spinner) {
         [spinner stopAnimating];
         [spinner removeFromSuperview];
-        [spinner release];
         spinner = nil;
     }
 }
@@ -268,7 +258,6 @@
 	NSString *message = @"We are sorry there was a problem processing Your Request Please Try Again later. Press Ok to continue";
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
 	[alert show];
-	[alert release];
 	[self hideLoadingIndicators];
 }
 
@@ -329,7 +318,6 @@
 	[formatter setTimeStyle:NSDateFormatterShortStyle];
 	NSString *formattedDateString = [formatter stringFromDate:currentDate];
 	NSString *title = [NSString stringWithFormat:@"Exercises %@", formattedDateString];
-	[formatter release];
 	return title;
 }
 
@@ -355,10 +343,8 @@
 	userController.user = [[UserService sharedInstance] retrieveUser];
 	userController.delegate = self;
 	UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:userController];
-	[userController release];
 	
 	[self presentModalViewController:navController animated:YES];
-	[navController release];
 	
 }
 
@@ -387,10 +373,6 @@
 }
 
 
-- (void)dealloc {
-	[tableData release];
-    [super dealloc];
-}
 
 
 @end

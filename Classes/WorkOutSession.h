@@ -14,8 +14,8 @@ extern NSString * const WOS_ENTITY_NAME;
 
 @interface WorkOutSession : NSManagedObject
 
-@property (nonatomic, retain) NSDate *startDate;
-@property (nonatomic, retain) NSDate *endDate;
-@property (nonatomic, retain) WorkOut *workOut;
+@property (nonatomic, strong) NSDate *startDate;
+@property (nonatomic, strong) NSDate *endDate;
+@property (nonatomic, strong) WorkOut *workOut;
 
 @end

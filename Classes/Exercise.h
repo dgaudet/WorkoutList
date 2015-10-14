@@ -15,10 +15,10 @@ extern NSString * const E_ENTITY_NAME;
 @interface Exercise : NSManagedObject {
 }
 
-@property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSString *weight;
-@property (nonatomic, retain) NSString *reps;
-@property (nonatomic, retain) NSNumber *ordinal;
-@property (nonatomic, retain) ExerciseGroup *exerciseGroup;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *weight;
+@property (nonatomic, strong) NSString *reps;
+@property (nonatomic, strong) NSNumber *ordinal;
+@property (nonatomic, strong) ExerciseGroup *exerciseGroup;
 
 @end

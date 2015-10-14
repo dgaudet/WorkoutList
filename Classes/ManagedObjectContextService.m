@@ -110,7 +110,7 @@
         return _managedObjectModel;
     }
     
-	_managedObjectModel = [[NSManagedObjectModel mergedModelFromBundles:nil] retain];
+	_managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
     return _managedObjectModel;
 }
 
@@ -177,11 +177,5 @@
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
-- (void)dealloc {
-	[_managedObjectContext release];
-	[_managedObjectModel release];
-	[_persistentStoreCoordinator release];
-	[super dealloc];
-}
 
 @end

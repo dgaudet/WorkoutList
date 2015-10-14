@@ -36,7 +36,6 @@
 
 - (id)fetchFirstManagedObjectsForEntity:(NSString*)entityName withPredicate:(NSPredicate *)predicate withSortDescriptor:(NSSortDescriptor *)sortDescriptor {
     NSArray *data = [[NSArray alloc] initWithArray:[self fetchManagedObjectsForEntity:entityName withPredicate:predicate withSortDescriptor:sortDescriptor]];
-	[sortDescriptor release];
 	if (data.count > 0) {
 		return [data objectAtIndex:0];
 	} else {
@@ -60,7 +59,7 @@
 	}
 	
 	NSError *error;
-	NSArray *fetchResults = [[[context executeFetchRequest:request error:&error] copy] autorelease];
+	NSArray *fetchResults = [[context executeFetchRequest:request error:&error] copy];
 	
 	if (!fetchResults) {
 		// Handle the error.
@@ -68,7 +67,6 @@
 		exit(-1);  // Fail
 	}
 	
-	[request release];
 	return fetchResults;
 }
 

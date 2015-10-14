@@ -35,8 +35,7 @@
 
 - (NSArray *)retreiveAllWorkOutSessions {
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"startDate" ascending:NO];
-	NSArray *data = [[[NSArray alloc] initWithArray:[_fetchedEntityService fetchManagedObjectsForEntity:WOS_ENTITY_NAME withPredicate:nil withSortDescriptor: sortDescriptor]] autorelease];
-	[sortDescriptor release];
+	NSArray *data = [[NSArray alloc] initWithArray:[_fetchedEntityService fetchManagedObjectsForEntity:WOS_ENTITY_NAME withPredicate:nil withSortDescriptor: sortDescriptor]];
 	return data;
 }
 
@@ -80,7 +79,7 @@
 
 - (NSString *)generateCSVDataForAllWorkOutSessionsWithDateFormatter:(NSDateFormatter *)formatter {
 	NSString *colHeaders = @"Work Out Session,Date,Duration";
-	NSString *rowData = [[[NSString alloc] init] autorelease];
+	NSString *rowData = [[NSString alloc] init];
 		
 	for (WorkOutSession *session in [self retreiveAllWorkOutSessions]) {
 		NSString *formattedDateString = [formatter stringFromDate:[session startDate]];

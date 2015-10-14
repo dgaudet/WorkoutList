@@ -39,8 +39,7 @@
 - (NSArray *)retreiveAllExerciseGroupsForWorkOutWithName:(NSString *) workOutName {
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"workOut.name like %@", workOutName];
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-	NSArray *data = [[[NSArray alloc] initWithArray:[_fetchEntityService fetchManagedObjectsForEntity:EG_ENTITY_NAME withPredicate:predicate withSortDescriptor:sortDescriptor]] autorelease];
-	[sortDescriptor release];	
+	NSArray *data = [[NSArray alloc] initWithArray:[_fetchEntityService fetchManagedObjectsForEntity:EG_ENTITY_NAME withPredicate:predicate withSortDescriptor:sortDescriptor]];
 	
 	return data;
 }

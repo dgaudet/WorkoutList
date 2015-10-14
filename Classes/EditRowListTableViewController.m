@@ -53,7 +53,6 @@
 	
 	UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonPressed:)];
 	self.navigationItem.rightBarButtonItem = doneButton;
-	[doneButton release];
 }
 
 -(void)doneButtonPressed:(id)sender{
@@ -79,20 +78,14 @@
 - (NSArray *)loadTableData{
 	NSArray *array1 = [[NSArray alloc] initWithObjects:exercise.name, nil];	
 	NSDictionary *section1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"Exercise Name:", @"Section Name", array1, @"items", nil];
-	[array1 release];
 	
 	NSArray *array2 = [[NSArray alloc] initWithObjects:exercise.weight, nil];	
 	NSDictionary *section2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"Excercise Weight:", @"Section Name", array2, @"items", nil];
-	[array2 release];
 	
 	NSArray *array3 = [[NSArray alloc] initWithObjects:exercise.reps, nil];	
 	NSDictionary *section3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"Excercise Reps:", @"Section Name", array3, @"items", nil];
-	[array3 release];
 	
-	NSArray *tableInfo = [[[NSArray alloc] initWithObjects: section1, section2, section3, nil] autorelease];
-	[section1 release];
-	[section2 release];
-	[section3 release];
+	NSArray *tableInfo = [[NSArray alloc] initWithObjects: section1, section2, section3, nil];
 	return tableInfo;
 }
 
@@ -151,12 +144,11 @@
 	
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 		
 		UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10.0, 10.0, 250.0, 40.0)];
 		textField.delegate = self;
 		[cell.contentView addSubview:textField];
-		[textField release];
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
@@ -175,7 +167,6 @@
 	if ([indexPath section] > 0) {
 		textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
 	}
-	[rowsForSection release];
     return cell;
 }
 
@@ -276,11 +267,6 @@
     // For example: self.myOutlet = nil;
 }
 
-- (void)dealloc {
-	[tableData release];
-	[exercise release];
-    [super dealloc];
-}
 
 
 @end

@@ -52,11 +52,9 @@
 	
 	UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonPressed:)];
 	self.navigationItem.rightBarButtonItem = doneButton;
-	[doneButton release];
 	
 	UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonPressed:)];
 	self.navigationItem.leftBarButtonItem = cancelButton;
-	[cancelButton release];
 }
 
 -(void)doneButtonPressed:(id)sender{
@@ -88,20 +86,14 @@
 - (NSArray *)loadTableData{
 	NSArray *array1 = [[NSArray alloc] initWithObjects:user.userName, nil];	
 	NSDictionary *section1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"Email Address:", @"Section Name", array1, @"items", nil];
-	[array1 release];
 	
 	NSArray *array2 = [[NSArray alloc] initWithObjects:user.password, nil];	
 	NSDictionary *section2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"Password:", @"Section Name", array2, @"items", nil];
-	[array2 release];
 	
 	NSArray *array3 = [[NSArray alloc] initWithObjects:user.googleFolder, nil];	
 	NSDictionary *section3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"Folder To Store Exported items:", @"Section Name", array3, @"items", nil];
-	[array3 release];
 	
-	NSArray *tableInfo = [[[NSArray alloc] initWithObjects: section1, section2, section3, nil] autorelease];
-	[section1 release];
-	[section2 release];
-	[section3 release];
+	NSArray *tableInfo = [[NSArray alloc] initWithObjects: section1, section2, section3, nil];
 	return tableInfo;
 }
 
@@ -159,13 +151,12 @@
 	
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 		
 		UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10.0, 10.0, 250.0, 40.0)];
 		textField.delegate = self;	
 		textField.clearButtonMode = UITextFieldViewModeWhileEditing;
 		[cell.contentView addSubview:textField];
-		[textField release];
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
@@ -187,7 +178,6 @@
 	if ([indexPath section] == 1) {
 		textField.secureTextEntry = YES;
 	}
-	[rowsForSection release];
     return cell;
 }
 
@@ -296,11 +286,6 @@
 }
 
 
-- (void)dealloc {
-	[tableData release];
-	[user release];
-    [super dealloc];
-}
 
 
 @end

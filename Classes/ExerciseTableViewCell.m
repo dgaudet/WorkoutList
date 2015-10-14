@@ -115,19 +115,12 @@
 
 - (void)setExercise:(Exercise *)newExercise {
     if (newExercise != _exercise) {
-        [_exercise release];
-        _exercise = [newExercise retain];
+        _exercise = newExercise;
 	}
 	[nameLabel setText:_exercise.name];
     [weightlabel setText:_exercise.weight];
     [self.detailTextLabel setText:_exercise.reps];
 }
 
-- (void)dealloc {
-    [nameLabel release];
-    [weightlabel release];
-    
-    [super dealloc];
-}
 
 @end

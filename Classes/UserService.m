@@ -36,13 +36,13 @@ static NSUserDefaults *userDefaults;
 
 -(User *)retrieveUser {
 	if ([userDefaults stringForKey:USER_NAME_KEY] != nil) {
-		return [[[User alloc] initWithName:[userDefaults objectForKey:USER_NAME_KEY]
+		return [[User alloc] initWithName:[userDefaults objectForKey:USER_NAME_KEY]
 								 password:[userDefaults objectForKey:PASSWORD_KEY]
-							  googleFolder:[userDefaults objectForKey:GOOGLE_FOLDER_KEY]] autorelease];
+							  googleFolder:[userDefaults objectForKey:GOOGLE_FOLDER_KEY]];
 	}
-	return [[[User alloc] initWithName:@""
+	return [[User alloc] initWithName:@""
 							  password:@""
-						  googleFolder:@"WorkOutList Test Collection"] autorelease];
+						  googleFolder:@"WorkOutList Test Collection"];
 }
 
 - (void)updateUser:(User *)user {
