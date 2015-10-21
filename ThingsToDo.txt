@@ -1,3 +1,4 @@
+* Usecocoa Pods to get new Google Dependencies
 * Add Start/End Workout button to bottom of ExerciceListTableViewController
 * Add ability to move Excercieses from group to group
 ** Must not allow moving rows to the groups with the start button - done
