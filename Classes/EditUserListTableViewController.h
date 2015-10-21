@@ -12,13 +12,12 @@
 @protocol EditUserListTableViewControllerDelegate;
 
 @interface EditUserListTableViewController : UITableViewController <UITextFieldDelegate> {
-	id<EditUserListTableViewControllerDelegate> __unsafe_unretained delegate;
 	NSArray *tableData;
 	User *user;
 	UITextField *textFieldBeingEdited;
 }
 
-@property(unsafe_unretained)id<EditUserListTableViewControllerDelegate> delegate;
+@property(nonatomic, strong) id<EditUserListTableViewControllerDelegate> delegate;
 @property(nonatomic, strong) User *user;
 
 @end
