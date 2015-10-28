@@ -1,4 +1,4 @@
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.1'
 pod 'Google'
-pod 'GoogleSignIn'
+pod 'Google/SignIn'
