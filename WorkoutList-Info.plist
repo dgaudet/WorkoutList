@@ -35,7 +35,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.deanapps.workoutlist.dev</string>
+				<string>com.deansapps.workoutlist.dev</string>
 			</array>
 		</dict>
 	</array>

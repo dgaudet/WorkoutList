@@ -1,4 +1,12 @@
 * Usecocoa Pods to get new Google Dependencies
+** check for user signed in
+*** if so don't display sign in button, instead show sign out button
+*** if not display sign in button, not sign out
+* On Signin button click
+** check for signin error and handle gracefully, if the user clicks cancel they return a specific error
+* Fix view presentation errors
+* Create custom centeredTextStyleCell instead of duplicating in EditUserListTableViewController and ExerciseListTableViewController
+
 * Add Start/End Workout button to bottom of ExerciceListTableViewController
 * Add ability to move Excercieses from group to group
 ** Must not allow moving rows to the groups with the start button - done

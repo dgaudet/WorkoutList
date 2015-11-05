@@ -55,6 +55,13 @@
 	
 	UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonPressed:)];
 	self.navigationItem.leftBarButtonItem = cancelButton;
+    
+    // TODO(developer) Configure the sign-in button look/feel
+    
+    [GIDSignIn sharedInstance].uiDelegate = self;
+    
+    // Uncomment to automatically sign in the user.
+    //[[GIDSignIn sharedInstance] signInSilently];
 }
 
 -(void)doneButtonPressed:(id)sender{
@@ -92,8 +99,13 @@
 	
 	NSArray *array3 = [[NSArray alloc] initWithObjects:user.googleFolder, nil];	
 	NSDictionary *section3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"Folder To Store Exported items:", @"Section Name", array3, @"items", nil];
+    
+    NSArray *array4 = @[user.googleFolder];
+    NSDictionary *section4 = [[NSDictionary alloc] initWithObjectsAndKeys:@"", @"Section Name", array4, @"items", nil];
+    
+    NSDictionary *section5 = [[NSDictionary alloc] initWithObjectsAndKeys:@"", @"Section Name", array4, @"items", nil];
 	
-	NSArray *tableInfo = [[NSArray alloc] initWithObjects: section1, section2, section3, nil];
+    NSArray *tableInfo = @[section1, section2, section3, section4, section5];
 	return tableInfo;
 }
 
@@ -147,38 +159,76 @@
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString *CellIdentifier = @"Cell";
-	
+    if(indexPath.section < 3){
+        static NSString *CellIdentifier = @"Cell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            
+            UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10.0, 10.0, 250.0, 40.0)];
+            textField.delegate = self;	
+            textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+            [cell.contentView addSubview:textField];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        
+        // Configure the cell...
+        NSArray *rowsForSection = [[NSArray alloc] initWithArray:[[tableData objectAtIndex:indexPath.section] objectForKey:@"items"]];
+        
+        UITextField *textField = nil;
+        for (UIView *oneView in cell.contentView.subviews) {
+            if ([oneView isMemberOfClass:[UITextField class]]) {
+                textField = (UITextField *)oneView;
+            }
+        }
+        
+        textField.text = [rowsForSection objectAtIndex: indexPath.row];
+        textField.tag = [indexPath section];
+        if ([indexPath section] > 0) {
+            textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+        }
+        if ([indexPath section] == 1) {
+            textField.secureTextEntry = YES;
+        }
+        return cell;
+    } else if(indexPath.section == 3){
+        static NSString *CellIdentifier = @"SignInCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            
+            GIDSignInButton *siginInButton = [[GIDSignInButton alloc] initWithFrame:CGRectMake(10.0, 0.0, 300.0, 40.0)];
+            [cell.contentView addSubview:siginInButton];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        return cell;
+    } else {
+        return [self tableView:tableView centeredTextStyleCell:@"Sign Out"];
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView centeredTextStyleCell:(NSString *)text {
+    static NSString *CellIdentifier = @"CenteredTextCellStyle";
+    
+    NSInteger mainLabelTag = 1;
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-		
-		UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10.0, 10.0, 250.0, 40.0)];
-		textField.delegate = self;	
-		textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-		[cell.contentView addSubview:textField];
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
+        UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 2.0, 285.0, 40.0)];
+        mainLabel.textAlignment = UITextAlignmentCenter;
+        mainLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17.0];
+        mainLabel.textColor = [UIColor blackColor];
+        mainLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;
+        mainLabel.tag = mainLabelTag;
+        [cell.contentView addSubview:mainLabel];
     }
     
-    // Configure the cell...
-	NSArray *rowsForSection = [[NSArray alloc] initWithArray:[[tableData objectAtIndex:indexPath.section] objectForKey:@"items"]];
-	
-	UITextField *textField = nil;
-    for (UIView *oneView in cell.contentView.subviews) {
-        if ([oneView isMemberOfClass:[UITextField class]]) {
-            textField = (UITextField *)oneView;
-		}
-    }
-	
-	textField.text = [rowsForSection objectAtIndex: indexPath.row];
-    textField.tag = [indexPath section];
-	if ([indexPath section] > 0) {
-		textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-	}
-	if ([indexPath section] == 1) {
-		textField.secureTextEntry = YES;
-	}
-    return cell;
+    // Set up the cell...
+    UILabel *mainLabel = (UILabel *) [cell.contentView viewWithTag:mainLabelTag];
+    mainLabel.text = text;
+    
+    return cell;	
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
@@ -259,14 +309,10 @@
 #pragma mark Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
-    [detailViewController release];
-    */
+    if (indexPath.section == 4) {
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [[GIDSignIn sharedInstance] signOut];
+    }
 }
 
 

@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "ManagedObjectContextService.h"
+#import <Google/SignIn.h>
 
-@interface WorkoutListAppDelegate : NSObject <UIApplicationDelegate> {
+@interface WorkoutListAppDelegate : NSObject <UIApplicationDelegate, GIDSignInDelegate> {
     UIWindow *window;
 	UINavigationController *navController;
     ManagedObjectContextService *_managedObjectContextService;
