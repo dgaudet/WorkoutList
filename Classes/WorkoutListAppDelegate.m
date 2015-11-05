@@ -40,8 +40,7 @@
 	navController = [[UINavigationController alloc] init];
 	[navController pushViewController:rootViewController animated:NO];
 	
-    window.rootViewController = rootViewController;
-	[window addSubview:navController.view];
+    window.rootViewController = navController;
 	[window makeKeyAndVisible];
 	
     return YES;

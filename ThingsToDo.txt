@@ -4,7 +4,7 @@
 *** if not display sign in button, not sign out
 * On Signin button click
 ** check for signin error and handle gracefully, if the user clicks cancel they return a specific error
-* Fix view presentation errors
+* -Fix view presentation errors-
 * Create custom centeredTextStyleCell instead of duplicating in EditUserListTableViewController and ExerciseListTableViewController
 
 * Add Start/End Workout button to bottom of ExerciceListTableViewController
