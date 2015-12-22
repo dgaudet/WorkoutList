@@ -301,6 +301,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0420;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						DevelopmentTeam = GEK772SQ7W;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "WorkoutList" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -450,11 +455,15 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				BUNDLE_ID_SUFFIX = .beta;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WorkoutList_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "WorkoutList-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/Google/Libraries",
@@ -467,6 +476,7 @@
 					"$(PROJECT_DIR)/Pods/GoogleUtilities/Libraries",
 				);
 				PRODUCT_NAME = "WorkoutList-Beta";
+				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -485,14 +495,17 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				BUNDLE_ID_SUFFIX = .dev;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WorkoutList_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "WorkoutList-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/Google/Libraries",
@@ -505,6 +518,7 @@
 					"$(PROJECT_DIR)/Pods/GoogleUtilities/Libraries",
 				);
 				PRODUCT_NAME = WorkoutList;
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				USER_HEADER_SEARCH_PATHS = /usr/include/libxml2;
 			};
@@ -523,11 +537,15 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				BUNDLE_ID_SUFFIX = "";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WorkoutList_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "WorkoutList-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/Google/Libraries",
@@ -540,6 +558,7 @@
 					"$(PROJECT_DIR)/Pods/GoogleUtilities/Libraries",
 				);
 				PRODUCT_NAME = WorkoutList;
+				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				VALIDATE_PRODUCT = YES;
 			};
