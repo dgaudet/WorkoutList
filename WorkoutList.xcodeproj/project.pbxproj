@@ -31,6 +31,7 @@
 		05CE57721808F55000E5E445 /* ExerciseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CE57711808F55000E5E445 /* ExerciseTableViewCell.m */; };
 		05D2F4AC17F4B80400A68701 /* ManagedObjectContextService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D2F4AB17F4B80400A68701 /* ManagedObjectContextService.m */; };
 		05D2F4B317F4BB1D00A68701 /* FetchEntityService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D2F4B217F4BB1D00A68701 /* FetchEntityService.m */; };
+		05E437E71C290A2F002A2D68 /* CSVFileGenerationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E437E61C290A2F002A2D68 /* CSVFileGenerationService.m */; };
 		1D3623260D0F684500981E51 /* WorkoutListAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* WorkoutListAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -84,6 +85,8 @@
 		05D2F4AB17F4B80400A68701 /* ManagedObjectContextService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagedObjectContextService.m; sourceTree = "<group>"; };
 		05D2F4B117F4BB1D00A68701 /* FetchEntityService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchEntityService.h; sourceTree = "<group>"; };
 		05D2F4B217F4BB1D00A68701 /* FetchEntityService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchEntityService.m; sourceTree = "<group>"; };
+		05E437E51C290A2F002A2D68 /* CSVFileGenerationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSVFileGenerationService.h; sourceTree = "<group>"; };
+		05E437E61C290A2F002A2D68 /* CSVFileGenerationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSVFileGenerationService.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* WorkoutListAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkoutListAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* WorkoutListAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkoutListAppDelegate.m; sourceTree = "<group>"; };
@@ -257,6 +260,8 @@
 				05806F4813621F02001C5317 /* WorkOutService.m */,
 				05822EB213661A1300357408 /* WorkOutSessionService.h */,
 				05822EB313661A1300357408 /* WorkOutSessionService.m */,
+				05E437E51C290A2F002A2D68 /* CSVFileGenerationService.h */,
+				05E437E61C290A2F002A2D68 /* CSVFileGenerationService.m */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -403,6 +408,7 @@
 				05D2F4AC17F4B80400A68701 /* ManagedObjectContextService.m in Sources */,
 				05CE57721808F55000E5E445 /* ExerciseTableViewCell.m in Sources */,
 				05513AC912F3CCA9003E49DF /* ExerciseListTableViewController.m in Sources */,
+				05E437E71C290A2F002A2D68 /* CSVFileGenerationService.m in Sources */,
 				058410C112F5032900B54241 /* EditRowListTableViewController.m in Sources */,
 				058D854012F614D200EDBC90 /* Exercise.m in Sources */,
 				058431111304C76800DC5CF5 /* ExerciseGroup.m in Sources */,

@@ -27,8 +27,6 @@
 //- (void)createAndSaveSpreadsheetWithFeed:(GDataFeedDocList *)feed inFolderWithName:(GDataEntryFolderDoc *)folderEntry;
 - (NSString *)generateSessionSpreadSheetTitle;
 - (NSString *)generateSessionSpreadSheetData;
-- (NSURL *)createCSVFileWithBody:(NSString *)csvBody error:(NSError *)error;
-- (void)removeTempCSVFileAtURL:(NSURL *)fileURL error:(NSError *)error;
 //- (void)uploadDocTicket:(GDataServiceTicket *)ticket finishedWithEntry:(GDataEntryDocBase *)entry error:(NSError *)error;
 
 - (void)settingsButtonPressed:(id)sender;
@@ -58,6 +56,8 @@
 	self.navigationItem.leftBarButtonItem = settingsButton;
 	
 	tableData = [[NSArray alloc] initWithArray:[self loadTableData]];
+    
+    csvFileGenerationService = [CSVFileGenerationService sharedInstance];
 }
 
 - (NSArray *)loadTableData {
@@ -270,9 +270,15 @@
 - (void)exportButtonPressed:(id)sender {
     //[self showErrorAlert];
     
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    
+    NSString *formattedDateString = [dateFormatter stringFromDate:[NSDate date]];
+    NSString *fileName = [NSString stringWithFormat:@"WorkOutList-%@.csv", formattedDateString];
+    
     NSString *csvString = [self generateSessionSpreadSheetData];
     NSError *error = nil;
-    tempFileUrl = [self createCSVFileWithBody:csvString error:error];
+    NSURL *csvURL = [csvFileGenerationService createCSVFileWithFileName:fileName Body:csvString error:error];
     
     if (error) {
         [self showErrorAlert];
@@ -282,7 +288,7 @@
             mailController.mailComposeDelegate = self;
             [mailController setSubject:@"Email Workout Data"];
             [mailController setMessageBody:@"Attached is a .csv file of your Workout Data." isHTML:NO];
-            [mailController addAttachmentData:[NSData dataWithContentsOfURL:tempFileUrl] mimeType:@"text/csv" fileName:@"file.csv"];
+            [mailController addAttachmentData:[NSData dataWithContentsOfURL:csvURL] mimeType:@"text/csv" fileName:fileName];
             
             [self presentViewController:mailController animated:YES completion:nil];
         } else {
@@ -295,12 +301,10 @@
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
     [self dismissViewControllerAnimated:YES completion:nil];
-    if (tempFileUrl) {
-        NSError *removeFileError = nil;
-        [self removeTempCSVFileAtURL:tempFileUrl error:removeFileError];
-        if (removeFileError) {
-            [self showErrorAlert];
-        }
+    NSError *removeFileError = nil;
+    [csvFileGenerationService removeTempFilesWithError:removeFileError];
+    if (removeFileError) {
+        [self showErrorAlert];
     }
     if (error) {
         [self showErrorAlert];
@@ -360,36 +364,6 @@
 
 -(NSString *)generateSessionSpreadSheetData {
 	return [NSString stringWithString:[[WorkOutService sharedInstance] generateCSVForAllWorkOuts]];
-}
-
--(NSURL *)createCSVFileWithBody:(NSString *)csvBody error:(NSError *)error {
-    NSString *fileName = [NSString stringWithFormat:@"%@_%@", [[NSProcessInfo processInfo] globallyUniqueString], @"file.csv"];
-    NSURL *fileURL = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:fileName]];
-    NSLog(@"File path: %@", fileURL);
-    
-//    NSString *fileLocation = @"Path";
-//    if (![[NSFileManager defaultManager] fileExistsAtPath:fileLocation]) {
-//        [[NSFileManager defaultManager] createFileAtPath:fileLocation contents:nil attributes:nil];
-//        NSLog(@"Created file");
-//    }
-//    
-//    NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:fileLocation];
-//    [fileHandle truncateFileAtOffset:[fileHandle seekToEndOfFile]];
-//    [fileHandle writeData:[csvBody dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    NSData *csvData = [csvBody dataUsingEncoding:NSUTF8StringEncoding];
-    [csvData writeToURL:fileURL options:NSDataWritingAtomic error:&error];
-    
-    return fileURL;
-}
-
--(void)removeTempCSVFileAtURL:(NSURL *)fileURL error:(NSError *)error {
-    [[NSFileManager defaultManager] removeItemAtURL:fileURL error:&error];
-    if (error) {
-        NSLog(@"File could not be removed");
-    } else {
-        NSLog(@"File deleted: %@", fileURL);
-    }
 }
 
 //- (void)uploadDocTicket:(GDataServiceTicket *)ticket finishedWithEntry:(GDataEntryDocBase *)entry error:(NSError *)error {

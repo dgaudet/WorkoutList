@@ -10,11 +10,12 @@
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
 #import "EditUserListTableViewController.h"
+#import "CSVFileGenerationService.h"
 
 @interface RootViewController : UITableViewController <EditUserListTableViewControllerDelegate, MFMailComposeViewControllerDelegate> {
 	NSArray *tableData;
 	UIActivityIndicatorView *spinner;
-    NSURL *tempFileUrl;
+    CSVFileGenerationService *csvFileGenerationService;
 }
 
 @end
