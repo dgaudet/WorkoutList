@@ -269,7 +269,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
 		UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 2.0, 285.0, 40.0)];
-        mainLabel.textAlignment = UITextAlignmentCenter;
+        mainLabel.textAlignment = NSTextAlignmentCenter;
 		mainLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17.0];
         mainLabel.textColor = [UIColor blackColor];
         mainLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;		
@@ -354,7 +354,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
     Exercise *exercise = [self exerciseForRowAtIndexPath:sourceIndexPath];
     
     ExerciseGroup *toGroup = [tableData objectAtIndex:destinationIndexPath.section];
-    NSNumber *ordinal = [NSNumber numberWithInt:destinationIndexPath.row];
+    NSNumber *ordinal = [NSNumber numberWithLong:destinationIndexPath.row];
 
     [[ExerciseGroupService sharedInstance] moveExcercise:exercise fromGroup:fromGroup toGroup:toGroup toOrdinal:ordinal];
 }

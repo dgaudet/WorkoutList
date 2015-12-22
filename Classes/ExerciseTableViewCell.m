@@ -36,7 +36,7 @@
     if (self) {
         nameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 		nameLabel.contentMode = UIViewContentModeScaleAspectFit;
-        nameLabel.lineBreakMode = UILineBreakModeWordWrap;
+        nameLabel.lineBreakMode = NSLineBreakByWordWrapping;
         nameLabel.numberOfLines = 999;
         nameLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17.0];
         nameLabel.textColor = [UIColor blackColor];

@@ -216,7 +216,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
         UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 2.0, 285.0, 40.0)];
-        mainLabel.textAlignment = UITextAlignmentCenter;
+        mainLabel.textAlignment = NSTextAlignmentCenter;
         mainLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17.0];
         mainLabel.textColor = [UIColor blackColor];
         mainLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;

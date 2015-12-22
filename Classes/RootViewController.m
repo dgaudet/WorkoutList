@@ -157,7 +157,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
 		UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 2.0, 285.0, 40.0)];		
-        mainLabel.textAlignment = UITextAlignmentCenter;
+        mainLabel.textAlignment = NSTextAlignmentCenter;
 		mainLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17.0];
         mainLabel.textColor = [UIColor blackColor];
         mainLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;		
@@ -284,7 +284,7 @@
             [mailController setMessageBody:@"Attached is a .csv file of your Workout Data." isHTML:NO];
             [mailController addAttachmentData:[NSData dataWithContentsOfURL:tempFileUrl] mimeType:@"text/csv" fileName:@"file.csv"];
             
-            [self presentModalViewController:mailController animated:YES];
+            [self presentViewController:mailController animated:YES completion:nil];
         } else {
             [self showErrorAlert];
         }
@@ -294,7 +294,7 @@
 }
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
     if (tempFileUrl) {
         NSError *removeFileError = nil;
         [self removeTempCSVFileAtURL:tempFileUrl error:removeFileError];
@@ -411,17 +411,16 @@
 	userController.delegate = self;
 	UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:userController];
 	
-	[self presentModalViewController:navController animated:YES];
-	
+    [self presentViewController:navController animated:YES completion:nil];
 }
 
 - (void)editUserListTableViewController:(EditUserListTableViewController *)controller didChangeUser:(User *)changedUser {
-	[self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 	[[UserService sharedInstance] updateUser:changedUser];
 }
 
 - (void)editUserListTableViewControllerDidCancel:(EditUserListTableViewController *)controller {
-	[self dismissModalViewControllerAnimated:YES];
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark -
