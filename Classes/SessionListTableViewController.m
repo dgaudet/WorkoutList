@@ -75,6 +75,8 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
 	dateFormatter = [[NSDateFormatter alloc] init];
     NSString *formatString = [NSDateFormatter dateFormatFromTemplate:@"MMM, dd, yyyy" options:0 locale:[NSLocale currentLocale]];
     [dateFormatter setDateFormat:formatString];
+    
+    csvFileGenerationService = [CSVFileGenerationService sharedInstance];
 }
 		 
 - (NSArray *)loadTableDataArrayWithWorkOutSessionsFromDb {
@@ -208,9 +210,41 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
 #pragma mark Export work
 
 - (void)exportButtonPressed:(id)sender {
-    [self showErrorAlert];
+    NSString *fileName = [self generateSessionSpreadSheetTitle];
+    
+    NSString *csvString = [self generateSessionSpreadSheetData];
+    NSError *error = nil;
+    NSURL *csvURL = [csvFileGenerationService createCSVFileWithFileName:fileName Body:csvString error:error];
+    
+    if (error) {
+        [self showErrorAlert];
+    } else {
+        if (MFMailComposeViewController.canSendMail) {
+            MFMailComposeViewController *mailController = [[MFMailComposeViewController alloc] init];
+            mailController.mailComposeDelegate = self;
+            [mailController setSubject:@"Email Workout Session Data"];
+            [mailController setMessageBody:@"Attached is a .csv file of your Workout Session Data." isHTML:NO];
+            [mailController addAttachmentData:[NSData dataWithContentsOfURL:csvURL] mimeType:@"text/csv" fileName:fileName];
+            
+            [self presentViewController:mailController animated:YES completion:nil];
+        } else {
+            [self showErrorAlert];
+        }
+    }
 //	[[GoogleDataService sharedInstance] fetchDocListWithdidFinishSelector:@selector(docListFetchTicket:finishedWithFeed:error:) forDelegate:self];
 //	[self showLoadingIndicators];
+}
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    NSError *removeFileError = nil;
+    [csvFileGenerationService removeTempFilesWithError:removeFileError];
+    if (removeFileError) {
+        [self showErrorAlert];
+    }
+    if (error) {
+        [self showErrorAlert];
+    }
 }
 
 //- (void)docListFetchTicket:(GDataServiceTicket *)ticket finishedWithFeed:(GDataFeedDocList *)feed error:(NSError *)error {
@@ -257,10 +291,9 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
 -(NSString *)generateSessionSpreadSheetTitle {
 	NSDate *currentDate = [NSDate date];
 	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-	[formatter setDateStyle:NSDateFormatterShortStyle];
-	[formatter setTimeStyle:NSDateFormatterShortStyle];
+	[formatter setDateFormat:@"yyyy-MM-dd"];
 	NSString *formattedDateString = [formatter stringFromDate:currentDate];
-	NSString *title = [NSString stringWithFormat:@"%@ %@", SLTVC_SPREADSHEET_NAME, formattedDateString];
+	NSString *title = [NSString stringWithFormat:@"%@-%@.csv", SLTVC_SPREADSHEET_NAME, formattedDateString];
 	return title;
 }
 

@@ -268,13 +268,7 @@
 #pragma mark Export work
 
 - (void)exportButtonPressed:(id)sender {
-    //[self showErrorAlert];
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-    
-    NSString *formattedDateString = [dateFormatter stringFromDate:[NSDate date]];
-    NSString *fileName = [NSString stringWithFormat:@"WorkOutList-%@.csv", formattedDateString];
+    NSString *fileName = [self generateSessionSpreadSheetTitle];
     
     NSString *csvString = [self generateSessionSpreadSheetData];
     NSError *error = nil;
@@ -355,10 +349,9 @@
 -(NSString *)generateSessionSpreadSheetTitle {
 	NSDate *currentDate = [NSDate date];
 	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-	[formatter setDateStyle:NSDateFormatterShortStyle];
-	[formatter setTimeStyle:NSDateFormatterShortStyle];
+	[formatter setDateFormat:@"yyyy-MM-dd"];
 	NSString *formattedDateString = [formatter stringFromDate:currentDate];
-	NSString *title = [NSString stringWithFormat:@"Exercises %@", formattedDateString];
+	NSString *title = [NSString stringWithFormat:@"WorkOutList-%@.csv", formattedDateString];
 	return title;
 }
 
