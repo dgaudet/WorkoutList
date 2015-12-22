@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
+#import <MessageUI/MFMailComposeViewController.h>
 #import "EditUserListTableViewController.h"
 
-@interface RootViewController : UITableViewController <EditUserListTableViewControllerDelegate> {
+@interface RootViewController : UITableViewController <EditUserListTableViewControllerDelegate, MFMailComposeViewControllerDelegate> {
 	NSArray *tableData;
 	UIActivityIndicatorView *spinner;
+    NSURL *tempFileUrl;
 }
 
 @end

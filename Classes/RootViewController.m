@@ -26,8 +26,11 @@
 //- (void)docListFetchTicket:(GDataServiceTicket *)ticket finishedWithFeed:(GDataFeedDocList *)feed error:(NSError *)error;
 //- (void)createAndSaveSpreadsheetWithFeed:(GDataFeedDocList *)feed inFolderWithName:(GDataEntryFolderDoc *)folderEntry;
 - (NSString *)generateSessionSpreadSheetTitle;
-- (NSString*)generateSessionSpreadSheetData;
+- (NSString *)generateSessionSpreadSheetData;
+- (NSURL *)createCSVFileWithBody:(NSString *)csvBody error:(NSError *)error;
+- (void)removeTempCSVFileAtURL:(NSURL *)fileURL error:(NSError *)error;
 //- (void)uploadDocTicket:(GDataServiceTicket *)ticket finishedWithEntry:(GDataEntryDocBase *)entry error:(NSError *)error;
+
 - (void)settingsButtonPressed:(id)sender;
 - (void)settingsControllerDidFinish;
 
@@ -265,9 +268,43 @@
 #pragma mark Export work
 
 - (void)exportButtonPressed:(id)sender {
-    [self showErrorAlert];
+    //[self showErrorAlert];
+    
+    NSString *csvString = [self generateSessionSpreadSheetData];
+    NSError *error = nil;
+    tempFileUrl = [self createCSVFileWithBody:csvString error:error];
+    
+    if (error) {
+        [self showErrorAlert];
+    } else {
+        if (MFMailComposeViewController.canSendMail) {
+            MFMailComposeViewController *mailController = [[MFMailComposeViewController alloc] init];
+            mailController.mailComposeDelegate = self;
+            [mailController setSubject:@"Email Workout Data"];
+            [mailController setMessageBody:@"Attached is a .csv file of your Workout Data." isHTML:NO];
+            [mailController addAttachmentData:[NSData dataWithContentsOfURL:tempFileUrl] mimeType:@"text/csv" fileName:@"file.csv"];
+            
+            [self presentModalViewController:mailController animated:YES];
+        } else {
+            [self showErrorAlert];
+        }
+    }
 //	[[GoogleDataService sharedInstance] fetchDocListWithdidFinishSelector:@selector(docListFetchTicket:finishedWithFeed:error:) forDelegate:self];
 //	[self showLoadingIndicators];
+}
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+    [self dismissModalViewControllerAnimated:YES];
+    if (tempFileUrl) {
+        NSError *removeFileError = nil;
+        [self removeTempCSVFileAtURL:tempFileUrl error:removeFileError];
+        if (removeFileError) {
+            [self showErrorAlert];
+        }
+    }
+    if (error) {
+        [self showErrorAlert];
+    }
 }
 
 //- (void)docListFetchTicket:(GDataServiceTicket *)ticket finishedWithFeed:(GDataFeedDocList *)feed error:(NSError *)error {
@@ -323,6 +360,36 @@
 
 -(NSString *)generateSessionSpreadSheetData {
 	return [NSString stringWithString:[[WorkOutService sharedInstance] generateCSVForAllWorkOuts]];
+}
+
+-(NSURL *)createCSVFileWithBody:(NSString *)csvBody error:(NSError *)error {
+    NSString *fileName = [NSString stringWithFormat:@"%@_%@", [[NSProcessInfo processInfo] globallyUniqueString], @"file.csv"];
+    NSURL *fileURL = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:fileName]];
+    NSLog(@"File path: %@", fileURL);
+    
+//    NSString *fileLocation = @"Path";
+//    if (![[NSFileManager defaultManager] fileExistsAtPath:fileLocation]) {
+//        [[NSFileManager defaultManager] createFileAtPath:fileLocation contents:nil attributes:nil];
+//        NSLog(@"Created file");
+//    }
+//    
+//    NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:fileLocation];
+//    [fileHandle truncateFileAtOffset:[fileHandle seekToEndOfFile]];
+//    [fileHandle writeData:[csvBody dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    NSData *csvData = [csvBody dataUsingEncoding:NSUTF8StringEncoding];
+    [csvData writeToURL:fileURL options:NSDataWritingAtomic error:&error];
+    
+    return fileURL;
+}
+
+-(void)removeTempCSVFileAtURL:(NSURL *)fileURL error:(NSError *)error {
+    [[NSFileManager defaultManager] removeItemAtURL:fileURL error:&error];
+    if (error) {
+        NSLog(@"File could not be removed");
+    } else {
+        NSLog(@"File deleted: %@", fileURL);
+    }
 }
 
 //- (void)uploadDocTicket:(GDataServiceTicket *)ticket finishedWithEntry:(GDataEntryDocBase *)entry error:(NSError *)error {

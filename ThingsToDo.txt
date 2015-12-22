@@ -6,6 +6,8 @@
 ** check for signin error and handle gracefully, if the user clicks cancel they return a specific error
 * -Fix view presentation errors-
 * Create custom centeredTextStyleCell instead of duplicating in EditUserListTableViewController and ExerciseListTableViewController
+* Add ability to save document to drive
+* add ability to get list of folders from drive
 
 * Add Start/End Workout button to bottom of ExerciceListTableViewController
 * Add ability to move Excercieses from group to group
