@@ -20,9 +20,9 @@
 
 - (void)exerciseWithName:(NSString *)name weight:(NSString *)weight reps:(NSString *)reps ordinal:(NSNumber *)ordinal exerciseGroup:(ExerciseGroup *)exerciseGroup;
 - (NSURL *)applicationDocumentsDirectory;
-- (void)generateAndSaveWorkOut1;
-- (void)generateAndSaveWorkOut2;
-- (void)generateAndSaveWorkOut3;
+- (void)generateAndSaveWorkOut_AbsChestForearm;
+- (void)generateAndSaveWorkOut_BackBicepNeck;
+- (void)generateAndSaveWorkOut_ShoulderLeg;
 
 @end
 
@@ -52,12 +52,12 @@
 }
 
 - (void)populateDatabase {
-	[self generateAndSaveWorkOut1];
-	[self generateAndSaveWorkOut2];
-	[self generateAndSaveWorkOut3];
+    [self generateAndSaveWorkOut_ShoulderLeg];
+    [self generateAndSaveWorkOut_AbsChestForearm];
+    [self generateAndSaveWorkOut_BackBicepNeck];
 }
 
--(void)generateAndSaveWorkOut1 {
+-(void)generateAndSaveWorkOut_AbsChestForearm {
 	ExerciseGroup *exerciseGroup1 = (ExerciseGroup *)[NSEntityDescription insertNewObjectForEntityForName:EG_ENTITY_NAME inManagedObjectContext:_managedObjectContext];
 	[exerciseGroup1 setName: @"Workout Group 1"];
 	[self exerciseWithName:@"Bench Press" weight:@"130" reps:@"10" ordinal:[NSNumber numberWithInt:0] exerciseGroup:exerciseGroup1];
@@ -118,8 +118,8 @@
 	
     WorkOutSession *workOutSession = (WorkOutSession *)[NSEntityDescription insertNewObjectForEntityForName:WOS_ENTITY_NAME inManagedObjectContext:_managedObjectContext];
 	NSDate *currentDate = [NSDate date];
-	[workOutSession setStartDate:[currentDate dateByAddingTimeInterval:-1200]];
-	[workOutSession setEndDate:[currentDate dateByAddingTimeInterval:-100]];
+	[workOutSession setStartDate:[currentDate dateByAddingTimeInterval:-2880]];
+	[workOutSession setEndDate:[currentDate dateByAddingTimeInterval:-60]];
 	[workOutSession setWorkOut:workOut];
     
 	if (![_managedObjectContextService saveContextSuccessOrFail]) {
@@ -127,7 +127,7 @@
 	}
 }
 
--(void)generateAndSaveWorkOut2 {
+-(void)generateAndSaveWorkOut_BackBicepNeck {
 	ExerciseGroup *exerciseGroup1 = (ExerciseGroup *)[NSEntityDescription insertNewObjectForEntityForName:EG_ENTITY_NAME inManagedObjectContext:_managedObjectContext];
 	[exerciseGroup1 setName: @"Workout Group 1"];
 	[self exerciseWithName:@"Barbell Bent Over Row" weight:@"90" reps:@"7" ordinal:[NSNumber numberWithInt:0] exerciseGroup:exerciseGroup1];
@@ -177,8 +177,8 @@
 
 	WorkOutSession *workOutSession = (WorkOutSession *)[NSEntityDescription insertNewObjectForEntityForName:WOS_ENTITY_NAME inManagedObjectContext:_managedObjectContext];
 	NSDate *currentDate = [NSDate date];
-	[workOutSession setStartDate:[currentDate dateByAddingTimeInterval:-100200]];
-	[workOutSession setEndDate:[currentDate dateByAddingTimeInterval:-100]];
+	[workOutSession setStartDate:[currentDate dateByAddingTimeInterval:-21600]];
+	[workOutSession setEndDate:[currentDate dateByAddingTimeInterval:-18540]];
 	[workOutSession setWorkOut:workOut];
 	
 	if (![_managedObjectContextService saveContextSuccessOrFail]) {
@@ -186,7 +186,7 @@
 	}
 }	
 
--(void)generateAndSaveWorkOut3 {		
+-(void)generateAndSaveWorkOut_ShoulderLeg {
 	WorkOut *workOut = (WorkOut *)[NSEntityDescription insertNewObjectForEntityForName:WO_ENTITY_NAME inManagedObjectContext:_managedObjectContext];
 	[workOut setName:@"Shoulder/Leg"];
 	
@@ -243,8 +243,8 @@
 	
 	WorkOutSession *workOutSession = (WorkOutSession *)[NSEntityDescription insertNewObjectForEntityForName:WOS_ENTITY_NAME inManagedObjectContext:_managedObjectContext];
 	NSDate *currentDate = [NSDate date];
-	[workOutSession setStartDate:[currentDate dateByAddingTimeInterval:-200]];
-	[workOutSession setEndDate:[currentDate dateByAddingTimeInterval:-100]];
+	[workOutSession setStartDate:[currentDate dateByAddingTimeInterval:-86400]];
+	[workOutSession setEndDate:[currentDate dateByAddingTimeInterval:-83040]];
 	[workOutSession setWorkOut:workOut];
 	
 	if (![_managedObjectContextService saveContextSuccessOrFail]) {
