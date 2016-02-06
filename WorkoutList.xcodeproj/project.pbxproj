@@ -28,6 +28,7 @@
 		0585DE261332E29A0094C98C /* WorkOutSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 0585DE251332E29A0094C98C /* WorkOutSession.m */; };
 		058D854012F614D200EDBC90 /* Exercise.m in Sources */ = {isa = PBXBuildFile; fileRef = 058D853F12F614D200EDBC90 /* Exercise.m */; };
 		05957B5E135FB3F1004F1CE4 /* GoogleDataService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05957B5D135FB3F1004F1CE4 /* GoogleDataService.m */; };
+		05B3F4D51C659D34008B323A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B3F4D41C659D34008B323A /* LaunchScreen.xib */; };
 		05CE57721808F55000E5E445 /* ExerciseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CE57711808F55000E5E445 /* ExerciseTableViewCell.m */; };
 		05D2F4AC17F4B80400A68701 /* ManagedObjectContextService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D2F4AB17F4B80400A68701 /* ManagedObjectContextService.m */; };
 		05D2F4B317F4BB1D00A68701 /* FetchEntityService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D2F4B217F4BB1D00A68701 /* FetchEntityService.m */; };
@@ -79,6 +80,7 @@
 		058D853F12F614D200EDBC90 /* Exercise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Exercise.m; sourceTree = "<group>"; };
 		05957B5C135FB3F1004F1CE4 /* GoogleDataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleDataService.h; sourceTree = "<group>"; };
 		05957B5D135FB3F1004F1CE4 /* GoogleDataService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleDataService.m; sourceTree = "<group>"; };
+		05B3F4D41C659D34008B323A /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		05CE57701808F55000E5E445 /* ExerciseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExerciseTableViewCell.h; sourceTree = "<group>"; };
 		05CE57711808F55000E5E445 /* ExerciseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExerciseTableViewCell.m; sourceTree = "<group>"; };
 		05D2F4AA17F4B80400A68701 /* ManagedObjectContextService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagedObjectContextService.h; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				05851AF2132D9643009AEB9C /* DatabasePopulator.m */,
 				35B373C213689D91000B48C2 /* EditUserListTableViewController.h */,
 				35B373C313689D91000B48C2 /* EditUserListTableViewController.m */,
+				05B3F4D41C659D34008B323A /* LaunchScreen.xib */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 				28AD73600D9D9599002E5188 /* MainWindow.xib in Resources */,
 				28F335F11007B36200424DE2 /* RootViewController.xib in Resources */,
 				0529800F1BB5FF1F008B1493 /* Images.xcassets in Resources */,
+				05B3F4D51C659D34008B323A /* LaunchScreen.xib in Resources */,
 				0585C7F4133EA7A9009F084A /* bicep.gif in Resources */,
 				0525377A17F0C58D0084202E /* ThingsToDo.txt in Resources */,
 				055B38EE1BE0387300FA8DAF /* GoogleService-Info.plist in Resources */,
@@ -465,7 +469,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "WorkoutList-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/Google/Libraries",
@@ -505,7 +509,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "WorkoutList-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/Google/Libraries",
@@ -543,7 +547,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "WorkoutList-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/Google/Libraries",
