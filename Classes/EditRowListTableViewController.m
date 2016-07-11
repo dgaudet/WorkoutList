@@ -29,7 +29,6 @@
 //will be set to blank, even though you didn't actually enter blank
 //ToDo: fix bug where if app is shutdown while you were on the edit form, it will actually save the temporary data in the fields, without the
 //user clicking save
-//ToDo: new feature - when the user clicks inside a cell, but not actually inside the UITextField, give the textField focus
 //ToDo: if you add text to any field then hit back it saves anyway
 
 /*
@@ -53,40 +52,6 @@
 	
 	UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonPressed:)];
 	self.navigationItem.rightBarButtonItem = doneButton;
-}
-
--(void)doneButtonPressed:(id)sender{
-	if (textFieldBeingEdited != nil){
-		[self setCorrectValueFromTextField:textFieldBeingEdited];
-	}
-
-	if([self.delegate respondsToSelector:@selector(editRowListTableViewController:didChangeExercise:)]){
-		[self.delegate editRowListTableViewController:self didChangeExercise:exercise];
-	}
-}
-
--(void)setCorrectValueFromTextField:(UITextField *)textField {
-	if (textField.tag == 0) {
-		exercise.name = [textField.text copy];
-	} else if (textField.tag == 1) {
-		exercise.weight = [textField.text copy];
-	} else {
-		exercise.reps = [textField.text copy];
-	}
-}
-
-- (NSArray *)loadTableData{
-	NSArray *array1 = [[NSArray alloc] initWithObjects:exercise.name, nil];	
-	NSDictionary *section1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"Exercise Name:", @"Section Name", array1, @"items", nil];
-	
-	NSArray *array2 = [[NSArray alloc] initWithObjects:exercise.weight, nil];	
-	NSDictionary *section2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"Excercise Weight:", @"Section Name", array2, @"items", nil];
-	
-	NSArray *array3 = [[NSArray alloc] initWithObjects:exercise.reps, nil];	
-	NSDictionary *section3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"Excercise Reps:", @"Section Name", array3, @"items", nil];
-	
-	NSArray *tableInfo = [[NSArray alloc] initWithObjects: section1, section2, section3, nil];
-	return tableInfo;
 }
 
 /*
@@ -247,8 +212,10 @@
 #pragma mark Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here. Create and push another view controller.
-	NSLog(@"selected row %li", (long)indexPath.row);
+    UITextField *textField = [self tableView:tableView textFieldForRowAtIndexPath:indexPath];
+    if (textField) {
+        [textField becomeFirstResponder];
+    }
 }
 
 
@@ -267,7 +234,53 @@
     // For example: self.myOutlet = nil;
 }
 
+#pragma mark -
+#pragma private methods
 
+-(void)doneButtonPressed:(id)sender{
+    if (textFieldBeingEdited != nil){
+        [self setCorrectValueFromTextField:textFieldBeingEdited];
+    }
+    
+    if([self.delegate respondsToSelector:@selector(editRowListTableViewController:didChangeExercise:)]){
+        [self.delegate editRowListTableViewController:self didChangeExercise:exercise];
+    }
+}
+
+-(void)setCorrectValueFromTextField:(UITextField *)textField {
+    if (textField.tag == 0) {
+        exercise.name = [textField.text copy];
+    } else if (textField.tag == 1) {
+        exercise.weight = [textField.text copy];
+    } else {
+        exercise.reps = [textField.text copy];
+    }
+}
+
+- (NSArray *)loadTableData{
+    NSArray *array1 = [[NSArray alloc] initWithObjects:exercise.name, nil];
+    NSDictionary *section1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"Exercise Name:", @"Section Name", array1, @"items", nil];
+    
+    NSArray *array2 = [[NSArray alloc] initWithObjects:exercise.weight, nil];
+    NSDictionary *section2 = [[NSDictionary alloc] initWithObjectsAndKeys:@"Excercise Weight:", @"Section Name", array2, @"items", nil];
+    
+    NSArray *array3 = [[NSArray alloc] initWithObjects:exercise.reps, nil];
+    NSDictionary *section3 = [[NSDictionary alloc] initWithObjectsAndKeys:@"Excercise Reps:", @"Section Name", array3, @"items", nil];
+    
+    NSArray *tableInfo = [[NSArray alloc] initWithObjects: section1, section2, section3, nil];
+    return tableInfo;
+}
+
+- (UITextField *)tableView:(UITableView *)tableView textFieldForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    UITextField *textField = nil;
+    for (UIView *oneView in cell.contentView.subviews) {
+        if ([oneView isMemberOfClass:[UITextField class]]) {
+            textField = (UITextField *)oneView;
+        }
+    }
+    return textField;
+}
 
 @end
 
