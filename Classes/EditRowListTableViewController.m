@@ -120,13 +120,7 @@
     // Configure the cell...
 	NSArray *rowsForSection = [[NSArray alloc] initWithArray:[[tableData objectAtIndex:indexPath.section] objectForKey:@"items"]];
 	
-	UITextField *textField = nil;
-    for (UIView *oneView in cell.contentView.subviews) {
-        if ([oneView isMemberOfClass:[UITextField class]]) {
-            textField = (UITextField *)oneView;
-		}
-    }
-	
+	UITextField *textField = [self textFieldForCell:cell];
 	textField.placeholder = [rowsForSection objectAtIndex: indexPath.row];
     textField.tag = [indexPath section];
 	if ([indexPath section] > 0) {
@@ -155,15 +149,8 @@
 		NSUInteger nextIndex[] = {textField.tag + 1,0};
 		NSIndexPath *nextIndexPath = [NSIndexPath indexPathWithIndexes:nextIndex length:2];
 		UITableViewCell *nextCell = [self.tableView cellForRowAtIndexPath:nextIndexPath];
-	
-		UITextField *nextTextField = nil;
-		for (UIView *oneView in nextCell.contentView.subviews) {
-			if ([oneView isMemberOfClass:[UITextField class]]) {
-				nextTextField = (UITextField *)oneView;
-			}
-		}
-		[nextTextField becomeFirstResponder];
-	}
+        [self setFirstResponderOnCellTextField:nextCell];
+    }
 
 	return YES;
 }
@@ -212,12 +199,10 @@
 #pragma mark Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITextField *textField = [self tableView:tableView textFieldForRowAtIndexPath:indexPath];
-    if (textField) {
-        [textField becomeFirstResponder];
-    }
+    //basically sets focus on the text field when a tap is registered on the row
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    [self setFirstResponderOnCellTextField:cell];
 }
-
 
 #pragma mark -
 #pragma mark Memory management
@@ -271,8 +256,7 @@
     return tableInfo;
 }
 
-- (UITextField *)tableView:(UITableView *)tableView textFieldForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+- (UITextField *)textFieldForCell:(UITableViewCell *)cell {
     UITextField *textField = nil;
     for (UIView *oneView in cell.contentView.subviews) {
         if ([oneView isMemberOfClass:[UITextField class]]) {
@@ -280,6 +264,13 @@
         }
     }
     return textField;
+}
+
+- (void)setFirstResponderOnCellTextField:(UITableViewCell *)cell {
+    UITextField *textField = [self textFieldForCell:cell];
+    if (textField) {
+        [textField becomeFirstResponder];
+    }
 }
 
 @end
