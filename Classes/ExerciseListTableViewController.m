@@ -29,6 +29,7 @@
 - (void)endWorkOut;
 - (void)showErrorAlert;
 - (WorkOutSession *)findStartedWorkOutSession;
+- (bool)tableView:(UITableView *)tableView isWorkOutTimerButtonAtIndexPath:(NSIndexPath *)indexPath;
 
 @end
 
@@ -72,6 +73,8 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+    _exerciseGroupService = [ExerciseGroupService sharedInstance];
+    
 	UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
 	self.navigationItem.backBarButtonItem = backButton;
 		
@@ -82,13 +85,16 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 }
 
 - (NSArray *)loadTableDataArrayWithExerciseGroupsFromDb {
-	NSMutableArray *data = [[NSMutableArray alloc] initWithArray:[[ExerciseGroupService sharedInstance] 
+	NSMutableArray *data = [[NSMutableArray alloc] initWithArray:[_exerciseGroupService
 																  retreiveAllExerciseGroupsForWorkOutWithName: workOutName]];
 	startButtonIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    _endButtonIndexPath = [NSIndexPath indexPathForRow:0 inSection:[data count] + 1];
     if ([self findStartedWorkOutSession]) {
 		[data insertObject:END_WORK_OUT atIndex:0];
+        [data addObject:END_WORK_OUT];
 	} else {
 		[data insertObject:START_WORK_OUT atIndex:0];
+        [data addObject:START_WORK_OUT];
 	}
 	
 	return data;
@@ -142,7 +148,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	//Return the number of rows in a section
 	NSUInteger rowCount = 1;
-	if (section > 0) {
+	if (section != startButtonIndexPath.section && section != _endButtonIndexPath.section) {
 		ExerciseGroup *group = [tableData objectAtIndex:section];
  	 	NSArray *rowsForSection = [[NSArray alloc] initWithArray:[[group exercise] allObjects]];
 		rowCount = [rowsForSection count];
@@ -153,7 +159,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 	//Need to look into how to sort the allKeys so that it will behave correctly in each call for sections
 	NSString *title = nil;
-	if (section > 0) {
+	if (section != startButtonIndexPath.section && section != _endButtonIndexPath.section) {
 		title = [[tableData objectAtIndex:section] name];
 	}
 	return title;
@@ -161,7 +167,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     // Set up the cell...
-	if (indexPath.section == 0 && indexPath.row == 0) {
+    if ([self tableView:tableView isWorkOutTimerButtonAtIndexPath:indexPath]) {
 		return [self tableView:tableView centeredTextStyleCell:[tableData objectAtIndex:indexPath.section]];
 	} else {
 		Exercise *exerciseForRow = [self exerciseForRowAtIndexPath:indexPath];
@@ -317,7 +323,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat height = 43;
     NSString *text = @"";
-    if (indexPath.section > 0) {
+    if (![self tableView:tableView isWorkOutTimerButtonAtIndexPath:indexPath]) {
         Exercise *exerciseForRow = [self exerciseForRowAtIndexPath:indexPath];
         height = [ExerciseTableViewCell heightForCellWithString:exerciseForRow.name editingMode:self.editing] + 2.0;
         text = exerciseForRow.name;
@@ -343,7 +349,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 #pragma mark Cell Reordering
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == startButtonIndexPath.row && indexPath.section == startButtonIndexPath.section) {
+    if ([self tableView:tableView isWorkOutTimerButtonAtIndexPath:indexPath]) {
         return NO;
     }
     return YES;
@@ -371,7 +377,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 #pragma mark Cell Deleting
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == startButtonIndexPath.row && indexPath.section == startButtonIndexPath.section) {
+    if ([self tableView:tableView isWorkOutTimerButtonAtIndexPath:indexPath]) {
         return NO;
     }
 	return YES;
@@ -398,7 +404,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 #pragma mark Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	if (indexPath.section == 0 && indexPath.row == 0) {
+	if ([self tableView:tableView isWorkOutTimerButtonAtIndexPath:indexPath]) {
 		[self workOutSessionButtonPressed:indexPath];
 	} else {
 		EditRowListTableViewController *editNavController = [[EditRowListTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
@@ -430,7 +436,8 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 
 - (void)startWorkOut {
 	if ([[WorkOutSessionService sharedInstance] startWorkOutSessionForWorkOutWithName:workOutName]) {
-		[tableData replaceObjectAtIndex:0 withObject:END_WORK_OUT];	
+		[tableData replaceObjectAtIndex:startButtonIndexPath.section withObject:END_WORK_OUT];
+        [tableData replaceObjectAtIndex:_endButtonIndexPath.section withObject:END_WORK_OUT];
 	} else {
 		[self showErrorAlert];
 	}
@@ -442,10 +449,19 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 
 - (void)endWorkOut {	
 	if ([[WorkOutSessionService sharedInstance] endStartedWorkOutSessionForWorkOutWithName:workOutName]) {
-		[tableData replaceObjectAtIndex:0 withObject:START_WORK_OUT];
+        [tableData replaceObjectAtIndex:startButtonIndexPath.section withObject:START_WORK_OUT];
+        [tableData replaceObjectAtIndex:_endButtonIndexPath.section withObject:START_WORK_OUT];
 	} else {
 		[self showErrorAlert];
 	}
+}
+
+- (bool)tableView:(UITableView *)tableView isWorkOutTimerButtonAtIndexPath:(NSIndexPath *)indexPath {
+    bool isWorkoutTimer = NO;
+    if (indexPath.row == 0 && (indexPath.section == startButtonIndexPath.section || indexPath.section == _endButtonIndexPath.section)) {
+        isWorkoutTimer = YES;
+    }
+    return isWorkoutTimer;
 }
 
 
