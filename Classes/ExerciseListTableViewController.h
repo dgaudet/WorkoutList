@@ -10,6 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "EditRowListTableViewController.h"
 #import "ExerciseGroupService.h"
+#import "WorkOutSessionService.h"
 
 @interface ExerciseListTableViewController : UITableViewController <EditRowListTableViewControllerDelegate>{
 	NSMutableArray *tableData;
@@ -19,6 +20,7 @@
     NSIndexPath *_startButtonIndexPath;
     NSIndexPath *_endButtonIndexPath;
     ExerciseGroupService *_exerciseGroupService;
+    WorkOutSessionService *_workOutSessionService;
 }
 
 @property (nonatomic, strong) NSString *workOutName;

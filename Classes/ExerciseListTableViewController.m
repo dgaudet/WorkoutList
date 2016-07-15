@@ -30,7 +30,7 @@
 - (void)showErrorAlert;
 - (WorkOutSession *)findStartedWorkOutSession;
 - (bool)tableView:(UITableView *)tableView isWorkOutTimerButtonAtIndexPath:(NSIndexPath *)indexPath;
-- (UIColor *)ColorForStartEndWorkOutCellText:(NSString *)text;
+- (UIColor *)colorForStartEndWorkOutCell;
 
 @end
 
@@ -68,6 +68,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
     [super viewDidLoad];
 	
     _exerciseGroupService = [ExerciseGroupService sharedInstance];
+    _workOutSessionService = [WorkOutSessionService sharedInstance];
     
 	UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
 	self.navigationItem.backBarButtonItem = backButton;
@@ -163,7 +164,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
     // Set up the cell...
     if ([self tableView:tableView isWorkOutTimerButtonAtIndexPath:indexPath]) {
         NSString *buttonText = [tableData objectAtIndex:indexPath.section];
-        UIColor *buttonColor = [self ColorForStartEndWorkOutCellText:buttonText];
+        UIColor *buttonColor = [self colorForStartEndWorkOutCell];
 		return [self tableView:tableView centeredTextStyleCell:buttonText withBackgroundColor:buttonColor];
 	} else {
 		Exercise *exerciseForRow = [self exerciseForRowAtIndexPath:indexPath];
@@ -425,8 +426,8 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 		[self startWorkOut];
 	} else {
 		[self endWorkOut];
-        WorkOutSession *session = [[WorkOutSessionService sharedInstance] retreiveMostRecentlyEndedWorkOutSessionWithName:workOutName];
-        NSString *duration = [[WorkOutSessionService sharedInstance] friendlyDurationForWorkOutSession:session];
+        WorkOutSession *session = [_workOutSessionService retreiveMostRecentlyEndedWorkOutSessionWithName:workOutName];
+        NSString *duration = [_workOutSessionService friendlyDurationForWorkOutSession:session];
         message = [message stringByAppendingFormat:@"Nice Workout here's your time\n %@", duration];
 	}
 	[self.tableView reloadData];
@@ -437,7 +438,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 }
 
 - (void)startWorkOut {
-	if ([[WorkOutSessionService sharedInstance] startWorkOutSessionForWorkOutWithName:workOutName]) {
+	if ([_workOutSessionService startWorkOutSessionForWorkOutWithName:workOutName]) {
 		[tableData replaceObjectAtIndex:_startButtonIndexPath.section withObject:END_WORK_OUT];
         [tableData replaceObjectAtIndex:_endButtonIndexPath.section withObject:END_WORK_OUT];
 	} else {
@@ -446,11 +447,11 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 }
 
 - (WorkOutSession *)findStartedWorkOutSession {
-	return [[WorkOutSessionService sharedInstance] retreiveStartedWorkOutSessionWithName:workOutName];
+	return [_workOutSessionService retreiveStartedWorkOutSessionWithName:workOutName];
 }
 
 - (void)endWorkOut {	
-	if ([[WorkOutSessionService sharedInstance] endStartedWorkOutSessionForWorkOutWithName:workOutName]) {
+	if ([_workOutSessionService endStartedWorkOutSessionForWorkOutWithName:workOutName]) {
         [tableData replaceObjectAtIndex:_startButtonIndexPath.section withObject:START_WORK_OUT];
         [tableData replaceObjectAtIndex:_endButtonIndexPath.section withObject:START_WORK_OUT];
 	} else {
@@ -466,9 +467,9 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
     return isWorkoutTimer;
 }
 
-- (UIColor *)ColorForStartEndWorkOutCellText:(NSString *)text {
+- (UIColor *)colorForStartEndWorkOutCell {
     UIColor *color = [UIColor greenColor];
-    if (text == END_WORK_OUT) {
+    if ([self findStartedWorkOutSession]) {
         color = [UIColor redColor];
     }
     return color;
