@@ -23,13 +23,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView defaultStyleCell:(NSString *)name cellValue:(NSString *)value;
 - (UITableViewCell *)tableView:(UITableView *)tableView textBoxStyleCell:(NSString *)name cellValue:(NSString *)value;
 - (UITableViewCell *)tableView:(UITableView *)tableView threeColumnStyleCell:(NSString *)leftLabel middleLabel:(NSString *)middleLabel rightLabel:(NSString *)rightLabel;
-- (UITableViewCell *)tableView:(UITableView *)tableView centeredTextStyleCell:(NSString *)text;
+- (UITableViewCell *)tableView:(UITableView *)tableView centeredTextStyleCell:(NSString *)text withBackgroundColor:(UIColor *)backgroundColor;
 - (void)workOutSessionButtonPressed:(NSIndexPath *)indexPath;
 - (void)startWorkOut;
 - (void)endWorkOut;
 - (void)showErrorAlert;
 - (WorkOutSession *)findStartedWorkOutSession;
 - (bool)tableView:(UITableView *)tableView isWorkOutTimerButtonAtIndexPath:(NSIndexPath *)indexPath;
+- (UIColor *)ColorForStartEndWorkOutCellText:(NSString *)text;
 
 @end
 
@@ -161,7 +162,9 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     // Set up the cell...
     if ([self tableView:tableView isWorkOutTimerButtonAtIndexPath:indexPath]) {
-		return [self tableView:tableView centeredTextStyleCell:[tableData objectAtIndex:indexPath.section]];
+        NSString *buttonText = [tableData objectAtIndex:indexPath.section];
+        UIColor *buttonColor = [self ColorForStartEndWorkOutCellText:buttonText];
+		return [self tableView:tableView centeredTextStyleCell:buttonText withBackgroundColor:buttonColor];
 	} else {
 		Exercise *exerciseForRow = [self exerciseForRowAtIndexPath:indexPath];
         static NSString *ExerciseCellReuseIdentifier = @"ExerciseCellReuseIdentifier";
@@ -259,7 +262,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
     return cell;	
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView centeredTextStyleCell:(NSString *)text {
+- (UITableViewCell *)tableView:(UITableView *)tableView centeredTextStyleCell:(NSString *)text withBackgroundColor:(UIColor *)backgroundColor {
 	static NSString *CellIdentifier = @"CenteredTextCellStyle";
     
 	NSInteger mainLabelTag = 1;
@@ -267,20 +270,26 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
-		UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 2.0, 285.0, 40.0)];
+        
+        UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 2.0, 285.0, 40.0)];
         mainLabel.textAlignment = NSTextAlignmentCenter;
 		mainLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17.0];
         mainLabel.textColor = [UIColor blackColor];
         mainLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;		
-        mainLabel.tag = mainLabelTag;		
+        mainLabel.tag = mainLabelTag;
+
 		[cell.contentView addSubview:mainLabel];
     }
     
     // Set up the cell...
 	UILabel *mainLabel = (UILabel *) [cell.contentView viewWithTag:mainLabelTag];
-	mainLabel.text = text;	
+	mainLabel.text = text;
+    
+    if (backgroundColor) {
+        cell.backgroundColor = backgroundColor;
+    }
 	
-    return cell;	
+    return cell;
 }
 
 
@@ -455,6 +464,14 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
         isWorkoutTimer = YES;
     }
     return isWorkoutTimer;
+}
+
+- (UIColor *)ColorForStartEndWorkOutCellText:(NSString *)text {
+    UIColor *color = [UIColor greenColor];
+    if (text == END_WORK_OUT) {
+        color = [UIColor redColor];
+    }
+    return color;
 }
 
 
