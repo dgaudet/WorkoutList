@@ -15,7 +15,6 @@
 clear out that row. Instead add an x button on the right which clears out the row'
 * Allow adding and deleting exercises
 * Allow adding and deleting groups
-* Add Start/End Workout button to bottom of ExerciceListTableViewController
 * Show exercise run-time on the start/end button
 * Add ability to move Excercieses from group to group
 ** Must not allow moving rows to the groups with the start button - done

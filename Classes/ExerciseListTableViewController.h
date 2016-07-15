@@ -16,7 +16,7 @@
 	NSInteger lastRow;
 	NSInteger lastSection;
 	NSString *workOutName;
-    NSIndexPath *startButtonIndexPath;
+    NSIndexPath *_startButtonIndexPath;
     NSIndexPath *_endButtonIndexPath;
     ExerciseGroupService *_exerciseGroupService;
 }

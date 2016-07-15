@@ -48,15 +48,8 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 //ToDo: add the ability to add work outs
 //ToDo: add the ability to export work outs to somewhere
 //ToDo: fix bug where if you delete all rows for a section, the section continues to display
-//ToDo: need to add the start/stop button to the end of the list as well
 //ToDo: need to add a delegate with ok/cancel functionality for the start workout button
 //ToDo: What should happen if there is no currentSession, and someone hits the end button, not sure if it is possible
-//ToDo: allow the user to start an exercise then close the app, then continue using it, and be able to end the exercise
-//without having to start the work out again
-//ToDo: allow the user to start an exercise then close the app, then continue using it, and be able to end the exercise
-//without having to start the work out again
-//ToDo: remove managed object context from this class entirely, and add save/edit/delete methods to a service class
-//and pass a workOut object instead of the workOut name
 
 - (id)initWithStyle:(UITableViewStyle)style {
     // Override initWithStyle: if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -87,7 +80,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 - (NSArray *)loadTableDataArrayWithExerciseGroupsFromDb {
 	NSMutableArray *data = [[NSMutableArray alloc] initWithArray:[_exerciseGroupService
 																  retreiveAllExerciseGroupsForWorkOutWithName: workOutName]];
-	startButtonIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+	_startButtonIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     _endButtonIndexPath = [NSIndexPath indexPathForRow:0 inSection:[data count] + 1];
     if ([self findStartedWorkOutSession]) {
 		[data insertObject:END_WORK_OUT atIndex:0];
@@ -148,7 +141,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	//Return the number of rows in a section
 	NSUInteger rowCount = 1;
-	if (section != startButtonIndexPath.section && section != _endButtonIndexPath.section) {
+	if (section != _startButtonIndexPath.section && section != _endButtonIndexPath.section) {
 		ExerciseGroup *group = [tableData objectAtIndex:section];
  	 	NSArray *rowsForSection = [[NSArray alloc] initWithArray:[[group exercise] allObjects]];
 		rowCount = [rowsForSection count];
@@ -159,7 +152,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 	//Need to look into how to sort the allKeys so that it will behave correctly in each call for sections
 	NSString *title = nil;
-	if (section != startButtonIndexPath.section && section != _endButtonIndexPath.section) {
+	if (section != _startButtonIndexPath.section && section != _endButtonIndexPath.section) {
 		title = [[tableData objectAtIndex:section] name];
 	}
 	return title;
@@ -362,11 +355,11 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
     ExerciseGroup *toGroup = [tableData objectAtIndex:destinationIndexPath.section];
     NSNumber *ordinal = [NSNumber numberWithLong:destinationIndexPath.row];
 
-    [[ExerciseGroupService sharedInstance] moveExcercise:exercise fromGroup:fromGroup toGroup:toGroup toOrdinal:ordinal];
+    [_exerciseGroupService moveExcercise:exercise fromGroup:fromGroup toGroup:toGroup toOrdinal:ordinal];
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath {
-    if (proposedDestinationIndexPath.section == startButtonIndexPath.section) {
+    if (proposedDestinationIndexPath.section == _startButtonIndexPath.section) {
         return [NSIndexPath indexPathForRow:0 inSection:proposedDestinationIndexPath.section + 1];
     }
     
@@ -436,7 +429,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 
 - (void)startWorkOut {
 	if ([[WorkOutSessionService sharedInstance] startWorkOutSessionForWorkOutWithName:workOutName]) {
-		[tableData replaceObjectAtIndex:startButtonIndexPath.section withObject:END_WORK_OUT];
+		[tableData replaceObjectAtIndex:_startButtonIndexPath.section withObject:END_WORK_OUT];
         [tableData replaceObjectAtIndex:_endButtonIndexPath.section withObject:END_WORK_OUT];
 	} else {
 		[self showErrorAlert];
@@ -449,7 +442,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 
 - (void)endWorkOut {	
 	if ([[WorkOutSessionService sharedInstance] endStartedWorkOutSessionForWorkOutWithName:workOutName]) {
-        [tableData replaceObjectAtIndex:startButtonIndexPath.section withObject:START_WORK_OUT];
+        [tableData replaceObjectAtIndex:_startButtonIndexPath.section withObject:START_WORK_OUT];
         [tableData replaceObjectAtIndex:_endButtonIndexPath.section withObject:START_WORK_OUT];
 	} else {
 		[self showErrorAlert];
@@ -458,7 +451,7 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 
 - (bool)tableView:(UITableView *)tableView isWorkOutTimerButtonAtIndexPath:(NSIndexPath *)indexPath {
     bool isWorkoutTimer = NO;
-    if (indexPath.row == 0 && (indexPath.section == startButtonIndexPath.section || indexPath.section == _endButtonIndexPath.section)) {
+    if (indexPath.row == 0 && (indexPath.section == _startButtonIndexPath.section || indexPath.section == _endButtonIndexPath.section)) {
         isWorkoutTimer = YES;
     }
     return isWorkoutTimer;
