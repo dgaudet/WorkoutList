@@ -28,7 +28,9 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
 @interface SessionListTableViewController (PrivateMethods)
 
 - (NSArray *)loadTableDataArrayWithWorkOutSessionsFromDb;
+- (NSArray *)unfinishedSessionIndexPaths;
 - (void)sessionDisplayTimer;
+- (void)setupCell:(UITableViewCell *)cell forSession:(WorkOutSession *)session;
 //- (void)fetchDocList;
 //- (GDataServiceGoogleDocs *)docsService;
 
@@ -88,13 +90,29 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
 	return [_workOutSessionService retreiveAllWorkOutSessions];
 }
 
+- (NSArray *)unfinishedSessionIndexPaths {
+    NSMutableArray *unfinishedSessions = [[NSMutableArray alloc] init];
+    int sessionCount = 0;
+    for (WorkOutSession *session in _tableData) {
+        if (!session.endDate) {
+            [unfinishedSessions addObject:[NSIndexPath indexPathForRow:sessionCount inSection:0]];
+        }
+        sessionCount = sessionCount + 1;
+    }
+    return unfinishedSessions;
+}
+
 - (void)sessionDisplayTimer {
-    [self.tableView reloadData];
+    for (NSIndexPath *indexPath in _unfinishedSessionIndexPaths) {
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        [self setupCell:cell forSession:[_tableData objectAtIndex:indexPath.row]];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-	tableData = [[NSArray alloc] initWithArray: self.loadTableDataArrayWithWorkOutSessionsFromDb];
+	_tableData = [[NSArray alloc] initWithArray: self.loadTableDataArrayWithWorkOutSessionsFromDb];
+    _unfinishedSessionIndexPaths = [self unfinishedSessionIndexPaths];
 	[self.tableView reloadData];
 }
 
@@ -133,7 +151,7 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [tableData count];
+    return [_tableData count];
 }
 
 
@@ -148,17 +166,20 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
     }
     
     // Configure the cell...
-	WorkOutSession *session = [tableData objectAtIndex:indexPath.row];
-	NSString *formattedDateString = [dateFormatter stringFromDate:[session startDate]];
-	
-	cell.textLabel.text = [session workOut].name;
-	
-    NSString *label = [NSString stringWithFormat:@"%@ - %@", formattedDateString, [_workOutSessionService friendlyDurationForWorkOutSession:session]];
-	cell.detailTextLabel.text = label;
+	WorkOutSession *session = [_tableData objectAtIndex:indexPath.row];
+    [self setupCell:cell forSession:session];
     
     return cell;
 }
 
+- (void)setupCell:(UITableViewCell *)cell forSession:(WorkOutSession *)session {
+    NSString *formattedDateString = [dateFormatter stringFromDate:[session startDate]];
+    
+    cell.textLabel.text = [session workOut].name;
+    
+    NSString *label = [NSString stringWithFormat:@"%@ - %@", formattedDateString, [_workOutSessionService friendlyDurationForWorkOutSession:session]];
+    cell.detailTextLabel.text = label;
+}
 
 /*
 // Override to support conditional editing of the table view.

@@ -13,7 +13,8 @@
 #import "WorkOutSessionService.h"
 
 @interface SessionListTableViewController : UITableViewController <MFMailComposeViewControllerDelegate> {
-	NSArray *tableData;
+	NSArray *_tableData;
+    NSArray *_unfinishedSessionIndexPaths;
 	NSDateFormatter *dateFormatter;
 	NSString *lastExportedTitle;
 	UIActivityIndicatorView *spinner;
