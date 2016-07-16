@@ -10,6 +10,7 @@
 #import <CoreData/CoreData.h>
 #import <MessageUI/MFMailComposeViewController.h>
 #import "CSVFileGenerationService.h"
+#import "WorkOutSessionService.h"
 
 @interface SessionListTableViewController : UITableViewController <MFMailComposeViewControllerDelegate> {
 	NSArray *tableData;
@@ -17,6 +18,7 @@
 	NSString *lastExportedTitle;
 	UIActivityIndicatorView *spinner;
     CSVFileGenerationService *csvFileGenerationService;
+    WorkOutSessionService *_workOutSessionService;
 }
 
 @end

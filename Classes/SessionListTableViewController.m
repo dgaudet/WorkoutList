@@ -28,6 +28,7 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
 @interface SessionListTableViewController (PrivateMethods)
 
 - (NSArray *)loadTableDataArrayWithWorkOutSessionsFromDb;
+- (void)sessionDisplayTimer;
 //- (void)fetchDocList;
 //- (GDataServiceGoogleDocs *)docsService;
 
@@ -67,6 +68,8 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+    _workOutSessionService = [WorkOutSessionService sharedInstance];
+    
 	self.title = @"Sessions";
 	
 	UIBarButtonItem *exportButton = [[UIBarButtonItem alloc] initWithTitle:@"Export" style:UIBarButtonItemStylePlain target:self action:@selector(exportButtonPressed:)];
@@ -77,12 +80,17 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
     [dateFormatter setDateFormat:formatString];
     
     csvFileGenerationService = [CSVFileGenerationService sharedInstance];
+    
+    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(sessionDisplayTimer) userInfo:nil repeats:YES];
 }
 		 
 - (NSArray *)loadTableDataArrayWithWorkOutSessionsFromDb {
-	return [[WorkOutSessionService sharedInstance] retreiveAllWorkOutSessions];
+	return [_workOutSessionService retreiveAllWorkOutSessions];
 }
 
+- (void)sessionDisplayTimer {
+    [self.tableView reloadData];
+}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -145,7 +153,7 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
 	
 	cell.textLabel.text = [session workOut].name;
 	
-    NSString *label = [NSString stringWithFormat:@"%@ - %@", formattedDateString, [[WorkOutSessionService sharedInstance] friendlyDurationForWorkOutSession:session]];
+    NSString *label = [NSString stringWithFormat:@"%@ - %@", formattedDateString, [_workOutSessionService friendlyDurationForWorkOutSession:session]];
 	cell.detailTextLabel.text = label;
     
     return cell;
@@ -298,7 +306,7 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
 }
 
 -(NSString *)generateSessionSpreadSheetData {
-	return [[WorkOutSessionService sharedInstance] generateCSVDataForAllWorkOutSessionsWithDateFormatter:[GoogleDataService docsDateFormatter]];
+	return [_workOutSessionService generateCSVDataForAllWorkOutSessionsWithDateFormatter:[GoogleDataService docsDateFormatter]];
 }
 
 //- (void)uploadDocTicket:(GDataServiceTicket *)ticket finishedWithEntry:(GDataEntryDocBase *)entry error:(NSError *)error {

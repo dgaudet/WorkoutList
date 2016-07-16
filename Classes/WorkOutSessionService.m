@@ -91,7 +91,11 @@
 }
 
 - (NSString *)friendlyDurationForWorkOutSession:(WorkOutSession *)session {
-    NSTimeInterval interval = [session.endDate timeIntervalSinceDate:session.startDate];
+    NSDate *endDate = [NSDate date];
+    if (session.endDate) {
+        endDate = session.endDate;
+    }
+    NSTimeInterval interval = [endDate timeIntervalSinceDate:session.startDate];
     NSString *friendlyDuration = @"";
     int duration = round(interval);
 

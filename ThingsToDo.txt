@@ -11,6 +11,7 @@
 
 * Bug - iPhone 6 iOS 9.2 - centered cells are not centered in this screen resolution, need to use auto layout
 
+* turn off auto rotation
 * Modify editing a row so that if you tap to edit a row, but then don't change anything, then click back, it should not
 clear out that row. Instead add an x button on the right which clears out the row'
 * Allow adding and deleting exercises
