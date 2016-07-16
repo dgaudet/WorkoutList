@@ -27,6 +27,7 @@
 		0585DE231332E27A0094C98C /* WorkOut.m in Sources */ = {isa = PBXBuildFile; fileRef = 0585DE211332E27A0094C98C /* WorkOut.m */; };
 		0585DE261332E29A0094C98C /* WorkOutSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 0585DE251332E29A0094C98C /* WorkOutSession.m */; };
 		058D854012F614D200EDBC90 /* Exercise.m in Sources */ = {isa = PBXBuildFile; fileRef = 058D853F12F614D200EDBC90 /* Exercise.m */; };
+		05943C4E1D3AD79A00032593 /* CenteredTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05943C4D1D3AD79A00032593 /* CenteredTableViewCell.m */; };
 		05957B5E135FB3F1004F1CE4 /* GoogleDataService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05957B5D135FB3F1004F1CE4 /* GoogleDataService.m */; };
 		05B3F4D51C659D34008B323A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05B3F4D41C659D34008B323A /* LaunchScreen.xib */; };
 		05CE57721808F55000E5E445 /* ExerciseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CE57711808F55000E5E445 /* ExerciseTableViewCell.m */; };
@@ -78,6 +79,8 @@
 		0585DE251332E29A0094C98C /* WorkOutSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkOutSession.m; sourceTree = "<group>"; };
 		058D853E12F614D200EDBC90 /* Exercise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Exercise.h; sourceTree = "<group>"; };
 		058D853F12F614D200EDBC90 /* Exercise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Exercise.m; sourceTree = "<group>"; };
+		05943C4C1D3AD79A00032593 /* CenteredTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CenteredTableViewCell.h; sourceTree = "<group>"; };
+		05943C4D1D3AD79A00032593 /* CenteredTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CenteredTableViewCell.m; sourceTree = "<group>"; };
 		05957B5C135FB3F1004F1CE4 /* GoogleDataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleDataService.h; sourceTree = "<group>"; };
 		05957B5D135FB3F1004F1CE4 /* GoogleDataService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleDataService.m; sourceTree = "<group>"; };
 		05B3F4D41C659D34008B323A /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
@@ -156,6 +159,8 @@
 			children = (
 				05CE57701808F55000E5E445 /* ExerciseTableViewCell.h */,
 				05CE57711808F55000E5E445 /* ExerciseTableViewCell.m */,
+				05943C4C1D3AD79A00032593 /* CenteredTableViewCell.h */,
+				05943C4D1D3AD79A00032593 /* CenteredTableViewCell.m */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -415,6 +420,7 @@
 				05E437E71C290A2F002A2D68 /* CSVFileGenerationService.m in Sources */,
 				058410C112F5032900B54241 /* EditRowListTableViewController.m in Sources */,
 				058D854012F614D200EDBC90 /* Exercise.m in Sources */,
+				05943C4E1D3AD79A00032593 /* CenteredTableViewCell.m in Sources */,
 				058431111304C76800DC5CF5 /* ExerciseGroup.m in Sources */,
 				0583F53B1321E8B7003D206D /* WorkoutList.xcdatamodel in Sources */,
 				05851AF3132D9643009AEB9C /* DatabasePopulator.m in Sources */,

@@ -177,7 +177,12 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
     
     cell.textLabel.text = [session workOut].name;
     
-    NSString *label = [NSString stringWithFormat:@"%@ - %@", formattedDateString, [_workOutSessionService friendlyDurationForWorkOutSession:session]];
+    NSString *sessionStillGoing = @"";
+    if (!session.isSessionFinished) {
+        sessionStillGoing = @" - Session still going";
+    }
+    
+    NSString *label = [NSString stringWithFormat:@"%@ - %@%@", formattedDateString, [_workOutSessionService friendlyDurationForWorkOutSession:session], sessionStillGoing];
     cell.detailTextLabel.text = label;
 }
 
