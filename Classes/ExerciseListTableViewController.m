@@ -15,15 +15,17 @@
 #import "Exercise.h"
 #import "ExerciseGroup.h"
 #import "ExerciseTableViewCell.h"
+#import "CenteredTableViewCell.h"
 
 @interface ExerciseListTableViewController (PrivateMethods)
 
 - (NSArray *)loadTableDataArrayWithExerciseGroupsFromDb;
 - (Exercise *)exerciseForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (void)startEndButtonDisplayTimer;
+- (void)setupStartEndButtonCell:(CenteredTableViewCell *)cell forSession:(WorkOutSession *)session;
 - (UITableViewCell *)tableView:(UITableView *)tableView defaultStyleCell:(NSString *)name cellValue:(NSString *)value;
 - (UITableViewCell *)tableView:(UITableView *)tableView textBoxStyleCell:(NSString *)name cellValue:(NSString *)value;
 - (UITableViewCell *)tableView:(UITableView *)tableView threeColumnStyleCell:(NSString *)leftLabel middleLabel:(NSString *)middleLabel rightLabel:(NSString *)rightLabel;
-- (UITableViewCell *)tableView:(UITableView *)tableView centeredTextStyleCell:(NSString *)text withBackgroundColor:(UIColor *)backgroundColor;
 - (void)workOutSessionButtonPressed:(NSIndexPath *)indexPath;
 - (void)startWorkOut;
 - (void)endWorkOut;
@@ -39,7 +41,7 @@
 @synthesize workOutName;
 
 NSString *const START_WORK_OUT = @"Start Work Out";
-NSString *const END_WORK_OUT = @"End Work Out Timer";
+NSString *const END_WORK_OUT = @"Press to end work out timer";
 
 #pragma mark -
 #pragma mark Initialization
@@ -77,6 +79,8 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 	
 	lastRow = 0;
 	lastSection = 0;
+    
+    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(startEndButtonDisplayTimer) userInfo:nil repeats:YES];
 }
 
 - (NSArray *)loadTableDataArrayWithExerciseGroupsFromDb {
@@ -99,6 +103,14 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
     ExerciseGroup *group = [tableData objectAtIndex:indexPath.section];
     NSArray *rowsForSection = [group sortedExercies];
     return [rowsForSection objectAtIndex: indexPath.row];
+}
+
+- (void)startEndButtonDisplayTimer {
+    WorkOutSession *session = [self findStartedWorkOutSession];
+    CenteredTableViewCell *firstButtonCell = [self.tableView cellForRowAtIndexPath:_startButtonIndexPath];
+    [self setupStartEndButtonCell:firstButtonCell forSession:session];
+    CenteredTableViewCell *secondButtonCell = [self.tableView cellForRowAtIndexPath:_endButtonIndexPath];
+    [self setupStartEndButtonCell:secondButtonCell forSession:session];
 }
 
 /*
@@ -163,9 +175,16 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     // Set up the cell...
     if ([self tableView:tableView isWorkOutTimerButtonAtIndexPath:indexPath]) {
-        NSString *buttonText = [tableData objectAtIndex:indexPath.section];
-        UIColor *buttonColor = [self colorForStartEndWorkOutCell];
-		return [self tableView:tableView centeredTextStyleCell:buttonText withBackgroundColor:buttonColor];
+        static NSString *CellIdentifier = @"CenteredTextCellStyle";
+        
+        CenteredTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[CenteredTableViewCell alloc] initWithReuseIdentifier:CellIdentifier];
+        }
+        
+        WorkOutSession *session = [self findStartedWorkOutSession];
+        [self setupStartEndButtonCell:cell forSession:session];
+        return cell;
 	} else {
 		Exercise *exerciseForRow = [self exerciseForRowAtIndexPath:indexPath];
         static NSString *ExerciseCellReuseIdentifier = @"ExerciseCellReuseIdentifier";
@@ -263,37 +282,6 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
     return cell;	
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView centeredTextStyleCell:(NSString *)text withBackgroundColor:(UIColor *)backgroundColor {
-	static NSString *CellIdentifier = @"CenteredTextCellStyle";
-    
-	NSInteger mainLabelTag = 1;
-	
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
-        
-        UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 2.0, 285.0, 40.0)];
-        mainLabel.textAlignment = NSTextAlignmentCenter;
-		mainLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:17.0];
-        mainLabel.textColor = [UIColor blackColor];
-        mainLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;		
-        mainLabel.tag = mainLabelTag;
-
-		[cell.contentView addSubview:mainLabel];
-    }
-    
-    // Set up the cell...
-	UILabel *mainLabel = (UILabel *) [cell.contentView viewWithTag:mainLabelTag];
-	mainLabel.text = text;
-    
-    if (backgroundColor) {
-        cell.backgroundColor = backgroundColor;
-    }
-	
-    return cell;
-}
-
-
 - (UITableViewCell *)tableView:(UITableView *)tableView sliderStyleCell:(NSString *)name cellValue:(NSString *)value {
 	static NSString *CellIdentifier = @"SliderCellStyle";
 	
@@ -325,13 +313,26 @@ NSString *const END_WORK_OUT = @"End Work Out Timer";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat height = 43;
-    NSString *text = @"";
-    if (![self tableView:tableView isWorkOutTimerButtonAtIndexPath:indexPath]) {
+    if ([self tableView:tableView isWorkOutTimerButtonAtIndexPath:indexPath]) {
+        height = [CenteredTableViewCell heightForCell];
+    } else {
         Exercise *exerciseForRow = [self exerciseForRowAtIndexPath:indexPath];
         height = [ExerciseTableViewCell heightForCellWithString:exerciseForRow.name editingMode:self.editing] + 2.0;
-        text = exerciseForRow.name;
     }
     return height;
+}
+
+- (void)setupStartEndButtonCell:(CenteredTableViewCell *)cell forSession:(WorkOutSession *)session {
+    NSString *topLabelText = START_WORK_OUT;
+    NSString *bottomLabelText = @"";
+    cell.backgroundColor = [self colorForStartEndWorkOutCell];
+    if (session && !session.isSessionFinished) {
+        NSString *notFinished = [NSString stringWithFormat:@"Session Time: %@", [_workOutSessionService friendlyDurationForWorkOutSession:session]];
+        topLabelText = notFinished;
+        bottomLabelText = END_WORK_OUT;
+    }
+    cell.topLabel.text = topLabelText;
+    cell.bottomLabel.text = bottomLabelText;
 }
 
 #pragma mark -

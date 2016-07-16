@@ -10,7 +10,10 @@
 
 @interface CenteredTableViewCell : UITableViewCell
 
++ (CGFloat)heightForCell;
+
 - (id)initWithReuseIdentifier:(NSString *)reuseIdentifier;
-- (UILabel *)mainLabel;
+- (UILabel *)topLabel;
+- (UILabel *)bottomLabel;
 
 @end
