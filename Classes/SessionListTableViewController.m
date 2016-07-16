@@ -94,7 +94,7 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
     NSMutableArray *unfinishedSessions = [[NSMutableArray alloc] init];
     int sessionCount = 0;
     for (WorkOutSession *session in _tableData) {
-        if (!session.endDate) {
+        if (!session.isSessionFinished) {
             [unfinishedSessions addObject:[NSIndexPath indexPathForRow:sessionCount inSection:0]];
         }
         sessionCount = sessionCount + 1;

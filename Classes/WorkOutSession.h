@@ -18,4 +18,6 @@ extern NSString * const WOS_ENTITY_NAME;
 @property (nonatomic, strong) NSDate *endDate;
 @property (nonatomic, strong) WorkOut *workOut;
 
+- (bool)isSessionFinished;
+
 @end

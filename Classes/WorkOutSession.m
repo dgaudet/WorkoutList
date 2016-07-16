@@ -16,4 +16,12 @@ NSString * const WOS_ENTITY_NAME = @"WorkOutSession";
 @dynamic endDate;
 @dynamic workOut;
 
+- (bool)isSessionFinished {
+    bool isFinished = NO;
+    if (self.endDate) {
+        isFinished = YES;
+    }
+    return isFinished;
+}
+
 @end

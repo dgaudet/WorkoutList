@@ -92,7 +92,7 @@
 
 - (NSString *)friendlyDurationForWorkOutSession:(WorkOutSession *)session {
     NSDate *endDate = [NSDate date];
-    if (session.endDate) {
+    if (session.isSessionFinished) {
         endDate = session.endDate;
     }
     NSTimeInterval interval = [endDate timeIntervalSinceDate:session.startDate];
