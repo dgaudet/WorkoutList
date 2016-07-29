@@ -21,6 +21,10 @@
 
 - (NSArray *)loadTableDataArrayWithExerciseGroupsFromDb;
 - (Exercise *)exerciseForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (void)setupNotificationObservers;
+- (void)removeNotificationObservers;
+- (void)setupTimers;
+- (void)invalidateTimers;
 - (void)startEndButtonDisplayTimer;
 - (void)setupStartEndButtonCell:(CenteredTableViewCell *)cell forSession:(WorkOutSession *)session;
 - (UITableViewCell *)tableView:(UITableView *)tableView defaultStyleCell:(NSString *)name cellValue:(NSString *)value;
@@ -33,6 +37,8 @@
 - (WorkOutSession *)findStartedWorkOutSession;
 - (bool)tableView:(UITableView *)tableView isWorkOutTimerButtonAtIndexPath:(NSIndexPath *)indexPath;
 - (UIColor *)colorForStartEndWorkOutCell;
+- (void)applicationWillResignActive;
+- (void)applicationDidBecomeActive;
 
 @end
 
@@ -83,7 +89,9 @@ NSString *const END_WORK_OUT = @"Press to end work out timer";
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    _startEndButtonTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(startEndButtonDisplayTimer) userInfo:nil repeats:YES];
+    [self setupNotificationObservers];
+    
+    [self setupTimers];
 }
 
 - (NSArray *)loadTableDataArrayWithExerciseGroupsFromDb {
@@ -102,6 +110,24 @@ NSString *const END_WORK_OUT = @"Press to end work out timer";
 	return data;
 }
 
+- (void)setupNotificationObservers {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive) name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
+}
+
+- (void)removeNotificationObservers {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+}
+
+- (void)setupTimers {
+    _startEndButtonTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(startEndButtonDisplayTimer) userInfo:nil repeats:YES];
+}
+
+- (void)invalidateTimers {
+    [_startEndButtonTimer invalidate];
+}
+
 - (Exercise *)exerciseForRowAtIndexPath:(NSIndexPath *)indexPath {
     ExerciseGroup *group = [tableData objectAtIndex:indexPath.section];
     NSArray *rowsForSection = [group sortedExercies];
@@ -112,13 +138,9 @@ NSString *const END_WORK_OUT = @"Press to end work out timer";
     WorkOutSession *session = [self findStartedWorkOutSession];
     if (session && !session.isSessionFinished) {
         for (NSIndexPath *visiblePath in self.tableView.indexPathsForVisibleRows) {
-            if (visiblePath == _startButtonIndexPath) {
-                CenteredTableViewCell *firstButtonCell = [self.tableView cellForRowAtIndexPath:_startButtonIndexPath];
-                [self setupStartEndButtonCell:firstButtonCell forSession:session];
-            }
-            else if (visiblePath == _endButtonIndexPath) {
-                CenteredTableViewCell *secondButtonCell = [self.tableView cellForRowAtIndexPath:_endButtonIndexPath];
-                [self setupStartEndButtonCell:secondButtonCell forSession:session];
+            if (visiblePath == _startButtonIndexPath || visiblePath == _endButtonIndexPath) {
+                CenteredTableViewCell *buttonCell = [self.tableView cellForRowAtIndexPath:visiblePath];
+                [self setupStartEndButtonCell:buttonCell forSession:session];
             }
         }
     }
@@ -512,6 +534,16 @@ NSString *const END_WORK_OUT = @"Press to end work out timer";
 	[alert show];
 }
 
+#pragma mark - 
+#pragma mark UIApplication Multitasking handling Methods
+- (void)applicationWillResignActive {
+    [self invalidateTimers];
+}
+
+- (void)applicationDidBecomeActive {
+    [self setupTimers];
+}
+
 
 #pragma mark -
 #pragma mark Memory management
@@ -529,7 +561,8 @@ NSString *const END_WORK_OUT = @"Press to end work out timer";
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [_startEndButtonTimer invalidate];
+    [self invalidateTimers];
+    [self removeNotificationObservers];
 }
 
 @end
