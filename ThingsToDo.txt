@@ -11,6 +11,8 @@
 
 * Bug - iPhone 6 iOS 9.2 - centered cells are not centered in this screen resolution, need to use auto layout
 
+* Add view to Lock screen when app is running but phone is locked which shows the current exercises, so you don't have to
+** unlock the phone to quickly see what you were working on at the time
 * turn off auto rotation
 * Modify editing a row so that if you tap to edit a row, but then don't change anything, then click back, it should not
 clear out that row. Instead add an x button on the right which clears out the row'
