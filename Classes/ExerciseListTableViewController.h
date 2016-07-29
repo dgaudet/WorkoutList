@@ -19,6 +19,7 @@
 	NSString *workOutName;
     NSIndexPath *_startButtonIndexPath;
     NSIndexPath *_endButtonIndexPath;
+    NSTimer *_startEndButtonTimer;
     ExerciseGroupService *_exerciseGroupService;
     WorkOutSessionService *_workOutSessionService;
 }

@@ -79,8 +79,11 @@ NSString *const END_WORK_OUT = @"Press to end work out timer";
 	
 	lastRow = 0;
 	lastSection = 0;
-    
-    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(startEndButtonDisplayTimer) userInfo:nil repeats:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    _startEndButtonTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(startEndButtonDisplayTimer) userInfo:nil repeats:YES];
 }
 
 - (NSArray *)loadTableDataArrayWithExerciseGroupsFromDb {
@@ -107,10 +110,18 @@ NSString *const END_WORK_OUT = @"Press to end work out timer";
 
 - (void)startEndButtonDisplayTimer {
     WorkOutSession *session = [self findStartedWorkOutSession];
-    CenteredTableViewCell *firstButtonCell = [self.tableView cellForRowAtIndexPath:_startButtonIndexPath];
-    [self setupStartEndButtonCell:firstButtonCell forSession:session];
-    CenteredTableViewCell *secondButtonCell = [self.tableView cellForRowAtIndexPath:_endButtonIndexPath];
-    [self setupStartEndButtonCell:secondButtonCell forSession:session];
+    if (session && !session.isSessionFinished) {
+        for (NSIndexPath *visiblePath in self.tableView.indexPathsForVisibleRows) {
+            if (visiblePath == _startButtonIndexPath) {
+                CenteredTableViewCell *firstButtonCell = [self.tableView cellForRowAtIndexPath:_startButtonIndexPath];
+                [self setupStartEndButtonCell:firstButtonCell forSession:session];
+            }
+            else if (visiblePath == _endButtonIndexPath) {
+                CenteredTableViewCell *secondButtonCell = [self.tableView cellForRowAtIndexPath:_endButtonIndexPath];
+                [self setupStartEndButtonCell:secondButtonCell forSession:session];
+            }
+        }
+    }
 }
 
 /*
@@ -514,10 +525,12 @@ NSString *const END_WORK_OUT = @"Press to end work out timer";
 
 - (void)viewDidUnload {
     // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
-    // For example: self.myOutlet = nil;
 }
 
-
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [_startEndButtonTimer invalidate];
+}
 
 @end
 
