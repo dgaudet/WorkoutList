@@ -57,7 +57,6 @@ NSString *const END_WORK_OUT = @"Press to end work out timer";
 //ToDo: add the ability to add work outs
 //ToDo: add the ability to export work outs to somewhere
 //ToDo: fix bug where if you delete all rows for a section, the section continues to display
-//ToDo: need to add a delegate with ok/cancel functionality for the start workout button
 //ToDo: What should happen if there is no currentSession, and someone hits the end button, not sure if it is possible
 
 - (id)initWithStyle:(UITableViewStyle)style {
@@ -547,8 +546,10 @@ NSString *const END_WORK_OUT = @"Press to end work out timer";
 #pragma mark UI Type stuff
 - (void)showErrorAlert {
 	NSString *message = @"We are sorry there was a problem processing Your Request Please Try Again later. Press Ok to continue";
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-	[alert show];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+    [alertController addAction:defaultAction];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - 
