@@ -55,3 +55,4 @@ clear out that row. Instead add an x button on the right which clears out the ro
 * when moving to edit mode the cell transistion is a little off, willTransitionToState may be the solution
 * Make the Excercise name input uppercase firt letter of all words
 * replace lastRow and lastSection in ExerciseListTableViewController with NSIndexPath
+* Refactor All error message UIAlertView's with a shared UIAlertController, take the implementation from ExerciseListTableViewController
