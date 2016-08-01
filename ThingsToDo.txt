@@ -13,6 +13,10 @@
 
 * Add view to Lock screen when app is running but phone is locked which shows the current exercises, so you don't have to
 ** unlock the phone to quickly see what you were working on at the time
+** Possibly this is a widget? - When your screen is locked and you swipe down from the top it brings down
+** app 'widgets' which I am not sure how they work exactly. Looks like they are called widgets in the 'Today View'
+** Today View info - https://developer.apple.com/library/ios/documentation/General/Conceptual/ExtensibilityPG/Today.html
+** You can share some data, looks like you can use core data some how
 * turn off auto rotation
 * Modify editing a row so that if you tap to edit a row, but then don't change anything, then click back, it should not
 clear out that row. Instead add an x button on the right which clears out the row'

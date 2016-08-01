@@ -456,19 +456,27 @@ NSString *const END_WORK_OUT = @"Press to end work out timer";
 - (void)workOutSessionButtonPressed:(NSIndexPath *)indexPath {
 	NSString *message = @"";
     if ([[tableData objectAtIndex:0] isEqualToString:START_WORK_OUT]) {
-        message = [message stringByAppendingString:@"Get started with your Workout"];
-		[self startWorkOut];
+        message = @"Get started with your Workout";
 	} else {
-		[self endWorkOut];
-        WorkOutSession *session = [_workOutSessionService retreiveMostRecentlyEndedWorkOutSessionWithName:workOutName];
-        NSString *duration = [_workOutSessionService friendlyDurationForWorkOutSession:session];
-        message = [message stringByAppendingFormat:@"Nice Workout here's your time\n %@", duration];
+        message = @"Do you want to finish your workout?";
 	}
-	[self.tableView reloadData];
     
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];	
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-	[alert show];
+    UIAlertController *alertView = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if ([[tableData objectAtIndex:0] isEqualToString:START_WORK_OUT]) {
+            [self startWorkOut];
+        } else {
+            [self endWorkOut];
+        }
+        [self.tableView reloadData];
+    }];
+    [alertView addAction:defaultAction];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    [alertView addAction:cancelAction];
+    
+    [self presentViewController:alertView animated:YES completion:nil];
+    
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)startWorkOut {
@@ -488,6 +496,15 @@ NSString *const END_WORK_OUT = @"Press to end work out timer";
 	if ([_workOutSessionService endStartedWorkOutSessionForWorkOutWithName:workOutName]) {
         [tableData replaceObjectAtIndex:_startButtonIndexPath.section withObject:START_WORK_OUT];
         [tableData replaceObjectAtIndex:_endButtonIndexPath.section withObject:START_WORK_OUT];
+        
+        WorkOutSession *session = [_workOutSessionService retreiveMostRecentlyEndedWorkOutSessionWithName:workOutName];
+        NSString *duration = [_workOutSessionService friendlyDurationForWorkOutSession:session];
+        NSString *message = [NSString stringWithFormat:@"Nice Workout here's your time\n %@", duration];
+        
+        UIAlertController *alertView = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+        [alertView addAction:defaultAction];
+        [self presentViewController:alertView animated:YES completion:nil];
 	} else {
 		[self showErrorAlert];
 	}
