@@ -87,14 +87,14 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
 }
 		 
 - (NSArray *)loadTableDataArrayWithWorkOutSessionsFromDb {
-	return [_workOutSessionService retreiveAllWorkOutSessions];
+	return [_workOutSessionService retrieveAllWorkOutSessionsWithNullForWeekGaps];
 }
 
 - (NSArray *)unfinishedSessionIndexPaths {
     NSMutableArray *unfinishedSessions = [[NSMutableArray alloc] init];
     int sessionCount = 0;
     for (WorkOutSession *session in _tableData) {
-        if (!session.isSessionFinished) {
+        if ([session respondsToSelector:@selector(isSessionFinished)] && !session.isSessionFinished) {
             [unfinishedSessions addObject:[NSIndexPath indexPathForRow:sessionCount inSection:0]];
         }
         sessionCount = sessionCount + 1;
@@ -173,16 +173,23 @@ NSString * const SLTVC_SPREADSHEET_NAME = @"Sessions";
 }
 
 - (void)setupCell:(UITableViewCell *)cell forSession:(WorkOutSession *)session {
-    NSString *formattedDateString = [dateFormatter stringFromDate:[session startDate]];
-    
-    cell.textLabel.text = [session workOut].name;
-    
-    NSString *sessionStillGoing = @"";
-    if (!session.isSessionFinished) {
-        sessionStillGoing = @" - Session still going";
+    NSString *label = @"";
+    if ([session respondsToSelector:@selector(isSessionFinished)]) {
+        NSString *formattedDateString = [dateFormatter stringFromDate:[session startDate]];
+        
+        cell.textLabel.text = [session workOut].name;
+        
+        NSString *sessionStillGoing = @"";
+        if (!session.isSessionFinished) {
+            sessionStillGoing = @" - Session still going";
+        }
+        
+        label = [NSString stringWithFormat:@"%@ - %@%@", formattedDateString, [_workOutSessionService friendlyDurationForWorkOutSession:session], sessionStillGoing];
+        cell.detailTextLabel.text = label;
+    } else {
+        cell.backgroundColor = [UIColor lightGrayColor];
+        label = @"- Over week long break -";
     }
-    
-    NSString *label = [NSString stringWithFormat:@"%@ - %@%@", formattedDateString, [_workOutSessionService friendlyDurationForWorkOutSession:session], sessionStillGoing];
     cell.detailTextLabel.text = label;
 }
 

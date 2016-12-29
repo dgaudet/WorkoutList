@@ -10,6 +10,7 @@
 #import "WorkOutSession.h"
 #import "WorkOut.h"
 #import "ManagedObjectContextService.h"
+#import "NSDate+NSDateComparison.h"
 
 @implementation WorkOutSessionService
 
@@ -31,6 +32,19 @@
         _managedObjectContextService = [ManagedObjectContextService sharedInstance];
     }
     return self;
+}
+
+- (NSArray *)retrieveAllWorkOutSessionsWithNullForWeekGaps {
+    //This adds a null record each time there is a week break in between sessions
+    NSArray *sessions = self.retreiveAllWorkOutSessions;
+    NSMutableArray *sessionsWithGaps = [NSMutableArray array];
+    for (WorkOutSession *session in sessions) {
+        if ((sessionsWithGaps.count > 1) && [session.endDate isTimeIntervalLargerThanWeekSinceDate:[[sessionsWithGaps objectAtIndex:sessionsWithGaps.count - 1] endDate]]) {
+            [sessionsWithGaps addObject:[NSNull null]];
+        }
+        [sessionsWithGaps addObject:session];
+    }
+    return sessionsWithGaps;
 }
 
 - (NSArray *)retreiveAllWorkOutSessions {

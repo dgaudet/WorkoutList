@@ -18,6 +18,7 @@
 
 + (id)sharedInstance;
 - (NSArray *)retreiveAllWorkOutSessions;
+- (NSArray *)retrieveAllWorkOutSessionsWithNullForWeekGaps;
 - (WorkOutSession *)retreiveStartedWorkOutSessionWithName:(NSString *)name;
 - (WorkOutSession *)retreiveMostRecentlyEndedWorkOutSessionWithName:(NSString *)name;
 - (BOOL)startWorkOutSessionForWorkOutWithName:(NSString *)name;
