@@ -55,6 +55,21 @@
     [self generateAndSaveWorkOut_ShoulderLeg];
     [self generateAndSaveWorkOut_AbsChestForearm];
     [self generateAndSaveWorkOut_BackBicepNeck];
+    [self addSessionsForTesting];
+}
+
+- (void)addSessionsForTesting {
+    int weekInterval = 604800;
+    NSDate *currentDate = [NSDate date];
+    [self addSessionForWorkOutWithName:@"Shoulder/Leg"
+                             startDate:[currentDate dateByAddingTimeInterval:-weekInterval]
+                            andEndDate:[currentDate dateByAddingTimeInterval:-weekInterval]];
+    [self addSessionForWorkOutWithName:@"Abs/Chest/Forearm/Tricep"
+                             startDate:[currentDate dateByAddingTimeInterval:-weekInterval * 2]
+                            andEndDate:[currentDate dateByAddingTimeInterval:-weekInterval * 2]];
+    [self addSessionForWorkOutWithName:@"Back/Bicep/Neck"
+                             startDate:[currentDate dateByAddingTimeInterval:-weekInterval * 3]
+                            andEndDate:[currentDate dateByAddingTimeInterval:-weekInterval * 3]];
 }
 
 -(void)generateAndSaveWorkOut_AbsChestForearm {

@@ -12,6 +12,7 @@
 		0529800F1BB5FF1F008B1493 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0529800E1BB5FF1F008B1493 /* Images.xcassets */; };
 		05513AC912F3CCA9003E49DF /* ExerciseListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05513AC812F3CCA9003E49DF /* ExerciseListTableViewController.m */; };
 		055B38EE1BE0387300FA8DAF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 055B38ED1BE0387300FA8DAF /* GoogleService-Info.plist */; };
+		055F61281E15C132003C2C6C /* NSDate+NSDateComparison.m in Sources */ = {isa = PBXBuildFile; fileRef = 055F61271E15C132003C2C6C /* NSDate+NSDateComparison.m */; };
 		05806F4913621F02001C5317 /* WorkOutService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05806F4813621F02001C5317 /* WorkOutService.m */; };
 		05822E6E136603E100357408 /* ExerciseGroupService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05822E6D136603E100357408 /* ExerciseGroupService.m */; };
 		05822EB413661A1300357408 /* WorkOutSessionService.m in Sources */ = {isa = PBXBuildFile; fileRef = 05822EB313661A1300357408 /* WorkOutSessionService.m */; };
@@ -54,6 +55,8 @@
 		05513AC712F3CCA9003E49DF /* ExerciseListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExerciseListTableViewController.h; sourceTree = "<group>"; };
 		05513AC812F3CCA9003E49DF /* ExerciseListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExerciseListTableViewController.m; sourceTree = "<group>"; };
 		055B38ED1BE0387300FA8DAF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		055F61261E15C132003C2C6C /* NSDate+NSDateComparison.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+NSDateComparison.h"; sourceTree = "<group>"; };
+		055F61271E15C132003C2C6C /* NSDate+NSDateComparison.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+NSDateComparison.m"; sourceTree = "<group>"; };
 		05806F4713621F02001C5317 /* WorkOutService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkOutService.h; sourceTree = "<group>"; };
 		05806F4813621F02001C5317 /* WorkOutService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkOutService.m; sourceTree = "<group>"; };
 		05822E6C136603E100357408 /* ExerciseGroupService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExerciseGroupService.h; sourceTree = "<group>"; };
@@ -270,6 +273,8 @@
 				05822EB313661A1300357408 /* WorkOutSessionService.m */,
 				05E437E51C290A2F002A2D68 /* CSVFileGenerationService.h */,
 				05E437E61C290A2F002A2D68 /* CSVFileGenerationService.m */,
+				055F61261E15C132003C2C6C /* NSDate+NSDateComparison.h */,
+				055F61271E15C132003C2C6C /* NSDate+NSDateComparison.m */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -435,6 +440,7 @@
 				35B37391136896ED000B48C2 /* User.m in Sources */,
 				35B3739413689831000B48C2 /* UserService.m in Sources */,
 				35B373C413689D91000B48C2 /* EditUserListTableViewController.m in Sources */,
+				055F61281E15C132003C2C6C /* NSDate+NSDateComparison.m in Sources */,
 				35B376281371D325000B48C2 /* ExerciseService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
