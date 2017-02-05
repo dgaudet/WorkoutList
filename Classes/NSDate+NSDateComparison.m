@@ -14,7 +14,8 @@
     if (self == nil || date2 == nil) {
         return false;
     }
-    int weekInterval = 604800;
+    //THis is a week minus 2 hours
+    int weekInterval = 604800 - 7200;
     NSTimeInterval differenceBetween = [self timeIntervalSinceDate:date2];
     if (differenceBetween < 0) {
         differenceBetween = -differenceBetween;
