@@ -54,7 +54,8 @@
 #define MTVR_ROW_PADDING    6.0
 
 + (CGFloat)heightForString:(NSString *)string withWidth:(CGFloat)width withFont:(UIFont *)font {
-    CGSize size = [string sizeWithFont:font constrainedToSize:CGSizeMake(width, 485.0) lineBreakMode:UILineBreakModeWordWrap];
+    CGRect rect = [string boundingRectWithSize:CGSizeMake(width, 485.0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:font} context:nil];
+    CGSize  size = rect.size;
     CGFloat height = size.height;
     if (height < MINIMUM_HEIGHT) {
         height = MINIMUM_HEIGHT;
