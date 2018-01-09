@@ -10,8 +10,8 @@
 
 @implementation CenteredTableViewCell
 
-NSInteger *const TOP_LABEL_TAG = 1;
-NSInteger *const BOTTOM_LABEL_TAG = 2;
+NSInteger const TOP_LABEL_TAG = 1;
+NSInteger const BOTTOM_LABEL_TAG = 2;
 
 - (void)awakeFromNib {
     [super awakeFromNib];
