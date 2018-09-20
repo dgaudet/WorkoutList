@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "User.h"
-#import <Google/SignIn.h>
+//#import <Google/SignIn.h>
 
 @protocol EditUserListTableViewControllerDelegate;
 
-@interface EditUserListTableViewController : UITableViewController <UITextFieldDelegate, GIDSignInUIDelegate> {
+@interface EditUserListTableViewController : UITableViewController <UITextFieldDelegate> {
 	NSArray *tableData;
 	User *user;
 	UITextField *textFieldBeingEdited;

@@ -58,7 +58,7 @@
     
     // TODO(developer) Configure the sign-in button look/feel
     
-    [GIDSignIn sharedInstance].uiDelegate = self;
+//    [GIDSignIn sharedInstance].uiDelegate = self;
     
     // Uncomment to automatically sign in the user.
     //[[GIDSignIn sharedInstance] signInSilently];
@@ -197,8 +197,8 @@
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             
-            GIDSignInButton *siginInButton = [[GIDSignInButton alloc] initWithFrame:CGRectMake(10.0, 0.0, 300.0, 40.0)];
-            [cell.contentView addSubview:siginInButton];
+//            GIDSignInButton *siginInButton = [[GIDSignInButton alloc] initWithFrame:CGRectMake(10.0, 0.0, 300.0, 40.0)];
+//            [cell.contentView addSubview:siginInButton];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         return cell;
@@ -311,7 +311,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 4) {
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-        [[GIDSignIn sharedInstance] signOut];
+//        [[GIDSignIn sharedInstance] signOut];
     }
 }
 
