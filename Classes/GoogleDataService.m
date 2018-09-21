@@ -25,8 +25,7 @@
 
 + (NSDateFormatter *)docsDateFormatter {
 	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-	[formatter setDateStyle:NSDateFormatterShortStyle];
-	[formatter setTimeStyle:NSDateFormatterNoStyle];
+    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
 	
 	//No matter what the locale set on the device, we need to use us since that is the only locale
 	//that google will be able to handle

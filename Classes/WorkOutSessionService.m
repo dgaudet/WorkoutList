@@ -92,13 +92,14 @@
 }
 
 - (NSString *)generateCSVDataForAllWorkOutSessionsWithDateFormatter:(NSDateFormatter *)formatter {
-	NSString *colHeaders = @"Work Out Session,Date,Duration";
+	NSString *colHeaders = @"Work Out Session,Start Date,End Date,Duration";
 	NSString *rowData = [[NSString alloc] init];
 		
 	for (WorkOutSession *session in [self retreiveAllWorkOutSessions]) {
-		NSString *formattedDateString = [formatter stringFromDate:[session startDate]];
+		NSString *formattedStartDateString = [formatter stringFromDate:[session startDate]];
+        NSString *formattedEndDateString = [formatter stringFromDate:[session endDate]];
         NSString *friendlyDuration = [self friendlyDurationForWorkOutSession:session];
-		rowData = [rowData stringByAppendingFormat:@"\n%@, %@, %@", [[session workOut] name], formattedDateString, friendlyDuration];
+		rowData = [rowData stringByAppendingFormat:@"\n%@, %@, %@, %@", [[session workOut] name], formattedStartDateString, formattedEndDateString, friendlyDuration];
 	}
 	
 	return [NSString stringWithFormat:@"%@%@", colHeaders, rowData];
